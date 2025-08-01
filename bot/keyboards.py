@@ -42,9 +42,8 @@ def get_services_keyboard(selected_services: list = None) -> InlineKeyboardMarku
         selected_services = []
     
     services = [
-        ('storage', '📦 Хранение товаров'),
         ('packaging', '📮 Упаковка'),
-        ('shipping', '🚚 Отправка'),
+        ('shipping', '🚚 Отгрузка'),
         ('returns', '↩️ Обработка возвратов'),
         ('labeling', '🏷 Маркировка'),
         ('quality_control', '✅ Контроль качества'),
