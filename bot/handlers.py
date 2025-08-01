@@ -3,12 +3,13 @@
 import logging
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes, ConversationHandler
-from bot.keyboards import get_main_menu_keyboard, get_marketplace_keyboard, get_services_keyboard, get_calculation_result_keyboard
+from bot.keyboards import get_main_menu_keyboard, get_marketplace_keyboard, get_services_keyboard, get_calculation_result_keyboard, get_ai_chat_keyboard
 from bot.messages import MESSAGES
 from bot.calculator import FulfillmentCalculator
+from bot.ai_assistant import AIAssistant
 from bot.states import (
     MARKETPLACE_CHOICE, ORDERS_COUNT, SERVICES_CHOICE, CALCULATION_RESULT,
-    APPLICATION_NAME, APPLICATION_CONTACT, APPLICATION_DESCRIPTION
+    APPLICATION_NAME, APPLICATION_CONTACT, APPLICATION_DESCRIPTION, AI_CHAT
 )
 from utils.formatters import format_calculation_result
 
@@ -99,6 +100,12 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
         await services_info(update, context)
     elif query.data == "advantages":
         await advantages(update, context)
+    elif query.data == "ai_chat":
+        await handle_ai_chat_start(update, context)
+    elif query.data == "ai_examples":
+        await handle_ai_examples(update, context)
+    elif query.data == "ai_ask_question":
+        await handle_ai_ask_question(update, context)
 
 # Обработчики калькулятора
 async def handle_calculator_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -300,3 +307,99 @@ async def handle_application_complete(update: Update, context: ContextTypes.DEFA
         reply_markup=keyboard,
         parse_mode='HTML'
     )
+
+# Обработчики AI-помощника
+async def handle_ai_chat_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    """Начало работы с AI-помощником"""
+    query = update.callback_query
+    await query.answer()
+    
+    keyboard = get_ai_chat_keyboard()
+    
+    await query.edit_message_text(
+        text=MESSAGES['ai_chat_welcome'],
+        reply_markup=keyboard,
+        parse_mode='HTML'
+    )
+    
+    return AI_CHAT
+
+async def handle_ai_examples(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    """Показ примеров вопросов для AI"""
+    query = update.callback_query
+    await query.answer()
+    
+    keyboard = get_ai_chat_keyboard()
+    
+    await query.edit_message_text(
+        text=MESSAGES['ai_examples'],
+        reply_markup=keyboard,
+        parse_mode='HTML'
+    )
+    
+    return AI_CHAT
+
+async def handle_ai_ask_question(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    """Переход к вопросу AI"""
+    query = update.callback_query
+    await query.answer()
+    
+    await query.edit_message_text(
+        text="🤖 <b>Задайте свой вопрос</b>\n\nНапишите любой вопрос о наших услугах фулфилмента, и я постараюсь дать подробный ответ.",
+        parse_mode='HTML'
+    )
+    
+    return AI_CHAT
+
+async def handle_ai_question(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    """Обработка вопроса пользователя к AI"""
+    user_message = update.message.text
+    
+    # Показываем, что бот печатает
+    await update.message.chat.send_action(action="typing")
+    
+    try:
+        # Инициализируем AI-помощника
+        ai_assistant = AIAssistant()
+        
+        # Получаем контекст пользователя (последний расчет)
+        user_context = {}
+        if 'calculation_result' in context.user_data:
+            user_context['last_calculation'] = context.user_data['calculation_result']
+        
+        # Получаем ответ от AI
+        ai_response = await ai_assistant.get_response(user_message, user_context)
+        
+        # Создаем клавиатуру для продолжения
+        keyboard = InlineKeyboardMarkup([
+            [
+                InlineKeyboardButton("🧮 Калькулятор", callback_data="calculator"),
+                InlineKeyboardButton("📝 Подать заявку", callback_data="application")
+            ],
+            [
+                InlineKeyboardButton("❓ Еще вопрос", callback_data="ai_ask_question"),
+                InlineKeyboardButton("🔙 Главное меню", callback_data="main_menu")
+            ]
+        ])
+        
+        await update.message.reply_text(
+            text=f"🤖 <b>AI-консультант отвечает:</b>\n\n{ai_response}",
+            reply_markup=keyboard,
+            parse_mode='HTML'
+        )
+        
+        return AI_CHAT
+        
+    except Exception as e:
+        logger.error(f"Ошибка AI-помощника: {e}")
+        
+        keyboard = get_ai_chat_keyboard()
+        
+        await update.message.reply_text(
+            text="❌ Извините, временные технические проблемы с AI-помощником.\n\n"
+                 "Попробуйте задать вопрос позже или воспользуйтесь калькулятором и подачей заявки.",
+            reply_markup=keyboard,
+            parse_mode='HTML'
+        )
+        
+        return AI_CHAT

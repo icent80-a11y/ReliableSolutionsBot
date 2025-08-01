@@ -14,7 +14,8 @@ def get_main_menu_keyboard() -> InlineKeyboardMarkup:
             InlineKeyboardButton("🛠 Наши услуги", callback_data="services")
         ],
         [
-            InlineKeyboardButton("⭐ Преимущества", callback_data="advantages")
+            InlineKeyboardButton("⭐ Преимущества", callback_data="advantages"),
+            InlineKeyboardButton("🤖 AI-консультант", callback_data="ai_chat")
         ]
     ]
     return InlineKeyboardMarkup(keyboard)
@@ -82,6 +83,19 @@ def get_calculation_result_keyboard() -> InlineKeyboardMarkup:
         [
             InlineKeyboardButton("🔄 Новый расчет", callback_data="calc_new"),
             InlineKeyboardButton("📝 Подать заявку", callback_data="calc_application")
+        ],
+        [
+            InlineKeyboardButton("🔙 Главное меню", callback_data="main_menu")
+        ]
+    ]
+    return InlineKeyboardMarkup(keyboard)
+
+def get_ai_chat_keyboard() -> InlineKeyboardMarkup:
+    """Клавиатура для AI-чата"""
+    keyboard = [
+        [
+            InlineKeyboardButton("❓ Задать вопрос", callback_data="ai_ask_question"),
+            InlineKeyboardButton("💡 Примеры вопросов", callback_data="ai_examples")
         ],
         [
             InlineKeyboardButton("🔙 Главное меню", callback_data="main_menu")

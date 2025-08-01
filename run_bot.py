@@ -5,8 +5,9 @@ import os
 import logging
 import sys
 
-# Устанавливаем токен напрямую для тестирования
+# Устанавливаем токены для тестирования
 os.environ["TELEGRAM_BOT_TOKEN"] = "7635966483:AAEPV4tBUNZhqyH3iWq_Pg6JyO3-udTITdc"
+# OpenAI API ключ будет взят из переменных окружения Replit
 
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, MessageHandler, filters, ConversationHandler
 from bot.handlers import (
@@ -14,11 +15,12 @@ from bot.handlers import (
     button_callback, handle_calculator_start, handle_marketplace_choice,
     handle_orders_count, handle_services_choice, handle_calculation_result,
     handle_application_start, handle_application_name, handle_application_contact,
-    handle_application_description, handle_application_complete
+    handle_application_description, handle_application_complete,
+    handle_ai_chat_start, handle_ai_examples, handle_ai_ask_question, handle_ai_question
 )
 from bot.states import (
     MARKETPLACE_CHOICE, ORDERS_COUNT, SERVICES_CHOICE, CALCULATION_RESULT,
-    APPLICATION_NAME, APPLICATION_CONTACT, APPLICATION_DESCRIPTION
+    APPLICATION_NAME, APPLICATION_CONTACT, APPLICATION_DESCRIPTION, AI_CHAT
 )
 
 # Настройка логирования
@@ -65,11 +67,25 @@ def main():
         fallbacks=[CommandHandler('start', start)]
     )
     
+    # Создаем ConversationHandler для AI-чата
+    ai_chat_handler = ConversationHandler(
+        entry_points=[CallbackQueryHandler(handle_ai_chat_start, pattern="^ai_chat$")],
+        states={
+            AI_CHAT: [
+                MessageHandler(filters.TEXT & ~filters.COMMAND, handle_ai_question),
+                CallbackQueryHandler(handle_ai_examples, pattern="^ai_examples$"),
+                CallbackQueryHandler(handle_ai_ask_question, pattern="^ai_ask_question$")
+            ]
+        },
+        fallbacks=[CommandHandler('start', start)]
+    )
+    
     # Добавляем обработчики
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("help", help_command))
     application.add_handler(calculator_handler)
     application.add_handler(application_handler)
+    application.add_handler(ai_chat_handler)
     application.add_handler(CallbackQueryHandler(button_callback))
     
     # Запускаем бота
