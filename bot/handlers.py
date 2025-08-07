@@ -16,6 +16,25 @@ from utils.formatters import format_calculation_result
 
 logger = logging.getLogger(__name__)
 
+async def safe_edit_message(update: Update, text: str, reply_markup=None, parse_mode='HTML') -> None:
+    """Безопасное редактирование сообщения - работает с текстом и фото"""
+    query = update.callback_query
+    try:
+        # Попытаться отредактировать текст сообщения
+        await query.edit_message_text(
+            text=text,
+            reply_markup=reply_markup,
+            parse_mode=parse_mode
+        )
+    except Exception:
+        # Если не удалось отредактировать (например, сообщение с фото), 
+        # отправляем новое сообщение
+        await query.message.reply_text(
+            text=text,
+            reply_markup=reply_markup,
+            parse_mode=parse_mode
+        )
+
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Обработчик команды /start"""
     user = update.effective_user
@@ -25,12 +44,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     logo_path = "assets/logo.png"
     
     if update.callback_query:
-        # Если это callback от кнопки, редактируем существующее сообщение
-        await update.callback_query.edit_message_text(
-            text=welcome_text,
-            reply_markup=keyboard,
-            parse_mode='HTML'
-        )
+        # Если это callback от кнопки, безопасно редактируем сообщение
+        await safe_edit_message(update, welcome_text, keyboard)
     else:
         # Если это команда /start, отправляем логотип с приветствием
         if os.path.exists(logo_path):
@@ -64,11 +79,7 @@ async def company_info(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         [InlineKeyboardButton("🔙 Назад в меню", callback_data="main_menu")]
     ])
     
-    await query.edit_message_text(
-        text=MESSAGES['company_info'],
-        reply_markup=keyboard,
-        parse_mode='HTML'
-    )
+    await safe_edit_message(update, MESSAGES['company_info'], keyboard)
 
 async def services_info(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Информация об услугах"""
@@ -79,11 +90,7 @@ async def services_info(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
         [InlineKeyboardButton("🔙 Назад в меню", callback_data="main_menu")]
     ])
     
-    await query.edit_message_text(
-        text=MESSAGES['services_info'],
-        reply_markup=keyboard,
-        parse_mode='HTML'
-    )
+    await safe_edit_message(update, MESSAGES['services_info'], keyboard)
 
 async def advantages(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Преимущества работы с нами"""
@@ -94,11 +101,7 @@ async def advantages(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None
         [InlineKeyboardButton("🔙 Назад в меню", callback_data="main_menu")]
     ])
     
-    await query.edit_message_text(
-        text=MESSAGES['advantages'],
-        reply_markup=keyboard,
-        parse_mode='HTML'
-    )
+    await safe_edit_message(update, MESSAGES['advantages'], keyboard)
 
 async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Обработчик callback кнопок"""
@@ -128,11 +131,7 @@ async def handle_calculator_start(update: Update, context: ContextTypes.DEFAULT_
     
     keyboard = get_marketplace_keyboard()
     
-    await query.edit_message_text(
-        text=MESSAGES['calculator_start'],
-        reply_markup=keyboard,
-        parse_mode='HTML'
-    )
+    await safe_edit_message(update, MESSAGES['calculator_start'], keyboard)
     
     return MARKETPLACE_CHOICE
 
@@ -152,10 +151,7 @@ async def handle_marketplace_choice(update: Update, context: ContextTypes.DEFAUL
     
     text = MESSAGES['orders_count'].format(marketplace=marketplace_names.get(marketplace, marketplace))
     
-    await query.edit_message_text(
-        text=text,
-        parse_mode='HTML'
-    )
+    await safe_edit_message(update, text)
     
     return ORDERS_COUNT
 
@@ -203,11 +199,7 @@ async def handle_services_choice(update: Update, context: ContextTypes.DEFAULT_T
         formatted_result = format_calculation_result(result, marketplace, orders_count, selected_services)
         keyboard = get_calculation_result_keyboard()
         
-        await query.edit_message_text(
-            text=formatted_result,
-            reply_markup=keyboard,
-            parse_mode='HTML'
-        )
+        await safe_edit_message(update, formatted_result, keyboard)
         
         return CALCULATION_RESULT
     
@@ -225,11 +217,7 @@ async def handle_services_choice(update: Update, context: ContextTypes.DEFAULT_T
         
         keyboard = get_services_keyboard(selected_services)
         
-        await query.edit_message_text(
-            text=MESSAGES['services_choice'],
-            reply_markup=keyboard,
-            parse_mode='HTML'
-        )
+        await safe_edit_message(update, MESSAGES['services_choice'], keyboard)
         
         return SERVICES_CHOICE
 
@@ -243,20 +231,13 @@ async def handle_calculation_result(update: Update, context: ContextTypes.DEFAUL
         context.user_data.clear()
         keyboard = get_marketplace_keyboard()
         
-        await query.edit_message_text(
-            text=MESSAGES['calculator_start'],
-            reply_markup=keyboard,
-            parse_mode='HTML'
-        )
+        await safe_edit_message(update, MESSAGES['calculator_start'], keyboard)
         
         return MARKETPLACE_CHOICE
     
     elif query.data == "calc_application":
         # Переход к подаче заявки
-        await query.edit_message_text(
-            text=MESSAGES['application_start'],
-            parse_mode='HTML'
-        )
+        await safe_edit_message(update, MESSAGES['application_start'])
         
         return APPLICATION_NAME
     
@@ -271,10 +252,7 @@ async def handle_application_start(update: Update, context: ContextTypes.DEFAULT
     query = update.callback_query
     await query.answer()
     
-    await query.edit_message_text(
-        text=MESSAGES['application_start'],
-        parse_mode='HTML'
-    )
+    await safe_edit_message(update, MESSAGES['application_start'])
     
     return APPLICATION_NAME
 
@@ -329,11 +307,7 @@ async def handle_ai_chat_start(update: Update, context: ContextTypes.DEFAULT_TYP
     
     keyboard = get_ai_chat_keyboard()
     
-    await query.edit_message_text(
-        text=MESSAGES['ai_chat_welcome'],
-        reply_markup=keyboard,
-        parse_mode='HTML'
-    )
+    await safe_edit_message(update, MESSAGES['ai_chat_welcome'], keyboard)
     
     return AI_CHAT
 
@@ -344,11 +318,7 @@ async def handle_ai_examples(update: Update, context: ContextTypes.DEFAULT_TYPE)
     
     keyboard = get_ai_chat_keyboard()
     
-    await query.edit_message_text(
-        text=MESSAGES['ai_examples'],
-        reply_markup=keyboard,
-        parse_mode='HTML'
-    )
+    await safe_edit_message(update, MESSAGES['ai_examples'], keyboard)
     
     return AI_CHAT
 
@@ -357,10 +327,7 @@ async def handle_ai_ask_question(update: Update, context: ContextTypes.DEFAULT_T
     query = update.callback_query
     await query.answer()
     
-    await query.edit_message_text(
-        text="🤖 <b>Задайте свой вопрос</b>\n\nНапишите любой вопрос о наших услугах фулфилмента, и я постараюсь дать подробный ответ.",
-        parse_mode='HTML'
-    )
+    await safe_edit_message(update, "🤖 <b>Задайте свой вопрос</b>\n\nНапишите любой вопрос о наших услугах фулфилмента, и я постараюсь дать подробный ответ.")
     
     return AI_CHAT
 
