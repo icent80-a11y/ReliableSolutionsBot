@@ -4,7 +4,7 @@ This project is a Telegram bot for "Надежные-решения.рф" (Relia
 
 **NEW FEATURE (August 2025):** The bot now includes an AI-powered consultant using OpenAI GPT-4o that provides intelligent responses to user questions about services, pricing, and marketplace selection.
 
-**MIGRATION UPDATE (August 2025):** Project successfully migrated from Replit Agent to standard Replit environment with proper security practices, environment variable configuration, and dependency management.
+**MIGRATION UPDATE (August 2025):** Project successfully migrated from Replit Agent to standard Replit environment with proper security practices, environment variable configuration, and dependency management. Company logo has been integrated into the bot's welcome message.
 
 # User Preferences
 

@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import logging
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+import os
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto
 from telegram.ext import ContextTypes, ConversationHandler
 from bot.keyboards import get_main_menu_keyboard, get_marketplace_keyboard, get_services_keyboard, get_calculation_result_keyboard, get_ai_chat_keyboard
 from bot.messages import MESSAGES
@@ -21,19 +22,31 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     welcome_text = MESSAGES['welcome'].format(name=user.first_name)
     
     keyboard = get_main_menu_keyboard()
+    logo_path = "assets/logo.png"
     
     if update.callback_query:
+        # Если это callback от кнопки, редактируем существующее сообщение
         await update.callback_query.edit_message_text(
             text=welcome_text,
             reply_markup=keyboard,
             parse_mode='HTML'
         )
     else:
-        await update.message.reply_text(
-            text=welcome_text,
-            reply_markup=keyboard,
-            parse_mode='HTML'
-        )
+        # Если это команда /start, отправляем логотип с приветствием
+        if os.path.exists(logo_path):
+            with open(logo_path, 'rb') as logo_file:
+                await update.message.reply_photo(
+                    photo=logo_file,
+                    caption=welcome_text,
+                    reply_markup=keyboard,
+                    parse_mode='HTML'
+                )
+        else:
+            await update.message.reply_text(
+                text=welcome_text,
+                reply_markup=keyboard,
+                parse_mode='HTML'
+            )
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Обработчик команды /help"""
