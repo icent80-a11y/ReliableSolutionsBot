@@ -5,9 +5,8 @@ import os
 import logging
 import sys
 
-# Устанавливаем токены для тестирования
-os.environ["TELEGRAM_BOT_TOKEN"] = "7635966483:AAEPV4tBUNZhqyH3iWq_Pg6JyO3-udTITdc"
-# OpenAI API ключ будет взят из переменных окружения Replit
+# Токены будут взяты из переменных окружения Replit (используйте Secrets в Replit)
+# TELEGRAM_BOT_TOKEN и OPENAI_API_KEY должны быть настроены в Secrets
 
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, MessageHandler, filters, ConversationHandler
 from bot.handlers import (
@@ -33,7 +32,7 @@ logger = logging.getLogger(__name__)
 def main():
     """Основная функция запуска бота"""
     # Получаем токен бота из переменных окружения
-    bot_token = os.getenv("TELEGRAM_BOT_TOKEN", "")
+    bot_token = os.getenv("TELEGRAM_BOT_TOKEN", "").strip()
     
     if not bot_token:
         logger.error("TELEGRAM_BOT_TOKEN не найден в переменных окружения!")
