@@ -3,7 +3,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Cent Commander"><meta name="theme-color" content="#111111">
-<title>Mega ChatGPT Helper 3.0</title>
+<title>Mega ChatGPT Helper 3.0</title><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml"><meta name="mobile-web-app-capable" content="yes">
 <style>
 :root{--bg:#f5f2ea;--card:#fff;--text:#161616;--muted:#6c6c6c;--line:#ddd6c8;--soft:#f0ece3;--green:#eaf6e8}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--text);padding-bottom:84px}
@@ -25,6 +25,11 @@ section{scroll-margin-top:115px}h2{font-size:20px;margin:0 0 10px}details{border
 .globalSearchBox{margin-top:8px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px;max-height:55vh;overflow:auto;box-shadow:0 8px 30px rgba(0,0,0,.08)}
 .globalHit{display:grid;grid-template-columns:1fr auto;gap:8px;padding:10px;border-bottom:1px solid #eee}.globalHit:last-child{border-bottom:0}
 .globalHit code{padding:6px 8px}.globalHit .small{font-size:11px;color:var(--muted);margin-top:4px}.globalHit button{border:0;background:#111;color:#fff;border-radius:9px;padding:8px 9px;height:max-content}
+
+body.dark{--bg:#111214;--card:#1b1d20;--text:#f5f5f5;--muted:#a9adb4;--line:#34383e;--soft:#25282d;--green:#19351f}
+body.dark input,body.dark select,body.dark textarea,body.dark .panel,body.dark details,body.dark .cmd,body.dark .tipcard,body.dark .resultcard,body.dark .quick,body.dark .modebtn,body.dark .favpill,body.dark .stat,body.dark .nav a{background:#1b1d20;color:#f5f5f5}
+.mastergrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{margin-bottom:9px}.field label{display:block;font-size:12px;font-weight:800;margin-bottom:5px}.field small{display:block;color:var(--muted);margin-top:4px}.fixgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.fixbtn{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px;font-size:12px;font-weight:750;text-align:left}.templateitem{border:1px solid var(--line);border-radius:13px;padding:10px;margin-top:8px}.templateitem b{display:block;margin-bottom:5px}.toolbar{display:flex;gap:7px;flex-wrap:wrap}.toolbar button{border:1px solid var(--line);background:#fff;border-radius:11px;padding:8px 10px;font-weight:750}.megaNote{background:var(--soft);border-radius:12px;padding:10px;font-size:12px;line-height:1.45}.statusok{font-size:11px;color:var(--muted);margin-top:5px}.cmd .desc b{font-weight:800}
+@media(max-width:620px){.mastergrid{grid-template-columns:1fr}.fixgrid{grid-template-columns:1fr}}
 </style></head><body>
 <header class="wrap"><h1>🚀 Mega ChatGPT Helper 3.0</h1><div class="sub">Понятный помощник для ChatGPT: опиши задачу обычными словами — программа подскажет, что использовать</div><input id="search" type="search" placeholder="Поиск: удалить человека, WB, договор, рецепт, Reels…"><div id="globalSearchResults" class="hidden"></div></header>
 <main class="wrap">
@@ -81,6 +86,64 @@ section{scroll-margin-top:115px}h2{font-size:20px;margin:0 0 10px}details{border
   <div class="beginnerGrid">
     <div class="panel"><h2>⭐ Избранное</h2><div id="favoritesBox" class="favrow"><span class="empty">Нажимай ☆ у нужных команд — они появятся здесь.</span></div></div>
     <div class="panel"><h2>🕘 Недавние</h2><div id="recentBox" class="favrow"><span class="empty">Скопированные команды появятся здесь.</span></div></div>
+  </div>
+</section>
+
+<section id="master-lab">
+  <div class="panel">
+    <h2>🧩 Мастер идеального запроса</h2>
+    <div class="note">Заполни только то, что знаешь. Пустые поля программа пропустит.</div>
+    <div class="mastergrid" style="margin-top:10px">
+      <div>
+        <div class="field"><label>Что нужно сделать?</label><textarea id="mGoal" placeholder="Например: сделать карточку товара, проверить договор, придумать Reels"></textarea></div>
+        <div class="field"><label>Исходные данные / контекст</label><textarea id="mContext" placeholder="Что уже есть: фото, файл, товар, ситуация, ограничения"></textarea></div>
+        <div class="field"><label>Что нельзя менять?</label><input id="mKeep" placeholder="Например: лицо, этикетку, цифры, смысл текста"></div>
+      </div>
+      <div>
+        <div class="field"><label>Какой результат нужен?</label><input id="mFormat" placeholder="Например: таблица, готовый текст, пошаговая инструкция"></div>
+        <div class="field"><label>Что исключить?</label><input id="mAvoid" placeholder="Например: воду, выдуманные факты, лишний декор"></div>
+        <div class="field"><label>Нужна актуальная информация?</label><select id="mFresh"><option value="">Не обязательно</option><option value="Проверь актуальные данные в интернете и укажи дату актуальности.">Да, проверить в интернете</option><option value="Используй только предоставленные мной данные и файлы.">Нет, только мои данные</option></select></div>
+      </div>
+    </div>
+    <div class="helperActions"><button id="masterBuild" class="primary">Собрать мастер-промпт</button><button id="masterClear" class="secondary">Очистить</button></div>
+    <div id="masterOut" class="hidden resultcard"><b>Готовый мастер-промпт</b><code id="masterText" style="margin-top:8px"></code><div class="helperActions"><button id="masterCopy" class="secondary">Копировать</button><button id="masterOpen" class="primary">Открыть ChatGPT</button></div></div>
+  </div>
+
+  <div class="panel">
+    <h2>🩹 Исправить результат одной кнопкой</h2>
+    <div class="note">Если ChatGPT уже что-то сделал не так — выбери проблему и добавь команду к своему сообщению.</div>
+    <div class="fixgrid" id="fixgrid" style="margin-top:10px">
+      <button class="fixbtn" data-fix="Проверь предыдущий результат. Исправь ошибки, но сохрани всё, что уже сделано правильно.">✅ Исправить ошибки</button>
+      <button class="fixbtn" data-fix="Сделай результат реалистичнее и естественнее. Убери искусственность, артефакты и лишние изменения.">📸 Реалистичнее</button>
+      <button class="fixbtn" data-fix="Сделай короче и конкретнее. Убери повторы и общие фразы, сохрани только полезное.">✂️ Короче</button>
+      <button class="fixbtn" data-fix="Сделай сильнее и убедительнее, но без преувеличений и кликбейта.">💪 Сильнее</button>
+      <button class="fixbtn" data-fix="Вернись к исходнику и не меняй важные детали. Измени только то, что я явно попросил.">🔒 Сохранить исходник</button>
+      <button class="fixbtn" data-fix="Продолжи строго с текущего результата, не начинай заново и не меняй уже согласованные детали.">▶️ Продолжить</button>
+      <button class="fixbtn" data-fix="Сначала перечисли, что именно в предыдущем результате не соответствует моим условиям, затем исправь.">🔎 Найти несоответствия</button>
+      <button class="fixbtn" data-fix="Мы всё согласовали. Выдай только чистовой финальный вариант без пояснений и черновиков.">🏁 Только финал</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>💾 Мои шаблоны</h2>
+    <div class="note">Сохраняй свои удачные запросы прямо на телефоне. Они останутся в этом приложении.</div>
+    <div class="field" style="margin-top:10px"><label>Название</label><input id="tplName" placeholder="Например: Карточка WB — специи"></div>
+    <div class="field"><label>Текст шаблона</label><textarea id="tplText" placeholder="Вставь готовый промпт или собери его выше"></textarea></div>
+    <button id="tplSave" class="copy" style="width:100%">Сохранить шаблон</button>
+    <div id="tplList"></div>
+  </div>
+
+  <div class="panel">
+    <h2>⚙️ Настройки и резервная копия</h2>
+    <div class="toolbar">
+      <button id="themeBtn">🌙 Тёмная тема</button>
+      <button id="fontPlus">A+</button>
+      <button id="fontMinus">A−</button>
+      <button id="exportBtn">⬇️ Экспорт настроек</button>
+      <button id="importBtn">⬆️ Импорт настроек</button>
+      <input id="importFile" type="file" accept="application/json" class="hidden">
+    </div>
+    <div id="offlineStatus" class="statusok">Проверяю офлайн-режим…</div>
   </div>
 </section>
 <section id="daily-tips">
@@ -1195,6 +1258,66 @@ avoid=ghosting,artifacts,background_damage">Копировать</button>
   <div><code>/shot.notext</code><div class="desc">Без текста</div></div>
   <button class="copy" data-copy="/shot.notext">Копировать</button>
 </div></div></details></div></section>
+
+<section id="mega-pack"><div class="panel"><h2>🧰 Mega Pack — дополнительные задачи</h2><div class="note">Команды ниже расширяют базу на код, таблицы, учёбу, бизнес, здоровье и универсальные промпты.</div></div>
+
+<details open class="cat" data-search="промпты улучшить запрос шаблон">
+<summary>Промпты и качество запроса <span>5</span></summary><div class="cmds">
+<div class="cmd" data-search="/prompt.improve улучшить запрос промпт"><div><code>/prompt.improve</code><div class="desc"><b>Что умеет:</b> превращает сырой запрос в точный профессиональный промпт. <b>Когда использовать:</b> когда мысль понятна, но не знаешь как правильно сформулировать задачу.</div></div><button class="copy" data-copy="/prompt.improve">Копировать</button></div>
+<div class="cmd" data-search="/prompt.audit проверить промпт ошибки"><div><code>/prompt.audit</code><div class="desc"><b>Что умеет:</b> находит противоречия, пробелы и слабые места в промпте. <b>Когда использовать:</b> перед дорогой или лимитированной генерацией.</div></div><button class="copy" data-copy="/prompt.audit">Копировать</button></div>
+<div class="cmd" data-search="/prompt.variables переменные шаблон"><div><code>/prompt.variables</code><div class="desc"><b>Что умеет:</b> превращает запрос в многоразовый шаблон с переменными. <b>Когда использовать:</b> для повторяющихся рабочих задач.</div></div><button class="copy" data-copy="/prompt.variables">Копировать</button></div>
+<div class="cmd" data-search="/prompt.compare сравнить варианты промпта"><div><code>/prompt.compare</code><div class="desc"><b>Что умеет:</b> сравнивает несколько формулировок и объясняет различия. <b>Когда использовать:</b> если есть несколько вариантов запроса.</div></div><button class="copy" data-copy="/prompt.compare">Копировать</button></div>
+<div class="cmd" data-search="/prompt.final финальный запрос"><div><code>/prompt.final</code><div class="desc"><b>Что умеет:</b> выдаёт только чистовой промпт без объяснений. <b>Когда использовать:</b> когда все детали уже согласованы.</div></div><button class="copy" data-copy="/prompt.final">Копировать</button></div>
+</div></details>
+
+<details class="cat" data-search="данные excel таблицы график анализ">
+<summary>Данные / Excel / таблицы <span>7</span></summary><div class="cmds">
+<div class="cmd" data-search="/data.clean очистить данные таблицу"><div><code>/data.clean</code><div class="desc"><b>Что умеет:</b> ищет пропуски, дубли и ошибки в данных. <b>Когда использовать:</b> перед анализом таблицы или отчёта.</div></div><button class="copy" data-copy="/data.clean">Копировать</button></div>
+<div class="cmd" data-search="/data.analyze анализ данных таблицы"><div><code>/data.analyze</code><div class="desc"><b>Что умеет:</b> находит закономерности, отклонения и ключевые выводы. <b>Когда использовать:</b> для продаж, рекламы, финансов и статистики.</div></div><button class="copy" data-copy="/data.analyze">Копировать</button></div>
+<div class="cmd" data-search="/data.chart график диаграмма"><div><code>/data.chart</code><div class="desc"><b>Что умеет:</b> подбирает подходящий график и готовит визуализацию данных. <b>Когда использовать:</b> когда цифры нужно показать наглядно.</div></div><button class="copy" data-copy="/data.chart">Копировать</button></div>
+<div class="cmd" data-search="/excel.formula формула excel"><div><code>/excel.formula</code><div class="desc"><b>Что умеет:</b> создаёт и объясняет формулы Excel. <b>Когда использовать:</b> если нужно автоматизировать расчёт в таблице.</div></div><button class="copy" data-copy="/excel.formula">Копировать</button></div>
+<div class="cmd" data-search="/excel.audit проверить excel таблицу"><div><code>/excel.audit</code><div class="desc"><b>Что умеет:</b> проверяет структуру, формулы и логические ошибки таблицы. <b>Когда использовать:</b> перед сдачей отчёта или важным расчётом.</div></div><button class="copy" data-copy="/excel.audit">Копировать</button></div>
+<div class="cmd" data-search="/table.build создать таблицу"><div><code>/table.build</code><div class="desc"><b>Что умеет:</b> проектирует таблицу с нужными колонками и логикой. <b>Когда использовать:</b> когда начинаешь учёт с нуля.</div></div><button class="copy" data-copy="/table.build">Копировать</button></div>
+<div class="cmd" data-search="/data.insights выводы цифры"><div><code>/data.insights</code><div class="desc"><b>Что умеет:</b> переводит цифры в понятные бизнес-выводы и действия. <b>Когда использовать:</b> когда нужен ответ «что делать дальше».</div></div><button class="copy" data-copy="/data.insights">Копировать</button></div>
+</div></details>
+
+<details class="cat" data-search="код программирование ошибка debug">
+<summary>Код и программирование <span>6</span></summary><div class="cmds">
+<div class="cmd" data-search="/code.write написать код"><div><code>/code.write</code><div class="desc"><b>Что умеет:</b> пишет код по требованиям с понятной структурой. <b>Когда использовать:</b> для скриптов, автоматизаций и небольших функций.</div></div><button class="copy" data-copy="/code.write">Копировать</button></div>
+<div class="cmd" data-search="/code.debug ошибка код починить"><div><code>/code.debug</code><div class="desc"><b>Что умеет:</b> ищет причину ошибки и предлагает исправление. <b>Когда использовать:</b> если код падает или работает не так.</div></div><button class="copy" data-copy="/code.debug">Копировать</button></div>
+<div class="cmd" data-search="/code.review ревью код"><div><code>/code.review</code><div class="desc"><b>Что умеет:</b> проверяет качество, ошибки и поддерживаемость кода. <b>Когда использовать:</b> перед публикацией или объединением изменений.</div></div><button class="copy" data-copy="/code.review">Копировать</button></div>
+<div class="cmd" data-search="/code.explain объяснить код"><div><code>/code.explain</code><div class="desc"><b>Что умеет:</b> объясняет код простыми словами по блокам. <b>Когда использовать:</b> чтобы разобраться в чужом или старом коде.</div></div><button class="copy" data-copy="/code.explain">Копировать</button></div>
+<div class="cmd" data-search="/code.refactor улучшить код"><div><code>/code.refactor</code><div class="desc"><b>Что умеет:</b> упрощает код без изменения поведения. <b>Когда использовать:</b> когда код стал запутанным или дублируется.</div></div><button class="copy" data-copy="/code.refactor">Копировать</button></div>
+<div class="cmd" data-search="/code.security безопасность код"><div><code>/code.security</code><div class="desc"><b>Что умеет:</b> ищет типовые риски безопасности и небезопасные практики. <b>Когда использовать:</b> перед развёртыванием приложения или бота.</div></div><button class="copy" data-copy="/code.security">Копировать</button></div>
+</div></details>
+
+<details class="cat" data-search="учеба обучение школа объяснить">
+<summary>Учёба и обучение <span>5</span></summary><div class="cmds">
+<div class="cmd" data-search="/study.explain объяснить тему просто"><div><code>/study.explain</code><div class="desc"><b>Что умеет:</b> объясняет сложную тему простым языком с примерами. <b>Когда использовать:</b> для самостоятельного обучения.</div></div><button class="copy" data-copy="/study.explain">Копировать</button></div>
+<div class="cmd" data-search="/study.quiz тест вопросы"><div><code>/study.quiz</code><div class="desc"><b>Что умеет:</b> создаёт тест и проверяет ответы. <b>Когда использовать:</b> чтобы закрепить материал.</div></div><button class="copy" data-copy="/study.quiz">Копировать</button></div>
+<div class="cmd" data-search="/study.plan план обучения"><div><code>/study.plan</code><div class="desc"><b>Что умеет:</b> строит реалистичный план изучения темы по дням. <b>Когда использовать:</b> для курса, экзамена или нового навыка.</div></div><button class="copy" data-copy="/study.plan">Копировать</button></div>
+<div class="cmd" data-search="/study.flashcards карточки запоминание"><div><code>/study.flashcards</code><div class="desc"><b>Что умеет:</b> делает карточки вопрос–ответ для запоминания. <b>Когда использовать:</b> для терминов, языков и фактов.</div></div><button class="copy" data-copy="/study.flashcards">Копировать</button></div>
+<div class="cmd" data-search="/study.check проверить решение домашнее задание"><div><code>/study.check</code><div class="desc"><b>Что умеет:</b> проверяет решение и показывает, где допущена ошибка. <b>Когда использовать:</b> после самостоятельной попытки.</div></div><button class="copy" data-copy="/study.check">Копировать</button></div>
+</div></details>
+
+<details class="cat" data-search="бизнес стратегия kpi процесс предложение">
+<summary>Бизнес и управление <span>6</span></summary><div class="cmds">
+<div class="cmd" data-search="/business.idea бизнес идея"><div><code>/business.idea</code><div class="desc"><b>Что умеет:</b> разбирает бизнес-идею, аудиторию, ценность и риски. <b>Когда использовать:</b> перед запуском нового направления.</div></div><button class="copy" data-copy="/business.idea">Копировать</button></div>
+<div class="cmd" data-search="/business.plan бизнес план"><div><code>/business.plan</code><div class="desc"><b>Что умеет:</b> собирает практичный план запуска с этапами и метриками. <b>Когда использовать:</b> для нового проекта или продукта.</div></div><button class="copy" data-copy="/business.plan">Копировать</button></div>
+<div class="cmd" data-search="/business.offer оффер предложение"><div><code>/business.offer</code><div class="desc"><b>Что умеет:</b> формулирует понятное ценностное предложение. <b>Когда использовать:</b> для карточки товара, лендинга или рекламы.</div></div><button class="copy" data-copy="/business.offer">Копировать</button></div>
+<div class="cmd" data-search="/business.process процесс регламент"><div><code>/business.process</code><div class="desc"><b>Что умеет:</b> превращает повторяющуюся работу в пошаговый процесс. <b>Когда использовать:</b> для делегирования и автоматизации.</div></div><button class="copy" data-copy="/business.process">Копировать</button></div>
+<div class="cmd" data-search="/business.kpi показатели kpi"><div><code>/business.kpi</code><div class="desc"><b>Что умеет:</b> подбирает измеримые показатели и контрольные точки. <b>Когда использовать:</b> чтобы отслеживать результат работы.</div></div><button class="copy" data-copy="/business.kpi">Копировать</button></div>
+<div class="cmd" data-search="/business.risks риски бизнес"><div><code>/business.risks</code><div class="desc"><b>Что умеет:</b> выявляет основные риски и способы их снизить. <b>Когда использовать:</b> перед вложениями, запуском или изменением процесса.</div></div><button class="copy" data-copy="/business.risks">Копировать</button></div>
+</div></details>
+
+<details class="cat" data-search="здоровье врач симптомы вопросы">
+<summary>Здоровье — информационная помощь <span>4</span></summary><div class="cmds">
+<div class="cmd" data-search="/health.explain здоровье объяснить"><div><code>/health.explain</code><div class="desc"><b>Что умеет:</b> объясняет медицинский термин, анализ или общую информацию простым языком. <b>Когда использовать:</b> чтобы лучше понять информацию, а не для постановки диагноза.</div></div><button class="copy" data-copy="/health.explain">Копировать</button></div>
+<div class="cmd" data-search="/health.questions вопросы врачу"><div><code>/health.questions</code><div class="desc"><b>Что умеет:</b> готовит список вопросов для врача по описанной ситуации. <b>Когда использовать:</b> перед консультацией.</div></div><button class="copy" data-copy="/health.questions">Копировать</button></div>
+<div class="cmd" data-search="/health.symptomlog симптомы дневник"><div><code>/health.symptomlog</code><div class="desc"><b>Что умеет:</b> помогает структурировать симптомы, время, триггеры и изменения. <b>Когда использовать:</b> чтобы подготовить понятное описание для специалиста.</div></div><button class="copy" data-copy="/health.symptomlog">Копировать</button></div>
+<div class="cmd" data-search="/health.medlist лекарства список"><div><code>/health.medlist</code><div class="desc"><b>Что умеет:</b> организует список лекарств, дозировок и вопросов о совместимости для обсуждения со специалистом. <b>Когда использовать:</b> чтобы ничего не забыть на консультации.</div></div><button class="copy" data-copy="/health.medlist">Копировать</button></div>
+</div></details>
+</section>
 </main>
 <nav class="nav"><a href="#beginner-helper">Помощник</a><a href="#builder">Конструктор</a><a href="#presets">Пресеты</a><a href="#daily-tips">Лайфхаки</a><a href="#catalog">Каталог</a></nav>
 <script>
@@ -1226,7 +1349,7 @@ document.addEventListener('DOMContentLoaded',()=>{
    life:'для планирования, решений и организации дел', research:'для исследования темы и проверки фактов',
    learn:'для понятного обучения и пошаговых объяснений', genealogy:'для генеалогии, архивов и семейного древа',
    format:'для выбора соотношения сторон изображения или видео', shot:'для кадрирования и композиции',
-   instagram:'для подготовки Reels, Stories, каруселей, подписей, хуков и контент-планов'
+   instagram:'для подготовки Reels, Stories, каруселей, подписей, хуков и контент-планов', prompt:'для улучшения и проверки промптов', data:'для анализа и очистки данных', excel:'для Excel и формул', table:'для проектирования таблиц', code:'для программирования и отладки', study:'для учёбы и обучения', business:'для бизнес-задач и процессов', health:'для информационной помощи по здоровью и подготовки вопросов специалисту'
  };
  const prefixOf=c=>(c||'').replace(/^\//,'').split('.')[0];
  const commandContext=(cmd,label)=>{
@@ -1335,6 +1458,59 @@ document.addEventListener('DOMContentLoaded',()=>{
  document.getElementById('openChatGPT')?.addEventListener('click',async()=>{await copy(document.getElementById('smartPrompt').textContent);window.open('https://chatgpt.com/','_blank')});
 
  document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{await copy(b.dataset.copy);const x=b.textContent;b.textContent='Скопировано';setTimeout(()=>b.textContent=x,900)}));
+
+
+ const val=id=>(document.getElementById(id)?.value||'').trim();
+ const masterBuild=()=>{
+   const goal=val('mGoal'); if(!goal){alert('Сначала напиши, что нужно сделать.');return}
+   const parts=[
+     'ЗАДАЧА:\n'+goal,
+     val('mContext')?'КОНТЕКСТ / ИСХОДНЫЕ ДАННЫЕ:\n'+val('mContext'):'',
+     val('mKeep')?'СОХРАНИТЬ БЕЗ ИЗМЕНЕНИЙ:\n'+val('mKeep'):'',
+     val('mAvoid')?'ИСКЛЮЧИТЬ:\n'+val('mAvoid'):'',
+     val('mFormat')?'ФОРМАТ РЕЗУЛЬТАТА:\n'+val('mFormat'):'',
+     val('mFresh')?val('mFresh'):'',
+     'ПРАВИЛА:\n— Не выдумывай отсутствующие факты.\n— Если критически важной информации не хватает, задай только необходимые уточняющие вопросы.\n— Дай практический результат, который можно использовать сразу.\n— Перед финалом проверь выполнение всех условий.'
+   ].filter(Boolean);
+   const out=parts.join('\n\n');document.getElementById('masterText').textContent=out;document.getElementById('masterOut').classList.remove('hidden');
+ };
+ document.getElementById('masterBuild')?.addEventListener('click',masterBuild);
+ document.getElementById('masterClear')?.addEventListener('click',()=>{['mGoal','mContext','mKeep','mFormat','mAvoid'].forEach(id=>document.getElementById(id).value='');document.getElementById('mFresh').value='';document.getElementById('masterOut').classList.add('hidden')});
+ document.getElementById('masterCopy')?.addEventListener('click',()=>copy(document.getElementById('masterText').textContent));
+ document.getElementById('masterOpen')?.addEventListener('click',async()=>{await copy(document.getElementById('masterText').textContent);window.open('https://chatgpt.com/','_blank')});
+ document.querySelectorAll('[data-fix]').forEach(b=>b.addEventListener('click',async()=>{await copy(b.dataset.fix);b.textContent='✅ Скопировано';setTimeout(()=>b.textContent=b.textContent.replace('✅ Скопировано','Готово'),800)}));
+
+ const getTemplates=()=>JSON.parse(localStorage.getItem('megaTemplates')||'[]');
+ const renderTemplates=()=>{
+   const box=document.getElementById('tplList');if(!box)return;const a=getTemplates();
+   box.innerHTML=a.length?a.map((x,i)=>'<div class="templateitem"><b>'+x.name+'</b><div class="note">'+x.text.slice(0,180)+(x.text.length>180?'…':'')+'</div><div class="toolbar" style="margin-top:7px"><button data-tcopy="'+i+'">Копировать</button><button data-tload="'+i+'">Открыть в мастере</button><button data-tdel="'+i+'">Удалить</button></div></div>').join(''):'<div class="empty">Сохранённых шаблонов пока нет.</div>';
+   box.querySelectorAll('[data-tcopy]').forEach(b=>b.onclick=()=>copy(a[+b.dataset.tcopy].text));
+   box.querySelectorAll('[data-tload]').forEach(b=>b.onclick=()=>{document.getElementById('mGoal').value=a[+b.dataset.tload].text;location.hash='master-lab'});
+   box.querySelectorAll('[data-tdel]').forEach(b=>b.onclick=()=>{const i=+b.dataset.tdel;a.splice(i,1);localStorage.setItem('megaTemplates',JSON.stringify(a));renderTemplates()});
+ };
+ document.getElementById('tplSave')?.addEventListener('click',()=>{const name=val('tplName'),textv=val('tplText');if(!name||!textv){alert('Заполни название и текст шаблона.');return}const a=getTemplates();a.unshift({name,text:textv});localStorage.setItem('megaTemplates',JSON.stringify(a.slice(0,50)));document.getElementById('tplName').value='';document.getElementById('tplText').value='';renderTemplates()});
+ renderTemplates();
+
+ const applyTheme=()=>document.body.classList.toggle('dark',localStorage.getItem('megaTheme')==='dark');
+ applyTheme();
+ document.getElementById('themeBtn')?.addEventListener('click',()=>{localStorage.setItem('megaTheme',document.body.classList.contains('dark')?'light':'dark');applyTheme()});
+ const setScale=n=>{n=Math.max(.9,Math.min(1.25,n));document.documentElement.style.fontSize=(16*n)+'px';localStorage.setItem('megaScale',String(n))};
+ setScale(parseFloat(localStorage.getItem('megaScale')||'1'));
+ document.getElementById('fontPlus')?.addEventListener('click',()=>setScale(parseFloat(localStorage.getItem('megaScale')||'1')+.05));
+ document.getElementById('fontMinus')?.addEventListener('click',()=>setScale(parseFloat(localStorage.getItem('megaScale')||'1')-.05));
+
+ document.getElementById('exportBtn')?.addEventListener('click',()=>{
+   const data={favorites:getFav(),recent:getRecent(),templates:getTemplates(),theme:localStorage.getItem('megaTheme')||'light',scale:localStorage.getItem('megaScale')||'1'};
+   const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='mega-chatgpt-helper-backup.json';a.click();URL.revokeObjectURL(a.href);
+ });
+ document.getElementById('importBtn')?.addEventListener('click',()=>document.getElementById('importFile').click());
+ document.getElementById('importFile')?.addEventListener('change',e=>{
+   const file=e.target.files[0];if(!file)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(d.favorites)localStorage.setItem('megaFav',JSON.stringify(d.favorites));if(d.recent)localStorage.setItem('megaRecent',JSON.stringify(d.recent));if(d.templates)localStorage.setItem('megaTemplates',JSON.stringify(d.templates));if(d.theme)localStorage.setItem('megaTheme',d.theme);if(d.scale)localStorage.setItem('megaScale',d.scale);location.reload()}catch(err){alert('Не удалось прочитать резервную копию.')}};r.readAsText(file);
+ });
+
+ if('serviceWorker' in navigator){
+   navigator.serviceWorker.register('sw.js').then(()=>{const s=document.getElementById('offlineStatus');if(s)s.textContent='✅ Офлайн-режим включён: приложение сможет открываться без интернета после первого посещения.'}).catch(()=>{const s=document.getElementById('offlineStatus');if(s)s.textContent='Офлайн-режим пока недоступен.'});
+ }
 
  const tipBank=[
   {t:"Проси сначала задать вопросы",d:"Если задача сложная, скажи ChatGPT сначала уточнить недостающие данные, а уже потом выполнять.",c:"Сначала задай мне до 5 уточняющих вопросов, затем выполни задачу."},
