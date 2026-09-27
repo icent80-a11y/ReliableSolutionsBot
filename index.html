@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="ChatGPT Коды">
+<title>ChatGPT Коды — Cent</title>
+<style>
+:root{--bg:#f6f4ef;--card:#fff;--text:#1b1b1b;--muted:#686868;--line:#dedbd3}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{position:sticky;top:0;z-index:20;background:rgba(246,244,239,.94);backdrop-filter:blur(12px);padding:14px 14px 10px;border-bottom:1px solid var(--line)}
+h1{font-size:22px;margin:0 0 4px}.sub{font-size:13px;color:var(--muted);margin-bottom:10px}
+input{width:100%;font-size:17px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#fff;outline:none}
+main{max-width:760px;margin:auto;padding:14px}.note{font-size:13px;line-height:1.4;background:#fff8d9;border:1px solid #eadb97;padding:12px;border-radius:12px;margin-bottom:14px}
+h2{font-size:18px;margin:18px 0 8px}details{background:var(--card);border:1px solid var(--line);border-radius:14px;margin:10px 0;overflow:hidden}
+summary{cursor:pointer;font-weight:700;font-size:17px;padding:15px;list-style:none}summary::-webkit-details-marker{display:none}summary span{float:right;color:var(--muted);font-size:13px;font-weight:500}
+.group{border-top:1px solid var(--line)}.cmd{display:grid;grid-template-columns:minmax(105px,auto) 1fr auto;gap:10px;align-items:center;padding:12px;border-bottom:1px solid #eee}
+.cmd:last-child{border-bottom:none}.code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:800;font-size:14px}.desc{font-size:14px;line-height:1.3;color:#333}
+button{border:0;border-radius:9px;padding:8px 10px;background:#111;color:#fff;font-size:12px}.combo{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;margin:8px 0}
+.combo b{display:block;margin-bottom:8px}.combo code{display:block;font-size:13px;line-height:1.4;white-space:normal;word-break:break-word;background:#f3f3f3;border-radius:8px;padding:9px;margin-bottom:8px}
+.footer{color:var(--muted);font-size:12px;text-align:center;padding:24px 8px 36px}.hidden{display:none!important}
+@media(max-width:520px){.cmd{grid-template-columns:1fr auto}.desc{grid-column:1/-1;grid-row:2}}
+</style>
+</head>
+<body>
+<header>
+<h1>ChatGPT КОДЫ — Cent</h1>
+<div class="sub">Мобильная шпаргалка • поиск • копирование одним нажатием</div>
+<input id="search" type="search" placeholder="Найти: лицо, INBEBE, видео, WB…" oninput="filterCmds()">
+</header>
+<main>
+<div class="note"><b>Важно:</b> это наша система коротких команд. Отправляешь фото/файл + код, а я разворачиваю его в полный рабочий запрос.</div>
+<h2>Частые комбинации</h2>
+<div class="combo"><b>Совместное фото</b><code>/together /keepface /keepidentity /realistic /studio</code><button onclick="copyText(this.previousElementSibling.textContent,this)">Копировать</button></div>
+<div class="combo"><b>INBEBE главное фото</b><code>/inbebehero /keeplabel /keepjar /minimaldecor /4x5</code><button onclick="copyText(this.previousElementSibling.textContent,this)">Копировать</button></div>
+<div class="combo"><b>INBEBE 3D-реклама</b><code>/3dbillboard /keeplabel /keepjar /premiumproduct /9x16</code><button onclick="copyText(this.previousElementSibling.textContent,this)">Копировать</button></div>
+<div class="combo"><b>PlaMon Reel</b><code>/plamon /nightdrive /redrose /backview /cinematic /9x16</code><button onclick="copyText(this.previousElementSibling.textContent,this)">Копировать</button></div>
+<div class="combo"><b>Продолжение PlaMon</b><code>/continue /firstframe /samecharacter /samecamera /samestage /walknatural /trackbehind /nocut /noface</code><button onclick="copyText(this.previousElementSibling.textContent,this)">Копировать</button></div>
+<div class="combo"><b>WB-разбор</b><code>/wbseo /funnel /ads /check /actionplan</code><button onclick="copyText(this.previousElementSibling.textContent,this)">Копировать</button></div>
+<h2>Все команды</h2>
+<details open><summary>Фото людей <span>11</span></summary><div class="group">
+<div class="cmd" data-search="/together объединить людей фото"><div class="code">/together</div><div class="desc">Объединить двух людей с разных фото.</div><button onclick="copyCode('/together',this)">Копировать</button></div>
+<div class="cmd" data-search="/couple пара фото"><div class="code">/couple</div><div class="desc">Совместное фото пары.</div><button onclick="copyCode('/couple',this)">Копировать</button></div>
+<div class="cmd" data-search="/family семья портрет"><div class="code">/family</div><div class="desc">Семейный портрет.</div><button onclick="copyCode('/family',this)">Копировать</button></div>
+<div class="cmd" data-search="/portrait портрет"><div class="code">/portrait</div><div class="desc">Реалистичный портрет.</div><button onclick="copyCode('/portrait',this)">Копировать</button></div>
+<div class="cmd" data-search="/studio студия"><div class="code">/studio</div><div class="desc">Студийная фотосессия.</div><button onclick="copyCode('/studio',this)">Копировать</button></div>
+<div class="cmd" data-search="/businessportrait деловой"><div class="code">/businessportrait</div><div class="desc">Деловой портрет.</div><button onclick="copyCode('/businessportrait',this)">Копировать</button></div>
+<div class="cmd" data-search="/cinematic кино"><div class="code">/cinematic</div><div class="desc">Кинематографичный свет и атмосфера.</div><button onclick="copyCode('/cinematic',this)">Копировать</button></div>
+<div class="cmd" data-search="/magazinecover журнал обложка"><div class="code">/magazinecover</div><div class="desc">Обложка журнала.</div><button onclick="copyCode('/magazinecover',this)">Копировать</button></div>
+<div class="cmd" data-search="/luxuryphoto премиум"><div class="code">/luxuryphoto</div><div class="desc">Премиальная luxury-подача.</div><button onclick="copyCode('/luxuryphoto',this)">Копировать</button></div>
+<div class="cmd" data-search="/goldenhour"><div class="code">/goldenhour</div><div class="desc">Тёплый свет золотого часа.</div><button onclick="copyCode('/goldenhour',this)">Копировать</button></div>
+<div class="cmd" data-search="/nightphoto ночь"><div class="code">/nightphoto</div><div class="desc">Ночная фотосессия.</div><button onclick="copyCode('/nightphoto',this)">Копировать</button></div>
+</div></details>
+
+<details open><summary>Сохранение внешности <span>8</span></summary><div class="group">
+<div class="cmd" data-search="/keepface лицо"><div class="code">/keepface</div><div class="desc">Строго сохранять лицо.</div><button onclick="copyCode('/keepface',this)">Копировать</button></div>
+<div class="cmd" data-search="/keepidentity личность"><div class="code">/keepidentity</div><div class="desc">Не менять узнаваемость.</div><button onclick="copyCode('/keepidentity',this)">Копировать</button></div>
+<div class="cmd" data-search="/keephair волосы"><div class="code">/keephair</div><div class="desc">Не менять причёску и цвет волос.</div><button onclick="copyCode('/keephair',this)">Копировать</button></div>
+<div class="cmd" data-search="/keepbody тело"><div class="code">/keepbody</div><div class="desc">Сохранять телосложение.</div><button onclick="copyCode('/keepbody',this)">Копировать</button></div>
+<div class="cmd" data-search="/sameperson"><div class="code">/sameperson</div><div class="desc">Один человек во всей серии.</div><button onclick="copyCode('/sameperson',this)">Копировать</button></div>
+<div class="cmd" data-search="/noextra"><div class="code">/noextra</div><div class="desc">Без лишних людей, рук и предметов.</div><button onclick="copyCode('/noextra',this)">Копировать</button></div>
+<div class="cmd" data-search="/realistic реализм"><div class="code">/realistic</div><div class="desc">Максимальный фотореализм.</div><button onclick="copyCode('/realistic',this)">Копировать</button></div>
+<div class="cmd" data-search="/natural естественно"><div class="code">/natural</div><div class="desc">Естественная кожа и анатомия.</div><button onclick="copyCode('/natural',this)">Копировать</button></div>
+</div></details>
+
+<details open><summary>INBEBE и товарные фото <span>13</span></summary><div class="group">
+<div class="cmd" data-search="/inbebehero inbebe"><div class="code">/inbebehero</div><div class="desc">Премиальный главный баннер.</div><button onclick="copyCode('/inbebehero',this)">Копировать</button></div>
+<div class="cmd" data-search="/keeplabel этикетка"><div class="code">/keeplabel</div><div class="desc">Не менять этикетку, текст и логотип.</div><button onclick="copyCode('/keeplabel',this)">Копировать</button></div>
+<div class="cmd" data-search="/keepjar банка"><div class="code">/keepjar</div><div class="desc">Сохранять форму банки.</div><button onclick="copyCode('/keepjar',this)">Копировать</button></div>
+<div class="cmd" data-search="/premiumproduct товар"><div class="code">/premiumproduct</div><div class="desc">Премиальная предметная съёмка.</div><button onclick="copyCode('/premiumproduct',this)">Копировать</button></div>
+<div class="cmd" data-search="/marketplace"><div class="code">/marketplace</div><div class="desc">Главное фото для маркетплейса.</div><button onclick="copyCode('/marketplace',this)">Копировать</button></div>
+<div class="cmd" data-search="/packshot"><div class="code">/packshot</div><div class="desc">Чистое товарное фото.</div><button onclick="copyCode('/packshot',this)">Копировать</button></div>
+<div class="cmd" data-search="/ingredients ингредиенты"><div class="code">/ingredients</div><div class="desc">Композиция с ингредиентами.</div><button onclick="copyCode('/ingredients',this)">Копировать</button></div>
+<div class="cmd" data-search="/3dbillboard билборд"><div class="code">/3dbillboard</div><div class="desc">Объёмный 3D-билборд.</div><button onclick="copyCode('/3dbillboard',this)">Копировать</button></div>
+<div class="cmd" data-search="/giantproduct гигантский товар"><div class="code">/giantproduct</div><div class="desc">Гигантский товар в городской среде.</div><button onclick="copyCode('/giantproduct',this)">Копировать</button></div>
+<div class="cmd" data-search="/anamorphic 3d"><div class="code">/anamorphic</div><div class="desc">Анаморфный 3D-эффект.</div><button onclick="copyCode('/anamorphic',this)">Копировать</button></div>
+<div class="cmd" data-search="/buildingwrap фасад"><div class="code">/buildingwrap</div><div class="desc">Реклама на фасаде здания.</div><button onclick="copyCode('/buildingwrap',this)">Копировать</button></div>
+<div class="cmd" data-search="/newspaper газета"><div class="code">/newspaper</div><div class="desc">Газетная рекламная композиция.</div><button onclick="copyCode('/newspaper',this)">Копировать</button></div>
+<div class="cmd" data-search="/minimaldecor"><div class="code">/minimaldecor</div><div class="desc">Минимум декора.</div><button onclick="copyCode('/minimaldecor',this)">Копировать</button></div>
+</div></details>
+
+<details open><summary>Маркетплейсы и аналитика <span>12</span></summary><div class="group">
+<div class="cmd" data-search="/wbseo wb"><div class="code">/wbseo</div><div class="desc">SEO карточки Wildberries.</div><button onclick="copyCode('/wbseo',this)">Копировать</button></div>
+<div class="cmd" data-search="/ozonseo ozon"><div class="code">/ozonseo</div><div class="desc">SEO карточки Ozon.</div><button onclick="copyCode('/ozonseo',this)">Копировать</button></div>
+<div class="cmd" data-search="/ymseo яндекс"><div class="code">/ymseo</div><div class="desc">SEO Яндекс Маркета.</div><button onclick="copyCode('/ymseo',this)">Копировать</button></div>
+<div class="cmd" data-search="/ads реклама"><div class="code">/ads</div><div class="desc">Разбор рекламы.</div><button onclick="copyCode('/ads',this)">Копировать</button></div>
+<div class="cmd" data-search="/sales продажи"><div class="code">/sales</div><div class="desc">Разбор продаж.</div><button onclick="copyCode('/sales',this)">Копировать</button></div>
+<div class="cmd" data-search="/funnel воронка"><div class="code">/funnel</div><div class="desc">Разбор воронки продаж.</div><button onclick="copyCode('/funnel',this)">Копировать</button></div>
+<div class="cmd" data-search="/unit экономика"><div class="code">/unit</div><div class="desc">Юнит-экономика.</div><button onclick="copyCode('/unit',this)">Копировать</button></div>
+<div class="cmd" data-search="/margin маржа"><div class="code">/margin</div><div class="desc">Маржинальность и прибыль.</div><button onclick="copyCode('/margin',this)">Копировать</button></div>
+<div class="cmd" data-search="/stocks остатки"><div class="code">/stocks</div><div class="desc">Остатки и риск out-of-stock.</div><button onclick="copyCode('/stocks',this)">Копировать</button></div>
+<div class="cmd" data-search="/forecast прогноз"><div class="code">/forecast</div><div class="desc">Прогноз потребности в запасе.</div><button onclick="copyCode('/forecast',this)">Копировать</button></div>
+<div class="cmd" data-search="/competitors конкуренты"><div class="code">/competitors</div><div class="desc">Сравнение с конкурентами.</div><button onclick="copyCode('/competitors',this)">Копировать</button></div>
+<div class="cmd" data-search="/actionplan план"><div class="code">/actionplan</div><div class="desc">План действий по аналитике.</div><button onclick="copyCode('/actionplan',this)">Копировать</button></div>
+</div></details>
+
+<details open><summary>PlaMon и видео <span>14</span></summary><div class="group">
+<div class="cmd" data-search="/plamon"><div class="code">/plamon</div><div class="desc">Фирменная эстетика PlaMon.</div><button onclick="copyCode('/plamon',this)">Копировать</button></div>
+<div class="cmd" data-search="/nightdrive ночь"><div class="code">/nightdrive</div><div class="desc">Ночной город и мокрый асфальт.</div><button onclick="copyCode('/nightdrive',this)">Копировать</button></div>
+<div class="cmd" data-search="/redrose роза"><div class="code">/redrose</div><div class="desc">Красная роза как акцент.</div><button onclick="copyCode('/redrose',this)">Копировать</button></div>
+<div class="cmd" data-search="/backview спина"><div class="code">/backview</div><div class="desc">Герой строго со спины.</div><button onclick="copyCode('/backview',this)">Копировать</button></div>
+<div class="cmd" data-search="/continue продолжение"><div class="code">/continue</div><div class="desc">Продолжить с последнего кадра.</div><button onclick="copyCode('/continue',this)">Копировать</button></div>
+<div class="cmd" data-search="/firstframe"><div class="code">/firstframe</div><div class="desc">Фото как точный первый кадр.</div><button onclick="copyCode('/firstframe',this)">Копировать</button></div>
+<div class="cmd" data-search="/samecharacter"><div class="code">/samecharacter</div><div class="desc">Сохранять одного героя.</div><button onclick="copyCode('/samecharacter',this)">Копировать</button></div>
+<div class="cmd" data-search="/samecamera"><div class="code">/samecamera</div><div class="desc">Сохранять параметры камеры.</div><button onclick="copyCode('/samecamera',this)">Копировать</button></div>
+<div class="cmd" data-search="/samestage"><div class="code">/samestage</div><div class="desc">Не менять локацию и свет.</div><button onclick="copyCode('/samestage',this)">Копировать</button></div>
+<div class="cmd" data-search="/walknatural походка"><div class="code">/walknatural</div><div class="desc">Естественная походка.</div><button onclick="copyCode('/walknatural',this)">Копировать</button></div>
+<div class="cmd" data-search="/trackbehind"><div class="code">/trackbehind</div><div class="desc">Камера следует сзади.</div><button onclick="copyCode('/trackbehind',this)">Копировать</button></div>
+<div class="cmd" data-search="/nocut"><div class="code">/nocut</div><div class="desc">Один непрерывный кадр.</div><button onclick="copyCode('/nocut',this)">Копировать</button></div>
+<div class="cmd" data-search="/noface лицо не показывать"><div class="code">/noface</div><div class="desc">Не показывать лицо героя.</div><button onclick="copyCode('/noface',this)">Копировать</button></div>
+<div class="cmd" data-search="/checkprompt проверка промпта"><div class="code">/checkprompt</div><div class="desc">Проверить промпт до генерации.</div><button onclick="copyCode('/checkprompt',this)">Копировать</button></div>
+</div></details>
+
+<details open><summary>Документы и быт <span>12</span></summary><div class="group">
+<div class="cmd" data-search="/rewrite"><div class="code">/rewrite</div><div class="desc">Переписать текст лучше.</div><button onclick="copyCode('/rewrite',this)">Копировать</button></div>
+<div class="cmd" data-search="/check проверка"><div class="code">/check</div><div class="desc">Проверить цифры и логику.</div><button onclick="copyCode('/check',this)">Копировать</button></div>
+<div class="cmd" data-search="/finalcheck"><div class="code">/finalcheck</div><div class="desc">Финальная перепроверка.</div><button onclick="copyCode('/finalcheck',this)">Копировать</button></div>
+<div class="cmd" data-search="/contract договор"><div class="code">/contract</div><div class="desc">Разобрать договор по рискам.</div><button onclick="copyCode('/contract',this)">Копировать</button></div>
+<div class="cmd" data-search="/upd"><div class="code">/upd</div><div class="desc">Проверить УПД.</div><button onclick="copyCode('/upd',this)">Копировать</button></div>
+<div class="cmd" data-search="/xmlcheck xml"><div class="code">/xmlcheck</div><div class="desc">Проверить XML.</div><button onclick="copyCode('/xmlcheck',this)">Копировать</button></div>
+<div class="cmd" data-search="/recipe рецепт"><div class="code">/recipe</div><div class="desc">Точный пошаговый рецепт.</div><button onclick="copyCode('/recipe',this)">Копировать</button></div>
+<div class="cmd" data-search="/repair ремонт"><div class="code">/repair</div><div class="desc">Пошаговая диагностика и ремонт.</div><button onclick="copyCode('/repair',this)">Копировать</button></div>
+<div class="cmd" data-search="/tech техника"><div class="code">/tech</div><div class="desc">Телефон, ПК, ТВ, роутер.</div><button onclick="copyCode('/tech',this)">Копировать</button></div>
+<div class="cmd" data-search="/howto"><div class="code">/howto</div><div class="desc">Инструкция «куда нажать».</div><button onclick="copyCode('/howto',this)">Копировать</button></div>
+<div class="cmd" data-search="/buy покупка"><div class="code">/buy</div><div class="desc">Подбор товара под требования.</div><button onclick="copyCode('/buy',this)">Копировать</button></div>
+<div class="cmd" data-search="/genealogy родословная"><div class="code">/genealogy</div><div class="desc">Разбор генеалогии и документов.</div><button onclick="copyCode('/genealogy',this)">Копировать</button></div>
+</div></details>
+
+<details open><summary>Форматы <span>8</span></summary><div class="group">
+<div class="cmd" data-search="/9x16 вертикальный"><div class="code">/9x16</div><div class="desc">Stories/Reels/TikTok.</div><button onclick="copyCode('/9x16',this)">Копировать</button></div>
+<div class="cmd" data-search="/4x5"><div class="code">/4x5</div><div class="desc">Instagram-пост.</div><button onclick="copyCode('/4x5',this)">Копировать</button></div>
+<div class="cmd" data-search="/1x1"><div class="code">/1x1</div><div class="desc">Квадрат.</div><button onclick="copyCode('/1x1',this)">Копировать</button></div>
+<div class="cmd" data-search="/16x9"><div class="code">/16x9</div><div class="desc">Горизонтальный формат.</div><button onclick="copyCode('/16x9',this)">Копировать</button></div>
+<div class="cmd" data-search="/closeup"><div class="code">/closeup</div><div class="desc">Крупный план.</div><button onclick="copyCode('/closeup',this)">Копировать</button></div>
+<div class="cmd" data-search="/wide"><div class="code">/wide</div><div class="desc">Общий план.</div><button onclick="copyCode('/wide',this)">Копировать</button></div>
+<div class="cmd" data-search="/textsafe"><div class="code">/textsafe</div><div class="desc">Оставить место под текст.</div><button onclick="copyCode('/textsafe',this)">Копировать</button></div>
+<div class="cmd" data-search="/notext"><div class="code">/notext</div><div class="desc">Без надписей.</div><button onclick="copyCode('/notext',this)">Копировать</button></div>
+</div></details>
+<div class="footer">Cent • мобильная версия • сентябрь 2026</div>
+</main>
+<script>
+function copyText(t,b){navigator.clipboard.writeText(t);let x=b.textContent;b.textContent='Скопировано';setTimeout(()=>b.textContent=x,900)}
+function copyCode(c,b){copyText(c,b)}
+function filterCmds(){const q=document.getElementById('search').value.toLowerCase().trim();document.querySelectorAll('.cmd').forEach(el=>el.classList.toggle('hidden',q&&!el.dataset.search.includes(q)));document.querySelectorAll('details').forEach(d=>{const visible=[...d.querySelectorAll('.cmd')].some(x=>!x.classList.contains('hidden'));d.classList.toggle('hidden',!visible);if(q&&visible)d.open=true;});}
+</script>
+</body></html>
