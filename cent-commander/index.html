@@ -30,6 +30,16 @@ body.dark{--bg:#111214;--card:#1b1d20;--text:#f5f5f5;--muted:#a9adb4;--line:#343
 body.dark input,body.dark select,body.dark textarea,body.dark .panel,body.dark details,body.dark .cmd,body.dark .tipcard,body.dark .resultcard,body.dark .quick,body.dark .modebtn,body.dark .favpill,body.dark .stat,body.dark .nav a{background:#1b1d20;color:#f5f5f5}
 .mastergrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{margin-bottom:9px}.field label{display:block;font-size:12px;font-weight:800;margin-bottom:5px}.field small{display:block;color:var(--muted);margin-top:4px}.fixgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.fixbtn{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px;font-size:12px;font-weight:750;text-align:left}.templateitem{border:1px solid var(--line);border-radius:13px;padding:10px;margin-top:8px}.templateitem b{display:block;margin-bottom:5px}.toolbar{display:flex;gap:7px;flex-wrap:wrap}.toolbar button{border:1px solid var(--line);background:#fff;border-radius:11px;padding:8px 10px;font-weight:750}.megaNote{background:var(--soft);border-radius:12px;padding:10px;font-size:12px;line-height:1.45}.statusok{font-size:11px;color:var(--muted);margin-top:5px}.cmd .desc b{font-weight:800}
 @media(max-width:620px){.mastergrid{grid-template-columns:1fr}.fixgrid{grid-template-columns:1fr}}
+
+.factoryToolbar{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}.factoryToolbar button,.factoryToolbar select{width:auto;border:1px solid var(--line);background:#fff;border-radius:11px;padding:9px 10px;font-size:12px;font-weight:750}
+.tipcard.pro{position:relative}.tipmeta{display:flex;gap:6px;flex-wrap:wrap;margin:7px 0}.statusBadge,.catBadge{font-size:10px;font-weight:800;padding:4px 7px;border-radius:999px;background:var(--soft)}
+.tipActions{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-top:9px}.tipActions button{border:1px solid var(--line);border-radius:10px;background:#fff;padding:8px;font-size:11px;font-weight:750}
+.tipActions .primaryAction{background:#111;color:#fff}.tipExample{font-size:12px;background:var(--soft);border-radius:10px;padding:8px;margin-top:7px;line-height:1.4}
+.factoryTabs{display:flex;gap:6px;overflow:auto;margin:10px 0}.factoryTabs button{flex:0 0 auto;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 10px;font-size:11px;font-weight:800}.factoryTabs button.active{background:#111;color:#fff}
+.archiveGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.archiveItem{border:1px solid var(--line);border-radius:12px;padding:9px;background:#fff}.archiveItem b{font-size:13px}.archiveItem .note{margin-top:4px}
+.planTable{width:100%;border-collapse:collapse;font-size:12px}.planTable th,.planTable td{border-bottom:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}.planWrap{overflow:auto}
+.counterbar{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:10px 0}.counter{background:var(--soft);border-radius:12px;padding:9px;text-align:center}.counter b{display:block;font-size:18px}
+@media(max-width:620px){.archiveGrid{grid-template-columns:1fr}.counterbar{grid-template-columns:repeat(2,1fr)}.tipActions{grid-template-columns:1fr}}
 </style></head><body>
 <header class="wrap"><h1>🚀 Mega ChatGPT Helper 3.0</h1><div class="sub">Понятный помощник для ChatGPT: опиши задачу обычными словами — программа подскажет, что использовать</div><input id="search" type="search" placeholder="Поиск: удалить человека, WB, договор, рецепт, Reels…"><div id="globalSearchResults" class="hidden"></div></header>
 <main class="wrap">
@@ -148,53 +158,71 @@ body.dark input,body.dark select,body.dark textarea,body.dark .panel,body.dark d
 </section>
 <section id="daily-tips">
   <div class="panel igbox">
-    <h2>🔥 3 лайфхака дня для ChatGPT</h2>
-    <div class="note">Каждый день автоматически выбираются 3 практичных приёма. Их можно использовать самому или сразу превратить в контент для Instagram.</div>
-    <div id="dailyTips" class="tipgrid" style="margin-top:10px"></div>
-    <div class="actionrow">
-      <button id="newTips" class="secondary">Ещё 3 лайфхака</button>
-      <button id="makeInstagram" class="primary">Сделать контент для Instagram</button>
+    <h2>📲 Instagram AI Content Factory</h2>
+    <div class="note">Каждый день — 3 новых практичных лайфхака по ChatGPT. У каждого есть код, объяснение, пример и готовые кнопки для превращения идеи в пост, карусель, Reels или Stories.</div>
+    <div class="counterbar">
+      <div class="counter"><b id="bankCount">0</b><span class="note">в банке</span></div>
+      <div class="counter"><b id="publishedCount">0</b><span class="note">опубликовано</span></div>
+      <div class="counter"><b id="favTipCount">0</b><span class="note">избранное</span></div>
+      <div class="counter"><b id="laterCount">0</b><span class="note">на потом</span></div>
+    </div>
+    <div class="factoryToolbar">
+      <select id="tipCategory"><option value="all">Все темы</option></select>
+      <button id="todayTips">Сегодняшние 3</button>
+      <button id="newTips">Ещё 3</button>
+      <button id="makeInstagram">Собрать пакет дня</button>
+    </div>
+    <div id="dailyTips" class="tipgrid"></div>
+  </div>
+
+  <div class="panel">
+    <h2>🗂 Банк лайфхаков</h2>
+    <div class="note">Фильтруй темы и отмечай статус. Программа помнит, что уже опубликовано, что понравилось и что оставлено на потом.</div>
+    <div class="factoryTabs" id="statusTabs">
+      <button class="active" data-status="all">Все</button>
+      <button data-status="new">Новые</button>
+      <button data-status="published">Опубликовано</button>
+      <button data-status="favorite">Избранное</button>
+      <button data-status="later">На потом</button>
+    </div>
+    <input id="tipSearch" type="search" placeholder="Поиск лайфхака: фото, промпт, файл, бизнес, Reels…">
+    <div id="tipArchive" class="archiveGrid" style="margin-top:10px"></div>
+  </div>
+
+  <div class="panel">
+    <h2>📅 План на 30 дней</h2>
+    <div class="note">30 разных тем вперёд с чередованием форматов. План строится из банка и не зависит от случайного выбора.</div>
+    <div class="factoryToolbar">
+      <button id="build30">Сформировать 30 дней</button>
+      <button id="copy30">Копировать план</button>
+    </div>
+    <div id="plan30" class="planWrap"></div>
+  </div>
+
+  <div class="panel">
+    <h2>🎬 Генератор контента</h2>
+    <div class="note">Выбери лайфхак в карточке и нажми нужный формат. Программа соберёт готовый промпт для ChatGPT: заголовок, структура, подпись и CTA.</div>
+    <div id="contentFactoryOut" class="resultcard hidden">
+      <b id="factoryTitle">Готовый запрос</b>
+      <code id="factoryPrompt" style="margin-top:8px"></code>
+      <div class="helperActions">
+        <button id="factoryCopy" class="secondary">Копировать</button>
+        <button id="factoryOpen" class="primary">Открыть ChatGPT</button>
+      </div>
     </div>
   </div>
 
   <div class="panel">
-    <h2>📲 Instagram / Контент-фабрика</h2>
-    <div class="chips">
-      <span class="chip">Reels</span><span class="chip">Stories</span><span class="chip">Карусель</span><span class="chip">Пост</span><span class="chip">Хук</span><span class="chip">CTA</span>
-    </div>
+    <h2>⚡ Команды Instagram</h2>
     <div class="cmds">
-      <div class="cmd" data-search="/instagram.tip лайфхак совет chatgpt instagram">
-        <div><code>/instagram.tip</code><div class="desc"><b>Что умеет:</b> превращает один полезный приём ChatGPT в короткий понятный лайфхак для публикации. <b>Когда использовать:</b> когда нужен ежедневный экспертный контент.</div></div>
-        <button class="copy" data-copy="/instagram.tip">Копировать</button>
-      </div>
-      <div class="cmd" data-search="/instagram.reel reels сценарий instagram">
-        <div><code>/instagram.reel</code><div class="desc"><b>Что умеет:</b> создаёт сценарий Reels на 8–20 секунд: хук, демонстрация, результат, CTA. <b>Когда использовать:</b> для короткого видео с одним лайфхаком.</div></div>
-        <button class="copy" data-copy="/instagram.reel">Копировать</button>
-      </div>
-      <div class="cmd" data-search="/instagram.story stories instagram">
-        <div><code>/instagram.story</code><div class="desc"><b>Что умеет:</b> разбивает идею на 3–5 Stories с вопросом, пользой и призывом к ответу. <b>Когда использовать:</b> для ежедневного прогрева аудитории.</div></div>
-        <button class="copy" data-copy="/instagram.story">Копировать</button>
-      </div>
-      <div class="cmd" data-search="/instagram.carousel карусель instagram">
-        <div><code>/instagram.carousel</code><div class="desc"><b>Что умеет:</b> делает структуру карусели: обложка, 5–8 слайдов, пример, финальный CTA. <b>Когда использовать:</b> когда лайфхак требует пошагового объяснения.</div></div>
-        <button class="copy" data-copy="/instagram.carousel">Копировать</button>
-      </div>
-      <div class="cmd" data-search="/instagram.hook хук instagram">
-        <div><code>/instagram.hook</code><div class="desc"><b>Что умеет:</b> генерирует несколько сильных первых фраз без кликбейта. <b>Когда использовать:</b> для первых 1–2 секунд Reels или первой строки поста.</div></div>
-        <button class="copy" data-copy="/instagram.hook">Копировать</button>
-      </div>
-      <div class="cmd" data-search="/instagram.caption подпись instagram">
-        <div><code>/instagram.caption</code><div class="desc"><b>Что умеет:</b> пишет подпись к публикации: польза, пример, короткий вывод и CTA. <b>Когда использовать:</b> после готового Reels или карусели.</div></div>
-        <button class="copy" data-copy="/instagram.caption">Копировать</button>
-      </div>
-      <div class="cmd" data-search="/instagram.plan7 контент план 7 дней instagram">
-        <div><code>/instagram.plan7</code><div class="desc"><b>Что умеет:</b> собирает недельный контент-план из лайфхаков ChatGPT с чередованием Reels, Stories и каруселей. <b>Когда использовать:</b> чтобы не придумывать тему каждый день.</div></div>
-        <button class="copy" data-copy="/instagram.plan7">Копировать</button>
-      </div>
-      <div class="cmd" data-search="/instagram.cta призыв действие instagram">
-        <div><code>/instagram.cta</code><div class="desc"><b>Что умеет:</b> подбирает естественный призыв к сохранению, комментарию, подписке или отправке другу. <b>Когда использовать:</b> в конце любой публикации.</div></div>
-        <button class="copy" data-copy="/instagram.cta">Копировать</button>
-      </div>
+      <div class="cmd" data-search="/instagram.tip лайфхак совет chatgpt instagram"><div><code>/instagram.tip</code><div class="desc"><b>Что умеет:</b> превращает один приём ChatGPT в понятный лайфхак для публикации. <b>Когда использовать:</b> для ежедневного экспертного контента.</div></div><button class="copy" data-copy="/instagram.tip">Копировать</button></div>
+      <div class="cmd" data-search="/instagram.post пост instagram"><div><code>/instagram.post</code><div class="desc"><b>Что умеет:</b> делает один законченный фото-пост: заголовок, основной текст, пример и CTA. <b>Когда использовать:</b> для одиночной карточки.</div></div><button class="copy" data-copy="/instagram.post">Копировать</button></div>
+      <div class="cmd" data-search="/instagram.carousel карусель instagram"><div><code>/instagram.carousel</code><div class="desc"><b>Что умеет:</b> строит карусель на 5–8 слайдов с логичным раскрытием темы. <b>Когда использовать:</b> когда лайфхак нужно объяснить пошагово.</div></div><button class="copy" data-copy="/instagram.carousel">Копировать</button></div>
+      <div class="cmd" data-search="/instagram.reel reels рилс сценарий instagram"><div><code>/instagram.reel</code><div class="desc"><b>Что умеет:</b> создаёт короткий сценарий Reels: хук, демонстрация, результат и CTA. <b>Когда использовать:</b> для динамичного формата.</div></div><button class="copy" data-copy="/instagram.reel">Копировать</button></div>
+      <div class="cmd" data-search="/instagram.story stories сторис instagram"><div><code>/instagram.story</code><div class="desc"><b>Что умеет:</b> разбивает тему на 3–5 Stories. <b>Когда использовать:</b> для ежедневного прогрева и вовлечения.</div></div><button class="copy" data-copy="/instagram.story">Копировать</button></div>
+      <div class="cmd" data-search="/instagram.caption подпись instagram"><div><code>/instagram.caption</code><div class="desc"><b>Что умеет:</b> пишет короткую подпись с пользой, примером и призывом к действию. <b>Когда использовать:</b> после готового визуала.</div></div><button class="copy" data-copy="/instagram.caption">Копировать</button></div>
+      <div class="cmd" data-search="/instagram.plan30 план 30 дней instagram"><div><code>/instagram.plan30</code><div class="desc"><b>Что умеет:</b> собирает месячный план публикаций с чередованием форматов. <b>Когда использовать:</b> чтобы заранее закрыть контент на месяц.</div></div><button class="copy" data-copy="/instagram.plan30">Копировать</button></div>
+      <div class="cmd" data-search="/instagram.metricool metricool планирование"><div><code>/instagram.metricool</code><div class="desc"><b>Что умеет:</b> готовит публикацию к планированию через Metricool: формат, подпись, CTA и данные для расписания. <b>Когда использовать:</b> когда контент уже готов и его нужно поставить в календарь.</div></div><button class="copy" data-copy="/instagram.metricool">Копировать</button></div>
     </div>
   </div>
 </section>
