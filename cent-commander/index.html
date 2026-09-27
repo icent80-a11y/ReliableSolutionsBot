@@ -1,0 +1,1095 @@
+<!doctype html>
+<html lang="ru"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Cent Commander"><meta name="theme-color" content="#111111">
+<title>Cent Commander PRO</title>
+<style>
+:root{--bg:#f5f2ea;--card:#fff;--text:#161616;--muted:#6c6c6c;--line:#ddd6c8;--soft:#f0ece3;--green:#eaf6e8}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--text);padding-bottom:84px}
+.wrap{max-width:900px;margin:auto}header{position:sticky;top:0;z-index:20;background:rgba(245,242,234,.96);backdrop-filter:blur(12px);padding:14px;border-bottom:1px solid var(--line)}
+h1{font-size:24px;margin:0}.sub{font-size:13px;color:var(--muted);margin:4px 0 10px}input,select,textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:13px;background:#fff;font-size:16px}
+main{padding:14px}.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:14px}.hero{background:var(--green)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px}.num{font-size:26px;font-weight:800}
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(4,1fr);gap:7px;padding:9px 10px calc(9px + env(safe-area-inset-bottom));background:rgba(245,242,234,.97);border-top:1px solid var(--line)}
+.nav a{text-decoration:none;text-align:center;color:#111;background:#fff;border:1px solid var(--line);border-radius:13px;padding:10px 4px;font-size:12px;font-weight:700}
+section{scroll-margin-top:115px}h2{font-size:20px;margin:0 0 10px}details{border:1px solid var(--line);border-radius:14px;background:#fff;margin-bottom:9px;overflow:hidden}summary{padding:13px;font-weight:750;cursor:pointer;list-style:none}summary span{float:right;color:var(--muted);font-size:12px}.cmds{border-top:1px solid var(--line)}.cmd{display:grid;grid-template-columns:1fr auto;gap:9px;padding:11px;border-bottom:1px solid #eee}.cmd:last-child{border:0}code{display:block;background:#f3f3f3;padding:9px;border-radius:10px;font-family:ui-monospace,Menlo,monospace;font-size:12px;white-space:pre-wrap;word-break:break-word}.desc{font-size:13px;margin-top:5px}.copy{border:0;background:#111;color:#fff;border-radius:10px;padding:9px 10px;height:max-content}
+.preset{border:1px solid var(--line);border-radius:14px;padding:11px;margin-bottom:9px}.preset b{display:block;margin-bottom:7px}.preset .copy{margin-top:8px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.builderout{margin-top:10px}.note{font-size:12px;color:var(--muted);line-height:1.45}.hidden{display:none!important}
+@media(max-width:620px){.stats,.grid2{grid-template-columns:1fr}.cmd{grid-template-columns:1fr}.copy{width:100%}}
+</style></head><body>
+<header class="wrap"><h1>Cent Commander PRO</h1><div class="sub">Рабочие команды для ChatGPT — фото, видео, маркетплейсы, документы и повседневные задачи</div><input id="search" type="search" placeholder="Поиск: удалить человека, WB, XML, рецепт…"></header>
+<main class="wrap">
+<section id="home"><div class="panel hero"><h2>Рабочая версия</h2><div class="note">Основная навигация работает даже без JavaScript. Кнопки копирования, поиск и конструктор работают в Safari. Это наша собственная система команд, а не официальный список slash-команд ChatGPT.</div></div>
+<div class="panel"><div class="stats"><div class="stat"><div class="num">241</div><div class="note">команд</div></div><div class="stat"><div class="num">18</div><div class="note">разделов</div></div><div class="stat"><div class="num">12</div><div class="note">пресетов</div></div></div></div></section>
+<section id="builder"><div class="panel"><h2>Конструктор</h2><div class="grid2"><select id="base"><option value="/people.together">Фото — люди — Объединить людей с разных фото</option><option value="/people.add">Фото — люди — Добавить человека в фото</option><option value="/people.remove">Фото — люди — Удалить человека с фото</option><option value="/people.couple">Фото — люди — Совместное фото пары</option><option value="/people.family">Фото — люди — Семейный портрет</option><option value="/people.pose">Фото — люди — Изменить позу</option><option value="/people.smile">Фото — люди — Добавить естественную улыбку</option><option value="/people.lookcamera">Фото — люди — Направить взгляд в камеру</option><option value="/edit.retouch">Фото — редактирование — Ретушь</option><option value="/edit.enhance">Фото — редактирование — Улучшить качество</option><option value="/edit.restore">Фото — редактирование — Восстановить старое фото</option><option value="/edit.colorize">Фото — редактирование — Раскрасить Ч/Б фото</option><option value="/edit.removebg">Фото — редактирование — Удалить фон</option><option value="/edit.newbg">Фото — редактирование — Сменить фон</option><option value="/edit.removeobject">Фото — редактирование — Удалить объект</option><option value="/edit.addobject">Фото — редактирование — Добавить объект</option><option value="/edit.outfit">Фото — редактирование — Сменить одежду</option><option value="/edit.hair">Фото — редактирование — Изменить причёску</option><option value="/edit.glasses">Фото — редактирование — Добавить/заменить очки</option><option value="/edit.light">Фото — редактирование — Изменить свет</option><option value="/edit.weather">Фото — редактирование — Изменить погоду</option><option value="/edit.daynight">Фото — редактирование — День ↔ ночь</option><option value="/photo.portrait">Фото — стили — Реалистичный портрет</option><option value="/photo.studio">Фото — стили — Студийная съёмка</option><option value="/photo.business">Фото — стили — Деловой портрет</option><option value="/photo.cinematic">Фото — стили — Кинематографичный кадр</option><option value="/photo.luxury">Фото — стили — Премиальная fashion-подача</option><option value="/photo.editorial">Фото — стили — Журнальная editorial-съёмка</option><option value="/photo.magazine">Фото — стили — Обложка журнала</option><option value="/photo.blackwhite">Фото — стили — Чёрно-белый стиль</option><option value="/photo.film35">Фото — стили — 35-мм плёнка</option><option value="/photo.vintage">Фото — стили — Винтаж</option><option value="/photo.goldenhour">Фото — стили — Золотой час</option><option value="/photo.night">Фото — стили — Ночная сцена</option><option value="/lock.face">LOCK / качество — Не менять лицо</option><option value="/lock.identity">LOCK / качество — Не менять узнаваемость</option><option value="/lock.hair">LOCK / качество — Не менять волосы</option><option value="/lock.body">LOCK / качество — Не менять телосложение</option><option value="/lock.outfit">LOCK / качество — Не менять одежду</option><option value="/lock.label">LOCK / качество — Не менять этикетку</option><option value="/lock.jar">LOCK / качество — Не менять банку</option><option value="/lock.logo">LOCK / качество — Не менять логотип</option><option value="/lock.text">LOCK / качество — Не менять текст</option><option value="/lock.camera">LOCK / качество — Не менять камеру</option><option value="/lock.location">LOCK / качество — Не менять локацию</option><option value="/quality.realistic">LOCK / качество — Максимальный фотореализм</option><option value="/quality.natural">LOCK / качество — Естественная кожа и анатомия</option><option value="/quality.strict">LOCK / качество — Строго следовать условиям</option><option value="/quality.precheck">LOCK / качество — Проверить до генерации</option><option value="/quality.finalcheck">LOCK / качество — Финальная проверка</option><option value="/product.packshot">Товары и реклама — Чистое товарное фото</option><option value="/product.whitebg">Товары и реклама — Белый фон</option><option value="/product.premium">Товары и реклама — Премиальная предметная съёмка</option><option value="/product.marketplace">Товары и реклама — Главное фото маркетплейса</option><option value="/product.hero">Товары и реклама — Hero-shot</option><option value="/product.macro">Товары и реклама — Макро</option><option value="/product.lifestyle">Товары и реклама — Lifestyle-сцена</option><option value="/product.kitchen">Товары и реклама — Кухонная сцена</option><option value="/product.ingredients">Товары и реклама — Ингредиенты вокруг товара</option><option value="/product.shadow">Товары и реклама — Естественная тень</option><option value="/product.reflection">Товары и реклама — Отражение</option><option value="/product.floating">Товары и реклама — Левитация</option><option value="/product.splash">Товары и реклама — Splash-эффект</option><option value="/ad.poster">Товары и реклама — Рекламный постер</option><option value="/ad.newspaper">Товары и реклама — Газетная реклама</option><option value="/ad.3dbillboard">Товары и реклама — 3D-билборд</option><option value="/ad.giantproduct">Товары и реклама — Гигантский товар</option><option value="/ad.anamorphic">Товары и реклама — Анаморфный 3D-экран</option><option value="/ad.buildingwrap">Товары и реклама — Реклама на фасаде</option><option value="/inbebe.hero">INBEBE — Премиальное главное фото</option><option value="/inbebe.white">INBEBE — Чистое фото банки</option><option value="/inbebe.ingredients">INBEBE — Банка + ингредиенты</option><option value="/inbebe.macro">INBEBE — Макро фракции</option><option value="/inbebe.kitchen">INBEBE — Премиальная кухня</option><option value="/inbebe.card">INBEBE — Главное фото карточки</option><option value="/inbebe.rich">INBEBE — Rich-контент</option><option value="/inbebe.infographic">INBEBE — Инфографика</option><option value="/inbebe.seo">INBEBE — SEO</option><option value="/inbebe.labelsafe">INBEBE — Строго сохранить этикетку</option><option value="/inbebe.minimal">INBEBE — Минимум декора</option><option value="/wb.seo">Маркетплейсы — контент — SEO Wildberries</option><option value="/ozon.seo">Маркетплейсы — контент — SEO Ozon</option><option value="/ym.seo">Маркетплейсы — контент — SEO Яндекс Маркета</option><option value="/market.title">Маркетплейсы — контент — Название товара</option><option value="/market.description">Маркетплейсы — контент — Описание</option><option value="/market.keywords">Маркетплейсы — контент — Ключевые слова</option><option value="/market.bullets">Маркетплейсы — контент — Преимущества</option><option value="/market.rich">Маркетплейсы — контент — Rich-контент</option><option value="/market.infographic">Маркетплейсы — контент — Инфографика</option><option value="/market.faq">Маркетплейсы — контент — FAQ</option><option value="/market.reviewreply">Маркетплейсы — контент — Ответ на хороший отзыв</option><option value="/market.negativereply">Маркетплейсы — контент — Ответ на негатив</option><option value="/market.questionreply">Маркетплейсы — контент — Ответ на вопрос</option><option value="/market.contentaudit">Маркетплейсы — контент — Аудит карточки</option><option value="/market.photoplan">Маркетплейсы — контент — План фото-контента</option><option value="/seller.unit">Маркетплейсы — аналитика — Юнит-экономика</option><option value="/seller.margin">Маркетплейсы — аналитика — Маржа</option><option value="/seller.price">Маркетплейсы — аналитика — Целевая цена</option><option value="/seller.discount">Маркетплейсы — аналитика — Допустимая скидка</option><option value="/seller.ads">Маркетплейсы — аналитика — Разбор рекламы</option><option value="/seller.sales">Маркетплейсы — аналитика — Разбор продаж</option><option value="/seller.funnel">Маркетплейсы — аналитика — Воронка</option><option value="/seller.ctr">Маркетплейсы — аналитика — CTR</option><option value="/seller.conversion">Маркетплейсы — аналитика — Конверсия</option><option value="/seller.cpc">Маркетплейсы — аналитика — CPC</option><option value="/seller.acos">Маркетплейсы — аналитика — ACOS/ДРР</option><option value="/seller.stocks">Маркетплейсы — аналитика — Остатки</option><option value="/seller.forecast">Маркетплейсы — аналитика — Прогноз запаса</option><option value="/seller.competitors">Маркетплейсы — аналитика — Конкуренты</option><option value="/seller.weekly">Маркетплейсы — аналитика — Недельный отчёт</option><option value="/seller.actionplan">Маркетплейсы — аналитика — План действий</option><option value="/plamon.style">PlaMon и видео — Фирменная эстетика</option><option value="/plamon.nightdrive">PlaMon и видео — Ночной город</option><option value="/plamon.redrose">PlaMon и видео — Красная роза</option><option value="/plamon.backview">PlaMon и видео — Герой со спины</option><option value="/plamon.blacksuit">PlaMon и видео — Чёрный костюм</option><option value="/plamon.hotel">PlaMon и видео — Отель</option><option value="/plamon.reelcover">PlaMon и видео — Обложка Reels</option><option value="/plamon.hook">PlaMon и видео — Хук</option><option value="/plamon.caption">PlaMon и видео — Подпись</option><option value="/video.5s">PlaMon и видео — Видео 5 секунд</option><option value="/video.continue">PlaMon и видео — Продолжить с последнего кадра</option><option value="/video.firstframe">PlaMon и видео — Точный первый кадр</option><option value="/video.lastframe">PlaMon и видео — Подготовить последний кадр</option><option value="/video.samecharacter">PlaMon и видео — Сохранить героя</option><option value="/video.samecamera">PlaMon и видео — Сохранить камеру</option><option value="/video.samestage">PlaMon и видео — Сохранить локацию</option><option value="/video.walknatural">PlaMon и видео — Естественная походка</option><option value="/video.trackbehind">PlaMon и видео — Камера сзади</option><option value="/video.nocut">PlaMon и видео — Без склеек</option><option value="/video.noface">PlaMon и видео — Не показывать лицо</option><option value="/video.noslide">PlaMon и видео — Не допускать скольжения ног</option><option value="/video.checkprompt">PlaMon и видео — Проверить видеопромпт</option><option value="/text.rewrite">Тексты — Переписать лучше</option><option value="/text.shorten">Тексты — Сократить</option><option value="/text.expand">Тексты — Расширить</option><option value="/text.proofread">Тексты — Корректура</option><option value="/text.formal">Тексты — Официальный стиль</option><option value="/text.simple">Тексты — Объяснить просто</option><option value="/text.translate">Тексты — Перевод</option><option value="/text.summary">Тексты — Краткое содержание</option><option value="/text.compare">Тексты — Сравнение</option><option value="/text.email">Тексты — Email</option><option value="/text.reply">Тексты — Ответ на сообщение</option><option value="/text.hook">Тексты — Хук</option><option value="/text.caption">Тексты — Подпись</option><option value="/text.cta">Тексты — CTA</option><option value="/text.complaint">Тексты — Претензия</option><option value="/doc.check">Документы и финансы — Проверить документ</option><option value="/doc.contract">Документы и финансы — Договор</option><option value="/doc.risks">Документы и финансы — Риски</option><option value="/doc.upd">Документы и финансы — УПД</option><option value="/doc.xml">Документы и финансы — XML</option><option value="/doc.invoice">Документы и финансы — Счёт</option><option value="/doc.act">Документы и финансы — Акт</option><option value="/doc.table">Документы и финансы — Таблица</option><option value="/doc.checklist">Документы и финансы — Чек-лист</option><option value="/doc.plan">Документы и финансы — План</option><option value="/finance.calc">Документы и финансы — Расчёт</option><option value="/finance.budget">Документы и финансы — Бюджет</option><option value="/finance.profit">Документы и финансы — Прибыль</option><option value="/finance.breakeven">Документы и финансы — Точка безубыточности</option><option value="/finance.percent">Документы и финансы — Проценты</option><option value="/tech.howto">Техника — Куда нажать</option><option value="/tech.diagnose">Техника — Диагностика</option><option value="/tech.iphone">Техника — iPhone</option><option value="/tech.windows">Техника — Windows</option><option value="/tech.tv">Техника — Телевизор</option><option value="/tech.router">Техника — Роутер</option><option value="/tech.vpn">Техника — VPN</option><option value="/tech.app">Техника — Приложения</option><option value="/tech.account">Техника — Аккаунты</option><option value="/tech.backup">Техника — Резервная копия</option><option value="/tech.migrate">Техника — Перенос данных</option><option value="/tech.optimize">Техника — Оптимизация</option><option value="/home.repair">Быт и ремонт — Ремонт</option><option value="/home.diagnose">Быт и ремонт — Диагностика поломки</option><option value="/home.clean">Быт и ремонт — Чистка</option><option value="/home.organize">Быт и ремонт — Организация пространства</option><option value="/home.measure">Быт и ремонт — Замеры</option><option value="/home.materials">Быт и ремонт — Материалы</option><option value="/home.tools">Быт и ремонт — Инструменты</option><option value="/cook.recipe">Кулинария — Пошаговый рецепт</option><option value="/cook.fridge">Кулинария — Из продуктов дома</option><option value="/cook.chef">Кулинария — Лучший способ приготовления</option><option value="/cook.proportions">Кулинария — Пропорции</option><option value="/cook.grams">Кулинария — Граммы ↔ ложки</option><option value="/cook.time">Кулинария — Время</option><option value="/cook.temperature">Кулинария — Температура</option><option value="/cook.airfryer">Кулинария — Аэрогриль</option><option value="/cook.oven">Кулинария — Духовка</option><option value="/cook.pan">Кулинария — Сковорода</option><option value="/cook.marinade">Кулинария — Маринад</option><option value="/cook.sauce">Кулинария — Соус</option><option value="/cook.menu">Кулинария — Меню</option><option value="/buy.find">Покупки / поездки / авто — Подобрать товар</option><option value="/buy.compare">Покупки / поездки / авто — Сравнить товары</option><option value="/buy.bestvalue">Покупки / поездки / авто — Цена/качество</option><option value="/buy.check">Покупки / поездки / авто — Проверить совместимость</option><option value="/buy.shortlist">Покупки / поездки / авто — Короткий список</option><option value="/trip.plan">Покупки / поездки / авто — План поездки</option><option value="/trip.route">Покупки / поездки / авто — Маршрут</option><option value="/trip.pack">Покупки / поездки / авто — Список вещей</option><option value="/trip.budget">Покупки / поездки / авто — Бюджет поездки</option><option value="/auto.fuel">Покупки / поездки / авто — Стоимость поездки</option><option value="/auto.diagnose">Покупки / поездки / авто — Автодиагностика</option><option value="/auto.parts">Покупки / поездки / авто — Подбор запчасти</option><option value="/auto.service">Покупки / поездки / авто — Что сказать сервису</option><option value="/life.todo">Организация / исследование — Список задач</option><option value="/life.plan">Организация / исследование — План дня</option><option value="/life.week">Организация / исследование — План недели</option><option value="/life.priority">Организация / исследование — Приоритеты</option><option value="/life.decision">Организация / исследование — Разобрать решение</option><option value="/life.compare">Организация / исследование — Сравнить варианты</option><option value="/life.questions">Организация / исследование — Список вопросов</option><option value="/research.topic">Организация / исследование — Исследовать тему</option><option value="/research.sources">Организация / исследование — Найти источники</option><option value="/research.factcheck">Организация / исследование — Проверить факт</option><option value="/research.timeline">Организация / исследование — Хронология</option><option value="/research.summary">Организация / исследование — Сводка</option><option value="/learn.explain">Организация / исследование — Объяснить тему</option><option value="/learn.stepbystep">Организация / исследование — Обучить пошагово</option><option value="/learn.cheatsheet">Организация / исследование — Шпаргалка</option><option value="/genealogy.tree">Генеалогия — Древо</option><option value="/genealogy.person">Генеалогия — Карточка человека</option><option value="/genealogy.timeline">Генеалогия — Хронология</option><option value="/genealogy.questions">Генеалогия — Вопросы родственникам</option><option value="/genealogy.archive">Генеалогия — План архивного поиска</option><option value="/genealogy.document">Генеалогия — Разобрать документ</option><option value="/genealogy.compare">Генеалогия — Сопоставить записи</option><option value="/format.9x16">Форматы — Stories / Reels / TikTok</option><option value="/format.4x5">Форматы — Вертикальный пост</option><option value="/format.1x1">Форматы — Квадрат</option><option value="/format.16x9">Форматы — Горизонталь</option><option value="/format.3x4">Форматы — Портрет</option><option value="/shot.closeup">Форматы — Крупный план</option><option value="/shot.medium">Форматы — Средний план</option><option value="/shot.wide">Форматы — Общий план</option><option value="/shot.center">Форматы — По центру</option><option value="/shot.textsafe">Форматы — Место для текста</option><option value="/shot.notext">Форматы — Без текста</option></select><select id="format"><option value="">Без формата</option><option>/format.9x16</option><option>/format.4x5</option><option>/format.1x1</option><option>/format.16x9</option></select></div><textarea id="notes" placeholder="Дополнительное условие: кого удалить, какой фон, что сохранить…" style="margin-top:10px"></textarea><button id="build" class="copy" style="margin-top:10px;width:100%">Собрать команду</button><div class="builderout"><code id="result">Выбери команду и нажми «Собрать команду»</code></div><button id="copyResult" class="copy" style="margin-top:8px;width:100%">Копировать результат</button></div></section>
+<section id="presets"><div class="panel"><h2>Пресеты</h2>
+<div class="preset" data-search="удалить человека /people.remove /quality.realistic /quality.natural
+avoid=ghosting,artifacts,background_damage">
+ <b>Удалить человека</b><code>/people.remove /quality.realistic /quality.natural
+avoid=ghosting,artifacts,background_damage</code><button class="copy" data-copy="/people.remove /quality.realistic /quality.natural
+avoid=ghosting,artifacts,background_damage">Копировать</button>
+</div>
+<div class="preset" data-search="добавить человека /people.add /people.together /lock.face /lock.identity /quality.realistic /quality.natural">
+ <b>Добавить человека</b><code>/people.add /people.together /lock.face /lock.identity /quality.realistic /quality.natural</code><button class="copy" data-copy="/people.add /people.together /lock.face /lock.identity /quality.realistic /quality.natural">Копировать</button>
+</div>
+<div class="preset" data-search="сменить фон /edit.newbg /lock.face /lock.identity /lock.body /quality.realistic">
+ <b>Сменить фон</b><code>/edit.newbg /lock.face /lock.identity /lock.body /quality.realistic</code><button class="copy" data-copy="/edit.newbg /lock.face /lock.identity /lock.body /quality.realistic">Копировать</button>
+</div>
+<div class="preset" data-search="профессиональный портрет /photo.studio /photo.portrait /lock.face /lock.identity /quality.realistic /format.4x5">
+ <b>Профессиональный портрет</b><code>/photo.studio /photo.portrait /lock.face /lock.identity /quality.realistic /format.4x5</code><button class="copy" data-copy="/photo.studio /photo.portrait /lock.face /lock.identity /quality.realistic /format.4x5">Копировать</button>
+</div>
+<div class="preset" data-search="inbebe главное фото /inbebe.hero /lock.label /lock.jar /lock.logo /lock.text /inbebe.minimal /format.4x5">
+ <b>INBEBE главное фото</b><code>/inbebe.hero /lock.label /lock.jar /lock.logo /lock.text /inbebe.minimal /format.4x5</code><button class="copy" data-copy="/inbebe.hero /lock.label /lock.jar /lock.logo /lock.text /inbebe.minimal /format.4x5">Копировать</button>
+</div>
+<div class="preset" data-search="inbebe 3d-реклама /ad.3dbillboard /product.premium /lock.label /lock.jar /format.9x16">
+ <b>INBEBE 3D-реклама</b><code>/ad.3dbillboard /product.premium /lock.label /lock.jar /format.9x16</code><button class="copy" data-copy="/ad.3dbillboard /product.premium /lock.label /lock.jar /format.9x16">Копировать</button>
+</div>
+<div class="preset" data-search="wb полный аудит /wb.seo /market.contentaudit /seller.ads /seller.sales /seller.funnel /seller.stocks /seller.competitors /seller.actionplan">
+ <b>WB полный аудит</b><code>/wb.seo /market.contentaudit /seller.ads /seller.sales /seller.funnel /seller.stocks /seller.competitors /seller.actionplan</code><button class="copy" data-copy="/wb.seo /market.contentaudit /seller.ads /seller.sales /seller.funnel /seller.stocks /seller.competitors /seller.actionplan">Копировать</button>
+</div>
+<div class="preset" data-search="plamon continuation /plamon.style /video.continue /video.firstframe /video.samecharacter /video.samecamera /video.samestage /video.walknatural /video.trackbehind /video.nocut /video.noface /format.9x16">
+ <b>PlaMon continuation</b><code>/plamon.style /video.continue /video.firstframe /video.samecharacter /video.samecamera /video.samestage /video.walknatural /video.trackbehind /video.nocut /video.noface /format.9x16</code><button class="copy" data-copy="/plamon.style /video.continue /video.firstframe /video.samecharacter /video.samecamera /video.samestage /video.walknatural /video.trackbehind /video.nocut /video.noface /format.9x16">Копировать</button>
+</div>
+<div class="preset" data-search="проверка xml /doc.xml /doc.check /quality.finalcheck">
+ <b>Проверка XML</b><code>/doc.xml /doc.check /quality.finalcheck</code><button class="copy" data-copy="/doc.xml /doc.check /quality.finalcheck">Копировать</button>
+</div>
+<div class="preset" data-search="рецепт из холодильника /cook.fridge /cook.chef /cook.recipe">
+ <b>Рецепт из холодильника</b><code>/cook.fridge /cook.chef /cook.recipe</code><button class="copy" data-copy="/cook.fridge /cook.chef /cook.recipe">Копировать</button>
+</div>
+<div class="preset" data-search="диагностика техники /tech.diagnose /tech.howto /doc.checklist">
+ <b>Диагностика техники</b><code>/tech.diagnose /tech.howto /doc.checklist</code><button class="copy" data-copy="/tech.diagnose /tech.howto /doc.checklist">Копировать</button>
+</div>
+<div class="preset" data-search="умная покупка /buy.find /buy.compare /buy.bestvalue /buy.shortlist">
+ <b>Умная покупка</b><code>/buy.find /buy.compare /buy.bestvalue /buy.shortlist</code><button class="copy" data-copy="/buy.find /buy.compare /buy.bestvalue /buy.shortlist">Копировать</button>
+</div></div></section>
+<section id="catalog"><div class="panel"><h2>Каталог</h2>
+<details open class="cat" data-search="фото — люди /people.together объединить людей с разных фото /people.add добавить человека в фото /people.remove удалить человека с фото /people.couple совместное фото пары /people.family семейный портрет /people.pose изменить позу /people.smile добавить естественную улыбку /people.lookcamera направить взгляд в камеру">
+<summary>Фото — люди <span>8</span></summary>
+<div class="cmds">
+<div class="cmd" data-search="/people.together объединить людей с разных фото фото — люди">
+  <div><code>/people.together</code><div class="desc">Объединить людей с разных фото</div></div>
+  <button class="copy" data-copy="/people.together">Копировать</button>
+</div>
+<div class="cmd" data-search="/people.add добавить человека в фото фото — люди">
+  <div><code>/people.add</code><div class="desc">Добавить человека в фото</div></div>
+  <button class="copy" data-copy="/people.add">Копировать</button>
+</div>
+<div class="cmd" data-search="/people.remove удалить человека с фото фото — люди">
+  <div><code>/people.remove</code><div class="desc">Удалить человека с фото</div></div>
+  <button class="copy" data-copy="/people.remove">Копировать</button>
+</div>
+<div class="cmd" data-search="/people.couple совместное фото пары фото — люди">
+  <div><code>/people.couple</code><div class="desc">Совместное фото пары</div></div>
+  <button class="copy" data-copy="/people.couple">Копировать</button>
+</div>
+<div class="cmd" data-search="/people.family семейный портрет фото — люди">
+  <div><code>/people.family</code><div class="desc">Семейный портрет</div></div>
+  <button class="copy" data-copy="/people.family">Копировать</button>
+</div>
+<div class="cmd" data-search="/people.pose изменить позу фото — люди">
+  <div><code>/people.pose</code><div class="desc">Изменить позу</div></div>
+  <button class="copy" data-copy="/people.pose">Копировать</button>
+</div>
+<div class="cmd" data-search="/people.smile добавить естественную улыбку фото — люди">
+  <div><code>/people.smile</code><div class="desc">Добавить естественную улыбку</div></div>
+  <button class="copy" data-copy="/people.smile">Копировать</button>
+</div>
+<div class="cmd" data-search="/people.lookcamera направить взгляд в камеру фото — люди">
+  <div><code>/people.lookcamera</code><div class="desc">Направить взгляд в камеру</div></div>
+  <button class="copy" data-copy="/people.lookcamera">Копировать</button>
+</div></div></details>
+<details open class="cat" data-search="фото — редактирование /edit.retouch ретушь /edit.enhance улучшить качество /edit.restore восстановить старое фото /edit.colorize раскрасить ч/б фото /edit.removebg удалить фон /edit.newbg сменить фон /edit.removeobject удалить объект /edit.addobject добавить объект /edit.outfit сменить одежду /edit.hair изменить причёску /edit.glasses добавить/заменить очки /edit.light изменить свет /edit.weather изменить погоду /edit.daynight день ↔ ночь">
+<summary>Фото — редактирование <span>14</span></summary>
+<div class="cmds">
+<div class="cmd" data-search="/edit.retouch ретушь фото — редактирование">
+  <div><code>/edit.retouch</code><div class="desc">Ретушь</div></div>
+  <button class="copy" data-copy="/edit.retouch">Копировать</button>
+</div>
+<div class="cmd" data-search="/edit.enhance улучшить качество фото — редактирование">
+  <div><code>/edit.enhance</code><div class="desc">Улучшить качество</div></div>
+  <button class="copy" data-copy="/edit.enhance">Копировать</button>
+</div>
+<div class="cmd" data-search="/edit.restore восстановить старое фото фото — редактирование">
+  <div><code>/edit.restore</code><div class="desc">Восстановить старое фото</div></div>
+  <button class="copy" data-copy="/edit.restore">Копировать</button>
+</div>
+<div class="cmd" data-search="/edit.colorize раскрасить ч/б фото фото — редактирование">
+  <div><code>/edit.colorize</code><div class="desc">Раскрасить Ч/Б фото</div></div>
+  <button class="copy" data-copy="/edit.colorize">Копировать</button>
+</div>
+<div class="cmd" data-search="/edit.removebg удалить фон фото — редактирование">
+  <div><code>/edit.removebg</code><div class="desc">Удалить фон</div></div>
+  <button class="copy" data-copy="/edit.removebg">Копировать</button>
+</div>
+<div class="cmd" data-search="/edit.newbg сменить фон фото — редактирование">
+  <div><code>/edit.newbg</code><div class="desc">Сменить фон</div></div>
+  <button class="copy" data-copy="/edit.newbg">Копировать</button>
+</div>
+<div class="cmd" data-search="/edit.removeobject удалить объект фото — редактирование">
+  <div><code>/edit.removeobject</code><div class="desc">Удалить объект</div></div>
+  <button class="copy" data-copy="/edit.removeobject">Копировать</button>
+</div>
+<div class="cmd" data-search="/edit.addobject добавить объект фото — редактирование">
+  <div><code>/edit.addobject</code><div class="desc">Добавить объект</div></div>
+  <button class="copy" data-copy="/edit.addobject">Копировать</button>
+</div>
+<div class="cmd" data-search="/edit.outfit сменить одежду фото — редактирование">
+  <div><code>/edit.outfit</code><div class="desc">Сменить одежду</div></div>
+  <button class="copy" data-copy="/edit.outfit">Копировать</button>
+</div>
+<div class="cmd" data-search="/edit.hair изменить причёску фото — редактирование">
+  <div><code>/edit.hair</code><div class="desc">Изменить причёску</div></div>
+  <button class="copy" data-copy="/edit.hair">Копировать</button>
+</div>
+<div class="cmd" data-search="/edit.glasses добавить/заменить очки фото — редактирование">
+  <div><code>/edit.glasses</code><div class="desc">Добавить/заменить очки</div></div>
+  <button class="copy" data-copy="/edit.glasses">Копировать</button>
+</div>
+<div class="cmd" data-search="/edit.light изменить свет фото — редактирование">
+  <div><code>/edit.light</code><div class="desc">Изменить свет</div></div>
+  <button class="copy" data-copy="/edit.light">Копировать</button>
+</div>
+<div class="cmd" data-search="/edit.weather изменить погоду фото — редактирование">
+  <div><code>/edit.weather</code><div class="desc">Изменить погоду</div></div>
+  <button class="copy" data-copy="/edit.weather">Копировать</button>
+</div>
+<div class="cmd" data-search="/edit.daynight день ↔ ночь фото — редактирование">
+  <div><code>/edit.daynight</code><div class="desc">День ↔ ночь</div></div>
+  <button class="copy" data-copy="/edit.daynight">Копировать</button>
+</div></div></details>
+<details open class="cat" data-search="фото — стили /photo.portrait реалистичный портрет /photo.studio студийная съёмка /photo.business деловой портрет /photo.cinematic кинематографичный кадр /photo.luxury премиальная fashion-подача /photo.editorial журнальная editorial-съёмка /photo.magazine обложка журнала /photo.blackwhite чёрно-белый стиль /photo.film35 35-мм плёнка /photo.vintage винтаж /photo.goldenhour золотой час /photo.night ночная сцена">
+<summary>Фото — стили <span>12</span></summary>
+<div class="cmds">
+<div class="cmd" data-search="/photo.portrait реалистичный портрет фото — стили">
+  <div><code>/photo.portrait</code><div class="desc">Реалистичный портрет</div></div>
+  <button class="copy" data-copy="/photo.portrait">Копировать</button>
+</div>
+<div class="cmd" data-search="/photo.studio студийная съёмка фото — стили">
+  <div><code>/photo.studio</code><div class="desc">Студийная съёмка</div></div>
+  <button class="copy" data-copy="/photo.studio">Копировать</button>
+</div>
+<div class="cmd" data-search="/photo.business деловой портрет фото — стили">
+  <div><code>/photo.business</code><div class="desc">Деловой портрет</div></div>
+  <button class="copy" data-copy="/photo.business">Копировать</button>
+</div>
+<div class="cmd" data-search="/photo.cinematic кинематографичный кадр фото — стили">
+  <div><code>/photo.cinematic</code><div class="desc">Кинематографичный кадр</div></div>
+  <button class="copy" data-copy="/photo.cinematic">Копировать</button>
+</div>
+<div class="cmd" data-search="/photo.luxury премиальная fashion-подача фото — стили">
+  <div><code>/photo.luxury</code><div class="desc">Премиальная fashion-подача</div></div>
+  <button class="copy" data-copy="/photo.luxury">Копировать</button>
+</div>
+<div class="cmd" data-search="/photo.editorial журнальная editorial-съёмка фото — стили">
+  <div><code>/photo.editorial</code><div class="desc">Журнальная editorial-съёмка</div></div>
+  <button class="copy" data-copy="/photo.editorial">Копировать</button>
+</div>
+<div class="cmd" data-search="/photo.magazine обложка журнала фото — стили">
+  <div><code>/photo.magazine</code><div class="desc">Обложка журнала</div></div>
+  <button class="copy" data-copy="/photo.magazine">Копировать</button>
+</div>
+<div class="cmd" data-search="/photo.blackwhite чёрно-белый стиль фото — стили">
+  <div><code>/photo.blackwhite</code><div class="desc">Чёрно-белый стиль</div></div>
+  <button class="copy" data-copy="/photo.blackwhite">Копировать</button>
+</div>
+<div class="cmd" data-search="/photo.film35 35-мм плёнка фото — стили">
+  <div><code>/photo.film35</code><div class="desc">35-мм плёнка</div></div>
+  <button class="copy" data-copy="/photo.film35">Копировать</button>
+</div>
+<div class="cmd" data-search="/photo.vintage винтаж фото — стили">
+  <div><code>/photo.vintage</code><div class="desc">Винтаж</div></div>
+  <button class="copy" data-copy="/photo.vintage">Копировать</button>
+</div>
+<div class="cmd" data-search="/photo.goldenhour золотой час фото — стили">
+  <div><code>/photo.goldenhour</code><div class="desc">Золотой час</div></div>
+  <button class="copy" data-copy="/photo.goldenhour">Копировать</button>
+</div>
+<div class="cmd" data-search="/photo.night ночная сцена фото — стили">
+  <div><code>/photo.night</code><div class="desc">Ночная сцена</div></div>
+  <button class="copy" data-copy="/photo.night">Копировать</button>
+</div></div></details>
+<details open class="cat" data-search="lock / качество /lock.face не менять лицо /lock.identity не менять узнаваемость /lock.hair не менять волосы /lock.body не менять телосложение /lock.outfit не менять одежду /lock.label не менять этикетку /lock.jar не менять банку /lock.logo не менять логотип /lock.text не менять текст /lock.camera не менять камеру /lock.location не менять локацию /quality.realistic максимальный фотореализм /quality.natural естественная кожа и анатомия /quality.strict строго следовать условиям /quality.precheck проверить до генерации /quality.finalcheck финальная проверка">
+<summary>LOCK / качество <span>16</span></summary>
+<div class="cmds">
+<div class="cmd" data-search="/lock.face не менять лицо lock / качество">
+  <div><code>/lock.face</code><div class="desc">Не менять лицо</div></div>
+  <button class="copy" data-copy="/lock.face">Копировать</button>
+</div>
+<div class="cmd" data-search="/lock.identity не менять узнаваемость lock / качество">
+  <div><code>/lock.identity</code><div class="desc">Не менять узнаваемость</div></div>
+  <button class="copy" data-copy="/lock.identity">Копировать</button>
+</div>
+<div class="cmd" data-search="/lock.hair не менять волосы lock / качество">
+  <div><code>/lock.hair</code><div class="desc">Не менять волосы</div></div>
+  <button class="copy" data-copy="/lock.hair">Копировать</button>
+</div>
+<div class="cmd" data-search="/lock.body не менять телосложение lock / качество">
+  <div><code>/lock.body</code><div class="desc">Не менять телосложение</div></div>
+  <button class="copy" data-copy="/lock.body">Копировать</button>
+</div>
+<div class="cmd" data-search="/lock.outfit не менять одежду lock / качество">
+  <div><code>/lock.outfit</code><div class="desc">Не менять одежду</div></div>
+  <button class="copy" data-copy="/lock.outfit">Копировать</button>
+</div>
+<div class="cmd" data-search="/lock.label не менять этикетку lock / качество">
+  <div><code>/lock.label</code><div class="desc">Не менять этикетку</div></div>
+  <button class="copy" data-copy="/lock.label">Копировать</button>
+</div>
+<div class="cmd" data-search="/lock.jar не менять банку lock / качество">
+  <div><code>/lock.jar</code><div class="desc">Не менять банку</div></div>
+  <button class="copy" data-copy="/lock.jar">Копировать</button>
+</div>
+<div class="cmd" data-search="/lock.logo не менять логотип lock / качество">
+  <div><code>/lock.logo</code><div class="desc">Не менять логотип</div></div>
+  <button class="copy" data-copy="/lock.logo">Копировать</button>
+</div>
+<div class="cmd" data-search="/lock.text не менять текст lock / качество">
+  <div><code>/lock.text</code><div class="desc">Не менять текст</div></div>
+  <button class="copy" data-copy="/lock.text">Копировать</button>
+</div>
+<div class="cmd" data-search="/lock.camera не менять камеру lock / качество">
+  <div><code>/lock.camera</code><div class="desc">Не менять камеру</div></div>
+  <button class="copy" data-copy="/lock.camera">Копировать</button>
+</div>
+<div class="cmd" data-search="/lock.location не менять локацию lock / качество">
+  <div><code>/lock.location</code><div class="desc">Не менять локацию</div></div>
+  <button class="copy" data-copy="/lock.location">Копировать</button>
+</div>
+<div class="cmd" data-search="/quality.realistic максимальный фотореализм lock / качество">
+  <div><code>/quality.realistic</code><div class="desc">Максимальный фотореализм</div></div>
+  <button class="copy" data-copy="/quality.realistic">Копировать</button>
+</div>
+<div class="cmd" data-search="/quality.natural естественная кожа и анатомия lock / качество">
+  <div><code>/quality.natural</code><div class="desc">Естественная кожа и анатомия</div></div>
+  <button class="copy" data-copy="/quality.natural">Копировать</button>
+</div>
+<div class="cmd" data-search="/quality.strict строго следовать условиям lock / качество">
+  <div><code>/quality.strict</code><div class="desc">Строго следовать условиям</div></div>
+  <button class="copy" data-copy="/quality.strict">Копировать</button>
+</div>
+<div class="cmd" data-search="/quality.precheck проверить до генерации lock / качество">
+  <div><code>/quality.precheck</code><div class="desc">Проверить до генерации</div></div>
+  <button class="copy" data-copy="/quality.precheck">Копировать</button>
+</div>
+<div class="cmd" data-search="/quality.finalcheck финальная проверка lock / качество">
+  <div><code>/quality.finalcheck</code><div class="desc">Финальная проверка</div></div>
+  <button class="copy" data-copy="/quality.finalcheck">Копировать</button>
+</div></div></details>
+<details open class="cat" data-search="товары и реклама /product.packshot чистое товарное фото /product.whitebg белый фон /product.premium премиальная предметная съёмка /product.marketplace главное фото маркетплейса /product.hero hero-shot /product.macro макро /product.lifestyle lifestyle-сцена /product.kitchen кухонная сцена /product.ingredients ингредиенты вокруг товара /product.shadow естественная тень /product.reflection отражение /product.floating левитация /product.splash splash-эффект /ad.poster рекламный постер /ad.newspaper газетная реклама /ad.3dbillboard 3d-билборд /ad.giantproduct гигантский товар /ad.anamorphic анаморфный 3d-экран /ad.buildingwrap реклама на фасаде">
+<summary>Товары и реклама <span>19</span></summary>
+<div class="cmds">
+<div class="cmd" data-search="/product.packshot чистое товарное фото товары и реклама">
+  <div><code>/product.packshot</code><div class="desc">Чистое товарное фото</div></div>
+  <button class="copy" data-copy="/product.packshot">Копировать</button>
+</div>
+<div class="cmd" data-search="/product.whitebg белый фон товары и реклама">
+  <div><code>/product.whitebg</code><div class="desc">Белый фон</div></div>
+  <button class="copy" data-copy="/product.whitebg">Копировать</button>
+</div>
+<div class="cmd" data-search="/product.premium премиальная предметная съёмка товары и реклама">
+  <div><code>/product.premium</code><div class="desc">Премиальная предметная съёмка</div></div>
+  <button class="copy" data-copy="/product.premium">Копировать</button>
+</div>
+<div class="cmd" data-search="/product.marketplace главное фото маркетплейса товары и реклама">
+  <div><code>/product.marketplace</code><div class="desc">Главное фото маркетплейса</div></div>
+  <button class="copy" data-copy="/product.marketplace">Копировать</button>
+</div>
+<div class="cmd" data-search="/product.hero hero-shot товары и реклама">
+  <div><code>/product.hero</code><div class="desc">Hero-shot</div></div>
+  <button class="copy" data-copy="/product.hero">Копировать</button>
+</div>
+<div class="cmd" data-search="/product.macro макро товары и реклама">
+  <div><code>/product.macro</code><div class="desc">Макро</div></div>
+  <button class="copy" data-copy="/product.macro">Копировать</button>
+</div>
+<div class="cmd" data-search="/product.lifestyle lifestyle-сцена товары и реклама">
+  <div><code>/product.lifestyle</code><div class="desc">Lifestyle-сцена</div></div>
+  <button class="copy" data-copy="/product.lifestyle">Копировать</button>
+</div>
+<div class="cmd" data-search="/product.kitchen кухонная сцена товары и реклама">
+  <div><code>/product.kitchen</code><div class="desc">Кухонная сцена</div></div>
+  <button class="copy" data-copy="/product.kitchen">Копировать</button>
+</div>
+<div class="cmd" data-search="/product.ingredients ингредиенты вокруг товара товары и реклама">
+  <div><code>/product.ingredients</code><div class="desc">Ингредиенты вокруг товара</div></div>
+  <button class="copy" data-copy="/product.ingredients">Копировать</button>
+</div>
+<div class="cmd" data-search="/product.shadow естественная тень товары и реклама">
+  <div><code>/product.shadow</code><div class="desc">Естественная тень</div></div>
+  <button class="copy" data-copy="/product.shadow">Копировать</button>
+</div>
+<div class="cmd" data-search="/product.reflection отражение товары и реклама">
+  <div><code>/product.reflection</code><div class="desc">Отражение</div></div>
+  <button class="copy" data-copy="/product.reflection">Копировать</button>
+</div>
+<div class="cmd" data-search="/product.floating левитация товары и реклама">
+  <div><code>/product.floating</code><div class="desc">Левитация</div></div>
+  <button class="copy" data-copy="/product.floating">Копировать</button>
+</div>
+<div class="cmd" data-search="/product.splash splash-эффект товары и реклама">
+  <div><code>/product.splash</code><div class="desc">Splash-эффект</div></div>
+  <button class="copy" data-copy="/product.splash">Копировать</button>
+</div>
+<div class="cmd" data-search="/ad.poster рекламный постер товары и реклама">
+  <div><code>/ad.poster</code><div class="desc">Рекламный постер</div></div>
+  <button class="copy" data-copy="/ad.poster">Копировать</button>
+</div>
+<div class="cmd" data-search="/ad.newspaper газетная реклама товары и реклама">
+  <div><code>/ad.newspaper</code><div class="desc">Газетная реклама</div></div>
+  <button class="copy" data-copy="/ad.newspaper">Копировать</button>
+</div>
+<div class="cmd" data-search="/ad.3dbillboard 3d-билборд товары и реклама">
+  <div><code>/ad.3dbillboard</code><div class="desc">3D-билборд</div></div>
+  <button class="copy" data-copy="/ad.3dbillboard">Копировать</button>
+</div>
+<div class="cmd" data-search="/ad.giantproduct гигантский товар товары и реклама">
+  <div><code>/ad.giantproduct</code><div class="desc">Гигантский товар</div></div>
+  <button class="copy" data-copy="/ad.giantproduct">Копировать</button>
+</div>
+<div class="cmd" data-search="/ad.anamorphic анаморфный 3d-экран товары и реклама">
+  <div><code>/ad.anamorphic</code><div class="desc">Анаморфный 3D-экран</div></div>
+  <button class="copy" data-copy="/ad.anamorphic">Копировать</button>
+</div>
+<div class="cmd" data-search="/ad.buildingwrap реклама на фасаде товары и реклама">
+  <div><code>/ad.buildingwrap</code><div class="desc">Реклама на фасаде</div></div>
+  <button class="copy" data-copy="/ad.buildingwrap">Копировать</button>
+</div></div></details>
+<details open class="cat" data-search="inbebe /inbebe.hero премиальное главное фото /inbebe.white чистое фото банки /inbebe.ingredients банка + ингредиенты /inbebe.macro макро фракции /inbebe.kitchen премиальная кухня /inbebe.card главное фото карточки /inbebe.rich rich-контент /inbebe.infographic инфографика /inbebe.seo seo /inbebe.labelsafe строго сохранить этикетку /inbebe.minimal минимум декора">
+<summary>INBEBE <span>11</span></summary>
+<div class="cmds">
+<div class="cmd" data-search="/inbebe.hero премиальное главное фото inbebe">
+  <div><code>/inbebe.hero</code><div class="desc">Премиальное главное фото</div></div>
+  <button class="copy" data-copy="/inbebe.hero">Копировать</button>
+</div>
+<div class="cmd" data-search="/inbebe.white чистое фото банки inbebe">
+  <div><code>/inbebe.white</code><div class="desc">Чистое фото банки</div></div>
+  <button class="copy" data-copy="/inbebe.white">Копировать</button>
+</div>
+<div class="cmd" data-search="/inbebe.ingredients банка + ингредиенты inbebe">
+  <div><code>/inbebe.ingredients</code><div class="desc">Банка + ингредиенты</div></div>
+  <button class="copy" data-copy="/inbebe.ingredients">Копировать</button>
+</div>
+<div class="cmd" data-search="/inbebe.macro макро фракции inbebe">
+  <div><code>/inbebe.macro</code><div class="desc">Макро фракции</div></div>
+  <button class="copy" data-copy="/inbebe.macro">Копировать</button>
+</div>
+<div class="cmd" data-search="/inbebe.kitchen премиальная кухня inbebe">
+  <div><code>/inbebe.kitchen</code><div class="desc">Премиальная кухня</div></div>
+  <button class="copy" data-copy="/inbebe.kitchen">Копировать</button>
+</div>
+<div class="cmd" data-search="/inbebe.card главное фото карточки inbebe">
+  <div><code>/inbebe.card</code><div class="desc">Главное фото карточки</div></div>
+  <button class="copy" data-copy="/inbebe.card">Копировать</button>
+</div>
+<div class="cmd" data-search="/inbebe.rich rich-контент inbebe">
+  <div><code>/inbebe.rich</code><div class="desc">Rich-контент</div></div>
+  <button class="copy" data-copy="/inbebe.rich">Копировать</button>
+</div>
+<div class="cmd" data-search="/inbebe.infographic инфографика inbebe">
+  <div><code>/inbebe.infographic</code><div class="desc">Инфографика</div></div>
+  <button class="copy" data-copy="/inbebe.infographic">Копировать</button>
+</div>
+<div class="cmd" data-search="/inbebe.seo seo inbebe">
+  <div><code>/inbebe.seo</code><div class="desc">SEO</div></div>
+  <button class="copy" data-copy="/inbebe.seo">Копировать</button>
+</div>
+<div class="cmd" data-search="/inbebe.labelsafe строго сохранить этикетку inbebe">
+  <div><code>/inbebe.labelsafe</code><div class="desc">Строго сохранить этикетку</div></div>
+  <button class="copy" data-copy="/inbebe.labelsafe">Копировать</button>
+</div>
+<div class="cmd" data-search="/inbebe.minimal минимум декора inbebe">
+  <div><code>/inbebe.minimal</code><div class="desc">Минимум декора</div></div>
+  <button class="copy" data-copy="/inbebe.minimal">Копировать</button>
+</div></div></details>
+<details open class="cat" data-search="маркетплейсы — контент /wb.seo seo wildberries /ozon.seo seo ozon /ym.seo seo яндекс маркета /market.title название товара /market.description описание /market.keywords ключевые слова /market.bullets преимущества /market.rich rich-контент /market.infographic инфографика /market.faq faq /market.reviewreply ответ на хороший отзыв /market.negativereply ответ на негатив /market.questionreply ответ на вопрос /market.contentaudit аудит карточки /market.photoplan план фото-контента">
+<summary>Маркетплейсы — контент <span>15</span></summary>
+<div class="cmds">
+<div class="cmd" data-search="/wb.seo seo wildberries маркетплейсы — контент">
+  <div><code>/wb.seo</code><div class="desc">SEO Wildberries</div></div>
+  <button class="copy" data-copy="/wb.seo">Копировать</button>
+</div>
+<div class="cmd" data-search="/ozon.seo seo ozon маркетплейсы — контент">
+  <div><code>/ozon.seo</code><div class="desc">SEO Ozon</div></div>
+  <button class="copy" data-copy="/ozon.seo">Копировать</button>
+</div>
+<div class="cmd" data-search="/ym.seo seo яндекс маркета маркетплейсы — контент">
+  <div><code>/ym.seo</code><div class="desc">SEO Яндекс Маркета</div></div>
+  <button class="copy" data-copy="/ym.seo">Копировать</button>
+</div>
+<div class="cmd" data-search="/market.title название товара маркетплейсы — контент">
+  <div><code>/market.title</code><div class="desc">Название товара</div></div>
+  <button class="copy" data-copy="/market.title">Копировать</button>
+</div>
+<div class="cmd" data-search="/market.description описание маркетплейсы — контент">
+  <div><code>/market.description</code><div class="desc">Описание</div></div>
+  <button class="copy" data-copy="/market.description">Копировать</button>
+</div>
+<div class="cmd" data-search="/market.keywords ключевые слова маркетплейсы — контент">
+  <div><code>/market.keywords</code><div class="desc">Ключевые слова</div></div>
+  <button class="copy" data-copy="/market.keywords">Копировать</button>
+</div>
+<div class="cmd" data-search="/market.bullets преимущества маркетплейсы — контент">
+  <div><code>/market.bullets</code><div class="desc">Преимущества</div></div>
+  <button class="copy" data-copy="/market.bullets">Копировать</button>
+</div>
+<div class="cmd" data-search="/market.rich rich-контент маркетплейсы — контент">
+  <div><code>/market.rich</code><div class="desc">Rich-контент</div></div>
+  <button class="copy" data-copy="/market.rich">Копировать</button>
+</div>
+<div class="cmd" data-search="/market.infographic инфографика маркетплейсы — контент">
+  <div><code>/market.infographic</code><div class="desc">Инфографика</div></div>
+  <button class="copy" data-copy="/market.infographic">Копировать</button>
+</div>
+<div class="cmd" data-search="/market.faq faq маркетплейсы — контент">
+  <div><code>/market.faq</code><div class="desc">FAQ</div></div>
+  <button class="copy" data-copy="/market.faq">Копировать</button>
+</div>
+<div class="cmd" data-search="/market.reviewreply ответ на хороший отзыв маркетплейсы — контент">
+  <div><code>/market.reviewreply</code><div class="desc">Ответ на хороший отзыв</div></div>
+  <button class="copy" data-copy="/market.reviewreply">Копировать</button>
+</div>
+<div class="cmd" data-search="/market.negativereply ответ на негатив маркетплейсы — контент">
+  <div><code>/market.negativereply</code><div class="desc">Ответ на негатив</div></div>
+  <button class="copy" data-copy="/market.negativereply">Копировать</button>
+</div>
+<div class="cmd" data-search="/market.questionreply ответ на вопрос маркетплейсы — контент">
+  <div><code>/market.questionreply</code><div class="desc">Ответ на вопрос</div></div>
+  <button class="copy" data-copy="/market.questionreply">Копировать</button>
+</div>
+<div class="cmd" data-search="/market.contentaudit аудит карточки маркетплейсы — контент">
+  <div><code>/market.contentaudit</code><div class="desc">Аудит карточки</div></div>
+  <button class="copy" data-copy="/market.contentaudit">Копировать</button>
+</div>
+<div class="cmd" data-search="/market.photoplan план фото-контента маркетплейсы — контент">
+  <div><code>/market.photoplan</code><div class="desc">План фото-контента</div></div>
+  <button class="copy" data-copy="/market.photoplan">Копировать</button>
+</div></div></details>
+<details open class="cat" data-search="маркетплейсы — аналитика /seller.unit юнит-экономика /seller.margin маржа /seller.price целевая цена /seller.discount допустимая скидка /seller.ads разбор рекламы /seller.sales разбор продаж /seller.funnel воронка /seller.ctr ctr /seller.conversion конверсия /seller.cpc cpc /seller.acos acos/дрр /seller.stocks остатки /seller.forecast прогноз запаса /seller.competitors конкуренты /seller.weekly недельный отчёт /seller.actionplan план действий">
+<summary>Маркетплейсы — аналитика <span>16</span></summary>
+<div class="cmds">
+<div class="cmd" data-search="/seller.unit юнит-экономика маркетплейсы — аналитика">
+  <div><code>/seller.unit</code><div class="desc">Юнит-экономика</div></div>
+  <button class="copy" data-copy="/seller.unit">Копировать</button>
+</div>
+<div class="cmd" data-search="/seller.margin маржа маркетплейсы — аналитика">
+  <div><code>/seller.margin</code><div class="desc">Маржа</div></div>
+  <button class="copy" data-copy="/seller.margin">Копировать</button>
+</div>
+<div class="cmd" data-search="/seller.price целевая цена маркетплейсы — аналитика">
+  <div><code>/seller.price</code><div class="desc">Целевая цена</div></div>
+  <button class="copy" data-copy="/seller.price">Копировать</button>
+</div>
+<div class="cmd" data-search="/seller.discount допустимая скидка маркетплейсы — аналитика">
+  <div><code>/seller.discount</code><div class="desc">Допустимая скидка</div></div>
+  <button class="copy" data-copy="/seller.discount">Копировать</button>
+</div>
+<div class="cmd" data-search="/seller.ads разбор рекламы маркетплейсы — аналитика">
+  <div><code>/seller.ads</code><div class="desc">Разбор рекламы</div></div>
+  <button class="copy" data-copy="/seller.ads">Копировать</button>
+</div>
+<div class="cmd" data-search="/seller.sales разбор продаж маркетплейсы — аналитика">
+  <div><code>/seller.sales</code><div class="desc">Разбор продаж</div></div>
+  <button class="copy" data-copy="/seller.sales">Копировать</button>
+</div>
+<div class="cmd" data-search="/seller.funnel воронка маркетплейсы — аналитика">
+  <div><code>/seller.funnel</code><div class="desc">Воронка</div></div>
+  <button class="copy" data-copy="/seller.funnel">Копировать</button>
+</div>
+<div class="cmd" data-search="/seller.ctr ctr маркетплейсы — аналитика">
+  <div><code>/seller.ctr</code><div class="desc">CTR</div></div>
+  <button class="copy" data-copy="/seller.ctr">Копировать</button>
+</div>
+<div class="cmd" data-search="/seller.conversion конверсия маркетплейсы — аналитика">
+  <div><code>/seller.conversion</code><div class="desc">Конверсия</div></div>
+  <button class="copy" data-copy="/seller.conversion">Копировать</button>
+</div>
+<div class="cmd" data-search="/seller.cpc cpc маркетплейсы — аналитика">
+  <div><code>/seller.cpc</code><div class="desc">CPC</div></div>
+  <button class="copy" data-copy="/seller.cpc">Копировать</button>
+</div>
+<div class="cmd" data-search="/seller.acos acos/дрр маркетплейсы — аналитика">
+  <div><code>/seller.acos</code><div class="desc">ACOS/ДРР</div></div>
+  <button class="copy" data-copy="/seller.acos">Копировать</button>
+</div>
+<div class="cmd" data-search="/seller.stocks остатки маркетплейсы — аналитика">
+  <div><code>/seller.stocks</code><div class="desc">Остатки</div></div>
+  <button class="copy" data-copy="/seller.stocks">Копировать</button>
+</div>
+<div class="cmd" data-search="/seller.forecast прогноз запаса маркетплейсы — аналитика">
+  <div><code>/seller.forecast</code><div class="desc">Прогноз запаса</div></div>
+  <button class="copy" data-copy="/seller.forecast">Копировать</button>
+</div>
+<div class="cmd" data-search="/seller.competitors конкуренты маркетплейсы — аналитика">
+  <div><code>/seller.competitors</code><div class="desc">Конкуренты</div></div>
+  <button class="copy" data-copy="/seller.competitors">Копировать</button>
+</div>
+<div class="cmd" data-search="/seller.weekly недельный отчёт маркетплейсы — аналитика">
+  <div><code>/seller.weekly</code><div class="desc">Недельный отчёт</div></div>
+  <button class="copy" data-copy="/seller.weekly">Копировать</button>
+</div>
+<div class="cmd" data-search="/seller.actionplan план действий маркетплейсы — аналитика">
+  <div><code>/seller.actionplan</code><div class="desc">План действий</div></div>
+  <button class="copy" data-copy="/seller.actionplan">Копировать</button>
+</div></div></details>
+<details open class="cat" data-search="plamon и видео /plamon.style фирменная эстетика /plamon.nightdrive ночной город /plamon.redrose красная роза /plamon.backview герой со спины /plamon.blacksuit чёрный костюм /plamon.hotel отель /plamon.reelcover обложка reels /plamon.hook хук /plamon.caption подпись /video.5s видео 5 секунд /video.continue продолжить с последнего кадра /video.firstframe точный первый кадр /video.lastframe подготовить последний кадр /video.samecharacter сохранить героя /video.samecamera сохранить камеру /video.samestage сохранить локацию /video.walknatural естественная походка /video.trackbehind камера сзади /video.nocut без склеек /video.noface не показывать лицо /video.noslide не допускать скольжения ног /video.checkprompt проверить видеопромпт">
+<summary>PlaMon и видео <span>22</span></summary>
+<div class="cmds">
+<div class="cmd" data-search="/plamon.style фирменная эстетика plamon и видео">
+  <div><code>/plamon.style</code><div class="desc">Фирменная эстетика</div></div>
+  <button class="copy" data-copy="/plamon.style">Копировать</button>
+</div>
+<div class="cmd" data-search="/plamon.nightdrive ночной город plamon и видео">
+  <div><code>/plamon.nightdrive</code><div class="desc">Ночной город</div></div>
+  <button class="copy" data-copy="/plamon.nightdrive">Копировать</button>
+</div>
+<div class="cmd" data-search="/plamon.redrose красная роза plamon и видео">
+  <div><code>/plamon.redrose</code><div class="desc">Красная роза</div></div>
+  <button class="copy" data-copy="/plamon.redrose">Копировать</button>
+</div>
+<div class="cmd" data-search="/plamon.backview герой со спины plamon и видео">
+  <div><code>/plamon.backview</code><div class="desc">Герой со спины</div></div>
+  <button class="copy" data-copy="/plamon.backview">Копировать</button>
+</div>
+<div class="cmd" data-search="/plamon.blacksuit чёрный костюм plamon и видео">
+  <div><code>/plamon.blacksuit</code><div class="desc">Чёрный костюм</div></div>
+  <button class="copy" data-copy="/plamon.blacksuit">Копировать</button>
+</div>
+<div class="cmd" data-search="/plamon.hotel отель plamon и видео">
+  <div><code>/plamon.hotel</code><div class="desc">Отель</div></div>
+  <button class="copy" data-copy="/plamon.hotel">Копировать</button>
+</div>
+<div class="cmd" data-search="/plamon.reelcover обложка reels plamon и видео">
+  <div><code>/plamon.reelcover</code><div class="desc">Обложка Reels</div></div>
+  <button class="copy" data-copy="/plamon.reelcover">Копировать</button>
+</div>
+<div class="cmd" data-search="/plamon.hook хук plamon и видео">
+  <div><code>/plamon.hook</code><div class="desc">Хук</div></div>
+  <button class="copy" data-copy="/plamon.hook">Копировать</button>
+</div>
+<div class="cmd" data-search="/plamon.caption подпись plamon и видео">
+  <div><code>/plamon.caption</code><div class="desc">Подпись</div></div>
+  <button class="copy" data-copy="/plamon.caption">Копировать</button>
+</div>
+<div class="cmd" data-search="/video.5s видео 5 секунд plamon и видео">
+  <div><code>/video.5s</code><div class="desc">Видео 5 секунд</div></div>
+  <button class="copy" data-copy="/video.5s">Копировать</button>
+</div>
+<div class="cmd" data-search="/video.continue продолжить с последнего кадра plamon и видео">
+  <div><code>/video.continue</code><div class="desc">Продолжить с последнего кадра</div></div>
+  <button class="copy" data-copy="/video.continue">Копировать</button>
+</div>
+<div class="cmd" data-search="/video.firstframe точный первый кадр plamon и видео">
+  <div><code>/video.firstframe</code><div class="desc">Точный первый кадр</div></div>
+  <button class="copy" data-copy="/video.firstframe">Копировать</button>
+</div>
+<div class="cmd" data-search="/video.lastframe подготовить последний кадр plamon и видео">
+  <div><code>/video.lastframe</code><div class="desc">Подготовить последний кадр</div></div>
+  <button class="copy" data-copy="/video.lastframe">Копировать</button>
+</div>
+<div class="cmd" data-search="/video.samecharacter сохранить героя plamon и видео">
+  <div><code>/video.samecharacter</code><div class="desc">Сохранить героя</div></div>
+  <button class="copy" data-copy="/video.samecharacter">Копировать</button>
+</div>
+<div class="cmd" data-search="/video.samecamera сохранить камеру plamon и видео">
+  <div><code>/video.samecamera</code><div class="desc">Сохранить камеру</div></div>
+  <button class="copy" data-copy="/video.samecamera">Копировать</button>
+</div>
+<div class="cmd" data-search="/video.samestage сохранить локацию plamon и видео">
+  <div><code>/video.samestage</code><div class="desc">Сохранить локацию</div></div>
+  <button class="copy" data-copy="/video.samestage">Копировать</button>
+</div>
+<div class="cmd" data-search="/video.walknatural естественная походка plamon и видео">
+  <div><code>/video.walknatural</code><div class="desc">Естественная походка</div></div>
+  <button class="copy" data-copy="/video.walknatural">Копировать</button>
+</div>
+<div class="cmd" data-search="/video.trackbehind камера сзади plamon и видео">
+  <div><code>/video.trackbehind</code><div class="desc">Камера сзади</div></div>
+  <button class="copy" data-copy="/video.trackbehind">Копировать</button>
+</div>
+<div class="cmd" data-search="/video.nocut без склеек plamon и видео">
+  <div><code>/video.nocut</code><div class="desc">Без склеек</div></div>
+  <button class="copy" data-copy="/video.nocut">Копировать</button>
+</div>
+<div class="cmd" data-search="/video.noface не показывать лицо plamon и видео">
+  <div><code>/video.noface</code><div class="desc">Не показывать лицо</div></div>
+  <button class="copy" data-copy="/video.noface">Копировать</button>
+</div>
+<div class="cmd" data-search="/video.noslide не допускать скольжения ног plamon и видео">
+  <div><code>/video.noslide</code><div class="desc">Не допускать скольжения ног</div></div>
+  <button class="copy" data-copy="/video.noslide">Копировать</button>
+</div>
+<div class="cmd" data-search="/video.checkprompt проверить видеопромпт plamon и видео">
+  <div><code>/video.checkprompt</code><div class="desc">Проверить видеопромпт</div></div>
+  <button class="copy" data-copy="/video.checkprompt">Копировать</button>
+</div></div></details>
+<details open class="cat" data-search="тексты /text.rewrite переписать лучше /text.shorten сократить /text.expand расширить /text.proofread корректура /text.formal официальный стиль /text.simple объяснить просто /text.translate перевод /text.summary краткое содержание /text.compare сравнение /text.email email /text.reply ответ на сообщение /text.hook хук /text.caption подпись /text.cta cta /text.complaint претензия">
+<summary>Тексты <span>15</span></summary>
+<div class="cmds">
+<div class="cmd" data-search="/text.rewrite переписать лучше тексты">
+  <div><code>/text.rewrite</code><div class="desc">Переписать лучше</div></div>
+  <button class="copy" data-copy="/text.rewrite">Копировать</button>
+</div>
+<div class="cmd" data-search="/text.shorten сократить тексты">
+  <div><code>/text.shorten</code><div class="desc">Сократить</div></div>
+  <button class="copy" data-copy="/text.shorten">Копировать</button>
+</div>
+<div class="cmd" data-search="/text.expand расширить тексты">
+  <div><code>/text.expand</code><div class="desc">Расширить</div></div>
+  <button class="copy" data-copy="/text.expand">Копировать</button>
+</div>
+<div class="cmd" data-search="/text.proofread корректура тексты">
+  <div><code>/text.proofread</code><div class="desc">Корректура</div></div>
+  <button class="copy" data-copy="/text.proofread">Копировать</button>
+</div>
+<div class="cmd" data-search="/text.formal официальный стиль тексты">
+  <div><code>/text.formal</code><div class="desc">Официальный стиль</div></div>
+  <button class="copy" data-copy="/text.formal">Копировать</button>
+</div>
+<div class="cmd" data-search="/text.simple объяснить просто тексты">
+  <div><code>/text.simple</code><div class="desc">Объяснить просто</div></div>
+  <button class="copy" data-copy="/text.simple">Копировать</button>
+</div>
+<div class="cmd" data-search="/text.translate перевод тексты">
+  <div><code>/text.translate</code><div class="desc">Перевод</div></div>
+  <button class="copy" data-copy="/text.translate">Копировать</button>
+</div>
+<div class="cmd" data-search="/text.summary краткое содержание тексты">
+  <div><code>/text.summary</code><div class="desc">Краткое содержание</div></div>
+  <button class="copy" data-copy="/text.summary">Копировать</button>
+</div>
+<div class="cmd" data-search="/text.compare сравнение тексты">
+  <div><code>/text.compare</code><div class="desc">Сравнение</div></div>
+  <button class="copy" data-copy="/text.compare">Копировать</button>
+</div>
+<div class="cmd" data-search="/text.email email тексты">
+  <div><code>/text.email</code><div class="desc">Email</div></div>
+  <button class="copy" data-copy="/text.email">Копировать</button>
+</div>
+<div class="cmd" data-search="/text.reply ответ на сообщение тексты">
+  <div><code>/text.reply</code><div class="desc">Ответ на сообщение</div></div>
+  <button class="copy" data-copy="/text.reply">Копировать</button>
+</div>
+<div class="cmd" data-search="/text.hook хук тексты">
+  <div><code>/text.hook</code><div class="desc">Хук</div></div>
+  <button class="copy" data-copy="/text.hook">Копировать</button>
+</div>
+<div class="cmd" data-search="/text.caption подпись тексты">
+  <div><code>/text.caption</code><div class="desc">Подпись</div></div>
+  <button class="copy" data-copy="/text.caption">Копировать</button>
+</div>
+<div class="cmd" data-search="/text.cta cta тексты">
+  <div><code>/text.cta</code><div class="desc">CTA</div></div>
+  <button class="copy" data-copy="/text.cta">Копировать</button>
+</div>
+<div class="cmd" data-search="/text.complaint претензия тексты">
+  <div><code>/text.complaint</code><div class="desc">Претензия</div></div>
+  <button class="copy" data-copy="/text.complaint">Копировать</button>
+</div></div></details>
+<details open class="cat" data-search="документы и финансы /doc.check проверить документ /doc.contract договор /doc.risks риски /doc.upd упд /doc.xml xml /doc.invoice счёт /doc.act акт /doc.table таблица /doc.checklist чек-лист /doc.plan план /finance.calc расчёт /finance.budget бюджет /finance.profit прибыль /finance.breakeven точка безубыточности /finance.percent проценты">
+<summary>Документы и финансы <span>15</span></summary>
+<div class="cmds">
+<div class="cmd" data-search="/doc.check проверить документ документы и финансы">
+  <div><code>/doc.check</code><div class="desc">Проверить документ</div></div>
+  <button class="copy" data-copy="/doc.check">Копировать</button>
+</div>
+<div class="cmd" data-search="/doc.contract договор документы и финансы">
+  <div><code>/doc.contract</code><div class="desc">Договор</div></div>
+  <button class="copy" data-copy="/doc.contract">Копировать</button>
+</div>
+<div class="cmd" data-search="/doc.risks риски документы и финансы">
+  <div><code>/doc.risks</code><div class="desc">Риски</div></div>
+  <button class="copy" data-copy="/doc.risks">Копировать</button>
+</div>
+<div class="cmd" data-search="/doc.upd упд документы и финансы">
+  <div><code>/doc.upd</code><div class="desc">УПД</div></div>
+  <button class="copy" data-copy="/doc.upd">Копировать</button>
+</div>
+<div class="cmd" data-search="/doc.xml xml документы и финансы">
+  <div><code>/doc.xml</code><div class="desc">XML</div></div>
+  <button class="copy" data-copy="/doc.xml">Копировать</button>
+</div>
+<div class="cmd" data-search="/doc.invoice счёт документы и финансы">
+  <div><code>/doc.invoice</code><div class="desc">Счёт</div></div>
+  <button class="copy" data-copy="/doc.invoice">Копировать</button>
+</div>
+<div class="cmd" data-search="/doc.act акт документы и финансы">
+  <div><code>/doc.act</code><div class="desc">Акт</div></div>
+  <button class="copy" data-copy="/doc.act">Копировать</button>
+</div>
+<div class="cmd" data-search="/doc.table таблица документы и финансы">
+  <div><code>/doc.table</code><div class="desc">Таблица</div></div>
+  <button class="copy" data-copy="/doc.table">Копировать</button>
+</div>
+<div class="cmd" data-search="/doc.checklist чек-лист документы и финансы">
+  <div><code>/doc.checklist</code><div class="desc">Чек-лист</div></div>
+  <button class="copy" data-copy="/doc.checklist">Копировать</button>
+</div>
+<div class="cmd" data-search="/doc.plan план документы и финансы">
+  <div><code>/doc.plan</code><div class="desc">План</div></div>
+  <button class="copy" data-copy="/doc.plan">Копировать</button>
+</div>
+<div class="cmd" data-search="/finance.calc расчёт документы и финансы">
+  <div><code>/finance.calc</code><div class="desc">Расчёт</div></div>
+  <button class="copy" data-copy="/finance.calc">Копировать</button>
+</div>
+<div class="cmd" data-search="/finance.budget бюджет документы и финансы">
+  <div><code>/finance.budget</code><div class="desc">Бюджет</div></div>
+  <button class="copy" data-copy="/finance.budget">Копировать</button>
+</div>
+<div class="cmd" data-search="/finance.profit прибыль документы и финансы">
+  <div><code>/finance.profit</code><div class="desc">Прибыль</div></div>
+  <button class="copy" data-copy="/finance.profit">Копировать</button>
+</div>
+<div class="cmd" data-search="/finance.breakeven точка безубыточности документы и финансы">
+  <div><code>/finance.breakeven</code><div class="desc">Точка безубыточности</div></div>
+  <button class="copy" data-copy="/finance.breakeven">Копировать</button>
+</div>
+<div class="cmd" data-search="/finance.percent проценты документы и финансы">
+  <div><code>/finance.percent</code><div class="desc">Проценты</div></div>
+  <button class="copy" data-copy="/finance.percent">Копировать</button>
+</div></div></details>
+<details open class="cat" data-search="техника /tech.howto куда нажать /tech.diagnose диагностика /tech.iphone iphone /tech.windows windows /tech.tv телевизор /tech.router роутер /tech.vpn vpn /tech.app приложения /tech.account аккаунты /tech.backup резервная копия /tech.migrate перенос данных /tech.optimize оптимизация">
+<summary>Техника <span>12</span></summary>
+<div class="cmds">
+<div class="cmd" data-search="/tech.howto куда нажать техника">
+  <div><code>/tech.howto</code><div class="desc">Куда нажать</div></div>
+  <button class="copy" data-copy="/tech.howto">Копировать</button>
+</div>
+<div class="cmd" data-search="/tech.diagnose диагностика техника">
+  <div><code>/tech.diagnose</code><div class="desc">Диагностика</div></div>
+  <button class="copy" data-copy="/tech.diagnose">Копировать</button>
+</div>
+<div class="cmd" data-search="/tech.iphone iphone техника">
+  <div><code>/tech.iphone</code><div class="desc">iPhone</div></div>
+  <button class="copy" data-copy="/tech.iphone">Копировать</button>
+</div>
+<div class="cmd" data-search="/tech.windows windows техника">
+  <div><code>/tech.windows</code><div class="desc">Windows</div></div>
+  <button class="copy" data-copy="/tech.windows">Копировать</button>
+</div>
+<div class="cmd" data-search="/tech.tv телевизор техника">
+  <div><code>/tech.tv</code><div class="desc">Телевизор</div></div>
+  <button class="copy" data-copy="/tech.tv">Копировать</button>
+</div>
+<div class="cmd" data-search="/tech.router роутер техника">
+  <div><code>/tech.router</code><div class="desc">Роутер</div></div>
+  <button class="copy" data-copy="/tech.router">Копировать</button>
+</div>
+<div class="cmd" data-search="/tech.vpn vpn техника">
+  <div><code>/tech.vpn</code><div class="desc">VPN</div></div>
+  <button class="copy" data-copy="/tech.vpn">Копировать</button>
+</div>
+<div class="cmd" data-search="/tech.app приложения техника">
+  <div><code>/tech.app</code><div class="desc">Приложения</div></div>
+  <button class="copy" data-copy="/tech.app">Копировать</button>
+</div>
+<div class="cmd" data-search="/tech.account аккаунты техника">
+  <div><code>/tech.account</code><div class="desc">Аккаунты</div></div>
+  <button class="copy" data-copy="/tech.account">Копировать</button>
+</div>
+<div class="cmd" data-search="/tech.backup резервная копия техника">
+  <div><code>/tech.backup</code><div class="desc">Резервная копия</div></div>
+  <button class="copy" data-copy="/tech.backup">Копировать</button>
+</div>
+<div class="cmd" data-search="/tech.migrate перенос данных техника">
+  <div><code>/tech.migrate</code><div class="desc">Перенос данных</div></div>
+  <button class="copy" data-copy="/tech.migrate">Копировать</button>
+</div>
+<div class="cmd" data-search="/tech.optimize оптимизация техника">
+  <div><code>/tech.optimize</code><div class="desc">Оптимизация</div></div>
+  <button class="copy" data-copy="/tech.optimize">Копировать</button>
+</div></div></details>
+<details open class="cat" data-search="быт и ремонт /home.repair ремонт /home.diagnose диагностика поломки /home.clean чистка /home.organize организация пространства /home.measure замеры /home.materials материалы /home.tools инструменты">
+<summary>Быт и ремонт <span>7</span></summary>
+<div class="cmds">
+<div class="cmd" data-search="/home.repair ремонт быт и ремонт">
+  <div><code>/home.repair</code><div class="desc">Ремонт</div></div>
+  <button class="copy" data-copy="/home.repair">Копировать</button>
+</div>
+<div class="cmd" data-search="/home.diagnose диагностика поломки быт и ремонт">
+  <div><code>/home.diagnose</code><div class="desc">Диагностика поломки</div></div>
+  <button class="copy" data-copy="/home.diagnose">Копировать</button>
+</div>
+<div class="cmd" data-search="/home.clean чистка быт и ремонт">
+  <div><code>/home.clean</code><div class="desc">Чистка</div></div>
+  <button class="copy" data-copy="/home.clean">Копировать</button>
+</div>
+<div class="cmd" data-search="/home.organize организация пространства быт и ремонт">
+  <div><code>/home.organize</code><div class="desc">Организация пространства</div></div>
+  <button class="copy" data-copy="/home.organize">Копировать</button>
+</div>
+<div class="cmd" data-search="/home.measure замеры быт и ремонт">
+  <div><code>/home.measure</code><div class="desc">Замеры</div></div>
+  <button class="copy" data-copy="/home.measure">Копировать</button>
+</div>
+<div class="cmd" data-search="/home.materials материалы быт и ремонт">
+  <div><code>/home.materials</code><div class="desc">Материалы</div></div>
+  <button class="copy" data-copy="/home.materials">Копировать</button>
+</div>
+<div class="cmd" data-search="/home.tools инструменты быт и ремонт">
+  <div><code>/home.tools</code><div class="desc">Инструменты</div></div>
+  <button class="copy" data-copy="/home.tools">Копировать</button>
+</div></div></details>
+<details open class="cat" data-search="кулинария /cook.recipe пошаговый рецепт /cook.fridge из продуктов дома /cook.chef лучший способ приготовления /cook.proportions пропорции /cook.grams граммы ↔ ложки /cook.time время /cook.temperature температура /cook.airfryer аэрогриль /cook.oven духовка /cook.pan сковорода /cook.marinade маринад /cook.sauce соус /cook.menu меню">
+<summary>Кулинария <span>13</span></summary>
+<div class="cmds">
+<div class="cmd" data-search="/cook.recipe пошаговый рецепт кулинария">
+  <div><code>/cook.recipe</code><div class="desc">Пошаговый рецепт</div></div>
+  <button class="copy" data-copy="/cook.recipe">Копировать</button>
+</div>
+<div class="cmd" data-search="/cook.fridge из продуктов дома кулинария">
+  <div><code>/cook.fridge</code><div class="desc">Из продуктов дома</div></div>
+  <button class="copy" data-copy="/cook.fridge">Копировать</button>
+</div>
+<div class="cmd" data-search="/cook.chef лучший способ приготовления кулинария">
+  <div><code>/cook.chef</code><div class="desc">Лучший способ приготовления</div></div>
+  <button class="copy" data-copy="/cook.chef">Копировать</button>
+</div>
+<div class="cmd" data-search="/cook.proportions пропорции кулинария">
+  <div><code>/cook.proportions</code><div class="desc">Пропорции</div></div>
+  <button class="copy" data-copy="/cook.proportions">Копировать</button>
+</div>
+<div class="cmd" data-search="/cook.grams граммы ↔ ложки кулинария">
+  <div><code>/cook.grams</code><div class="desc">Граммы ↔ ложки</div></div>
+  <button class="copy" data-copy="/cook.grams">Копировать</button>
+</div>
+<div class="cmd" data-search="/cook.time время кулинария">
+  <div><code>/cook.time</code><div class="desc">Время</div></div>
+  <button class="copy" data-copy="/cook.time">Копировать</button>
+</div>
+<div class="cmd" data-search="/cook.temperature температура кулинария">
+  <div><code>/cook.temperature</code><div class="desc">Температура</div></div>
+  <button class="copy" data-copy="/cook.temperature">Копировать</button>
+</div>
+<div class="cmd" data-search="/cook.airfryer аэрогриль кулинария">
+  <div><code>/cook.airfryer</code><div class="desc">Аэрогриль</div></div>
+  <button class="copy" data-copy="/cook.airfryer">Копировать</button>
+</div>
+<div class="cmd" data-search="/cook.oven духовка кулинария">
+  <div><code>/cook.oven</code><div class="desc">Духовка</div></div>
+  <button class="copy" data-copy="/cook.oven">Копировать</button>
+</div>
+<div class="cmd" data-search="/cook.pan сковорода кулинария">
+  <div><code>/cook.pan</code><div class="desc">Сковорода</div></div>
+  <button class="copy" data-copy="/cook.pan">Копировать</button>
+</div>
+<div class="cmd" data-search="/cook.marinade маринад кулинария">
+  <div><code>/cook.marinade</code><div class="desc">Маринад</div></div>
+  <button class="copy" data-copy="/cook.marinade">Копировать</button>
+</div>
+<div class="cmd" data-search="/cook.sauce соус кулинария">
+  <div><code>/cook.sauce</code><div class="desc">Соус</div></div>
+  <button class="copy" data-copy="/cook.sauce">Копировать</button>
+</div>
+<div class="cmd" data-search="/cook.menu меню кулинария">
+  <div><code>/cook.menu</code><div class="desc">Меню</div></div>
+  <button class="copy" data-copy="/cook.menu">Копировать</button>
+</div></div></details>
+<details open class="cat" data-search="покупки / поездки / авто /buy.find подобрать товар /buy.compare сравнить товары /buy.bestvalue цена/качество /buy.check проверить совместимость /buy.shortlist короткий список /trip.plan план поездки /trip.route маршрут /trip.pack список вещей /trip.budget бюджет поездки /auto.fuel стоимость поездки /auto.diagnose автодиагностика /auto.parts подбор запчасти /auto.service что сказать сервису">
+<summary>Покупки / поездки / авто <span>13</span></summary>
+<div class="cmds">
+<div class="cmd" data-search="/buy.find подобрать товар покупки / поездки / авто">
+  <div><code>/buy.find</code><div class="desc">Подобрать товар</div></div>
+  <button class="copy" data-copy="/buy.find">Копировать</button>
+</div>
+<div class="cmd" data-search="/buy.compare сравнить товары покупки / поездки / авто">
+  <div><code>/buy.compare</code><div class="desc">Сравнить товары</div></div>
+  <button class="copy" data-copy="/buy.compare">Копировать</button>
+</div>
+<div class="cmd" data-search="/buy.bestvalue цена/качество покупки / поездки / авто">
+  <div><code>/buy.bestvalue</code><div class="desc">Цена/качество</div></div>
+  <button class="copy" data-copy="/buy.bestvalue">Копировать</button>
+</div>
+<div class="cmd" data-search="/buy.check проверить совместимость покупки / поездки / авто">
+  <div><code>/buy.check</code><div class="desc">Проверить совместимость</div></div>
+  <button class="copy" data-copy="/buy.check">Копировать</button>
+</div>
+<div class="cmd" data-search="/buy.shortlist короткий список покупки / поездки / авто">
+  <div><code>/buy.shortlist</code><div class="desc">Короткий список</div></div>
+  <button class="copy" data-copy="/buy.shortlist">Копировать</button>
+</div>
+<div class="cmd" data-search="/trip.plan план поездки покупки / поездки / авто">
+  <div><code>/trip.plan</code><div class="desc">План поездки</div></div>
+  <button class="copy" data-copy="/trip.plan">Копировать</button>
+</div>
+<div class="cmd" data-search="/trip.route маршрут покупки / поездки / авто">
+  <div><code>/trip.route</code><div class="desc">Маршрут</div></div>
+  <button class="copy" data-copy="/trip.route">Копировать</button>
+</div>
+<div class="cmd" data-search="/trip.pack список вещей покупки / поездки / авто">
+  <div><code>/trip.pack</code><div class="desc">Список вещей</div></div>
+  <button class="copy" data-copy="/trip.pack">Копировать</button>
+</div>
+<div class="cmd" data-search="/trip.budget бюджет поездки покупки / поездки / авто">
+  <div><code>/trip.budget</code><div class="desc">Бюджет поездки</div></div>
+  <button class="copy" data-copy="/trip.budget">Копировать</button>
+</div>
+<div class="cmd" data-search="/auto.fuel стоимость поездки покупки / поездки / авто">
+  <div><code>/auto.fuel</code><div class="desc">Стоимость поездки</div></div>
+  <button class="copy" data-copy="/auto.fuel">Копировать</button>
+</div>
+<div class="cmd" data-search="/auto.diagnose автодиагностика покупки / поездки / авто">
+  <div><code>/auto.diagnose</code><div class="desc">Автодиагностика</div></div>
+  <button class="copy" data-copy="/auto.diagnose">Копировать</button>
+</div>
+<div class="cmd" data-search="/auto.parts подбор запчасти покупки / поездки / авто">
+  <div><code>/auto.parts</code><div class="desc">Подбор запчасти</div></div>
+  <button class="copy" data-copy="/auto.parts">Копировать</button>
+</div>
+<div class="cmd" data-search="/auto.service что сказать сервису покупки / поездки / авто">
+  <div><code>/auto.service</code><div class="desc">Что сказать сервису</div></div>
+  <button class="copy" data-copy="/auto.service">Копировать</button>
+</div></div></details>
+<details open class="cat" data-search="организация / исследование /life.todo список задач /life.plan план дня /life.week план недели /life.priority приоритеты /life.decision разобрать решение /life.compare сравнить варианты /life.questions список вопросов /research.topic исследовать тему /research.sources найти источники /research.factcheck проверить факт /research.timeline хронология /research.summary сводка /learn.explain объяснить тему /learn.stepbystep обучить пошагово /learn.cheatsheet шпаргалка">
+<summary>Организация / исследование <span>15</span></summary>
+<div class="cmds">
+<div class="cmd" data-search="/life.todo список задач организация / исследование">
+  <div><code>/life.todo</code><div class="desc">Список задач</div></div>
+  <button class="copy" data-copy="/life.todo">Копировать</button>
+</div>
+<div class="cmd" data-search="/life.plan план дня организация / исследование">
+  <div><code>/life.plan</code><div class="desc">План дня</div></div>
+  <button class="copy" data-copy="/life.plan">Копировать</button>
+</div>
+<div class="cmd" data-search="/life.week план недели организация / исследование">
+  <div><code>/life.week</code><div class="desc">План недели</div></div>
+  <button class="copy" data-copy="/life.week">Копировать</button>
+</div>
+<div class="cmd" data-search="/life.priority приоритеты организация / исследование">
+  <div><code>/life.priority</code><div class="desc">Приоритеты</div></div>
+  <button class="copy" data-copy="/life.priority">Копировать</button>
+</div>
+<div class="cmd" data-search="/life.decision разобрать решение организация / исследование">
+  <div><code>/life.decision</code><div class="desc">Разобрать решение</div></div>
+  <button class="copy" data-copy="/life.decision">Копировать</button>
+</div>
+<div class="cmd" data-search="/life.compare сравнить варианты организация / исследование">
+  <div><code>/life.compare</code><div class="desc">Сравнить варианты</div></div>
+  <button class="copy" data-copy="/life.compare">Копировать</button>
+</div>
+<div class="cmd" data-search="/life.questions список вопросов организация / исследование">
+  <div><code>/life.questions</code><div class="desc">Список вопросов</div></div>
+  <button class="copy" data-copy="/life.questions">Копировать</button>
+</div>
+<div class="cmd" data-search="/research.topic исследовать тему организация / исследование">
+  <div><code>/research.topic</code><div class="desc">Исследовать тему</div></div>
+  <button class="copy" data-copy="/research.topic">Копировать</button>
+</div>
+<div class="cmd" data-search="/research.sources найти источники организация / исследование">
+  <div><code>/research.sources</code><div class="desc">Найти источники</div></div>
+  <button class="copy" data-copy="/research.sources">Копировать</button>
+</div>
+<div class="cmd" data-search="/research.factcheck проверить факт организация / исследование">
+  <div><code>/research.factcheck</code><div class="desc">Проверить факт</div></div>
+  <button class="copy" data-copy="/research.factcheck">Копировать</button>
+</div>
+<div class="cmd" data-search="/research.timeline хронология организация / исследование">
+  <div><code>/research.timeline</code><div class="desc">Хронология</div></div>
+  <button class="copy" data-copy="/research.timeline">Копировать</button>
+</div>
+<div class="cmd" data-search="/research.summary сводка организация / исследование">
+  <div><code>/research.summary</code><div class="desc">Сводка</div></div>
+  <button class="copy" data-copy="/research.summary">Копировать</button>
+</div>
+<div class="cmd" data-search="/learn.explain объяснить тему организация / исследование">
+  <div><code>/learn.explain</code><div class="desc">Объяснить тему</div></div>
+  <button class="copy" data-copy="/learn.explain">Копировать</button>
+</div>
+<div class="cmd" data-search="/learn.stepbystep обучить пошагово организация / исследование">
+  <div><code>/learn.stepbystep</code><div class="desc">Обучить пошагово</div></div>
+  <button class="copy" data-copy="/learn.stepbystep">Копировать</button>
+</div>
+<div class="cmd" data-search="/learn.cheatsheet шпаргалка организация / исследование">
+  <div><code>/learn.cheatsheet</code><div class="desc">Шпаргалка</div></div>
+  <button class="copy" data-copy="/learn.cheatsheet">Копировать</button>
+</div></div></details>
+<details open class="cat" data-search="генеалогия /genealogy.tree древо /genealogy.person карточка человека /genealogy.timeline хронология /genealogy.questions вопросы родственникам /genealogy.archive план архивного поиска /genealogy.document разобрать документ /genealogy.compare сопоставить записи">
+<summary>Генеалогия <span>7</span></summary>
+<div class="cmds">
+<div class="cmd" data-search="/genealogy.tree древо генеалогия">
+  <div><code>/genealogy.tree</code><div class="desc">Древо</div></div>
+  <button class="copy" data-copy="/genealogy.tree">Копировать</button>
+</div>
+<div class="cmd" data-search="/genealogy.person карточка человека генеалогия">
+  <div><code>/genealogy.person</code><div class="desc">Карточка человека</div></div>
+  <button class="copy" data-copy="/genealogy.person">Копировать</button>
+</div>
+<div class="cmd" data-search="/genealogy.timeline хронология генеалогия">
+  <div><code>/genealogy.timeline</code><div class="desc">Хронология</div></div>
+  <button class="copy" data-copy="/genealogy.timeline">Копировать</button>
+</div>
+<div class="cmd" data-search="/genealogy.questions вопросы родственникам генеалогия">
+  <div><code>/genealogy.questions</code><div class="desc">Вопросы родственникам</div></div>
+  <button class="copy" data-copy="/genealogy.questions">Копировать</button>
+</div>
+<div class="cmd" data-search="/genealogy.archive план архивного поиска генеалогия">
+  <div><code>/genealogy.archive</code><div class="desc">План архивного поиска</div></div>
+  <button class="copy" data-copy="/genealogy.archive">Копировать</button>
+</div>
+<div class="cmd" data-search="/genealogy.document разобрать документ генеалогия">
+  <div><code>/genealogy.document</code><div class="desc">Разобрать документ</div></div>
+  <button class="copy" data-copy="/genealogy.document">Копировать</button>
+</div>
+<div class="cmd" data-search="/genealogy.compare сопоставить записи генеалогия">
+  <div><code>/genealogy.compare</code><div class="desc">Сопоставить записи</div></div>
+  <button class="copy" data-copy="/genealogy.compare">Копировать</button>
+</div></div></details>
+<details open class="cat" data-search="форматы /format.9x16 stories / reels / tiktok /format.4x5 вертикальный пост /format.1x1 квадрат /format.16x9 горизонталь /format.3x4 портрет /shot.closeup крупный план /shot.medium средний план /shot.wide общий план /shot.center по центру /shot.textsafe место для текста /shot.notext без текста">
+<summary>Форматы <span>11</span></summary>
+<div class="cmds">
+<div class="cmd" data-search="/format.9x16 stories / reels / tiktok форматы">
+  <div><code>/format.9x16</code><div class="desc">Stories / Reels / TikTok</div></div>
+  <button class="copy" data-copy="/format.9x16">Копировать</button>
+</div>
+<div class="cmd" data-search="/format.4x5 вертикальный пост форматы">
+  <div><code>/format.4x5</code><div class="desc">Вертикальный пост</div></div>
+  <button class="copy" data-copy="/format.4x5">Копировать</button>
+</div>
+<div class="cmd" data-search="/format.1x1 квадрат форматы">
+  <div><code>/format.1x1</code><div class="desc">Квадрат</div></div>
+  <button class="copy" data-copy="/format.1x1">Копировать</button>
+</div>
+<div class="cmd" data-search="/format.16x9 горизонталь форматы">
+  <div><code>/format.16x9</code><div class="desc">Горизонталь</div></div>
+  <button class="copy" data-copy="/format.16x9">Копировать</button>
+</div>
+<div class="cmd" data-search="/format.3x4 портрет форматы">
+  <div><code>/format.3x4</code><div class="desc">Портрет</div></div>
+  <button class="copy" data-copy="/format.3x4">Копировать</button>
+</div>
+<div class="cmd" data-search="/shot.closeup крупный план форматы">
+  <div><code>/shot.closeup</code><div class="desc">Крупный план</div></div>
+  <button class="copy" data-copy="/shot.closeup">Копировать</button>
+</div>
+<div class="cmd" data-search="/shot.medium средний план форматы">
+  <div><code>/shot.medium</code><div class="desc">Средний план</div></div>
+  <button class="copy" data-copy="/shot.medium">Копировать</button>
+</div>
+<div class="cmd" data-search="/shot.wide общий план форматы">
+  <div><code>/shot.wide</code><div class="desc">Общий план</div></div>
+  <button class="copy" data-copy="/shot.wide">Копировать</button>
+</div>
+<div class="cmd" data-search="/shot.center по центру форматы">
+  <div><code>/shot.center</code><div class="desc">По центру</div></div>
+  <button class="copy" data-copy="/shot.center">Копировать</button>
+</div>
+<div class="cmd" data-search="/shot.textsafe место для текста форматы">
+  <div><code>/shot.textsafe</code><div class="desc">Место для текста</div></div>
+  <button class="copy" data-copy="/shot.textsafe">Копировать</button>
+</div>
+<div class="cmd" data-search="/shot.notext без текста форматы">
+  <div><code>/shot.notext</code><div class="desc">Без текста</div></div>
+  <button class="copy" data-copy="/shot.notext">Копировать</button>
+</div></div></details></div></section>
+</main>
+<nav class="nav"><a href="#home">Главная</a><a href="#builder">Конструктор</a><a href="#presets">Пресеты</a><a href="#catalog">Каталог</a></nav>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+ const copy=async t=>{try{await navigator.clipboard.writeText(t)}catch(e){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove()}};
+ document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{await copy(b.dataset.copy);const x=b.textContent;b.textContent='Скопировано';setTimeout(()=>b.textContent=x,900)}));
+ const q=document.getElementById('search');
+ q.addEventListener('input',()=>{const s=q.value.toLowerCase().trim();document.querySelectorAll('.cmd,.preset').forEach(x=>x.classList.toggle('hidden',!!s&&!x.dataset.search.includes(s)));document.querySelectorAll('.cat').forEach(d=>{const any=[...d.querySelectorAll('.cmd')].some(x=>!x.classList.contains('hidden'));d.classList.toggle('hidden',!any);if(s&&any)d.open=true})});
+ document.getElementById('build').addEventListener('click',()=>{const a=document.getElementById('base').value;const f=document.getElementById('format').value;const n=document.getElementById('notes').value.trim();document.getElementById('result').textContent=[a,f].filter(Boolean).join(' ')+(n?'\n\nКомментарий: '+n:'')});
+ document.getElementById('copyResult').addEventListener('click',()=>copy(document.getElementById('result').textContent));
+});
+</script></body></html>
