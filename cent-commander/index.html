@@ -3,7 +3,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Cent Commander"><meta name="theme-color" content="#111111">
-<title>Cent Commander PRO</title>
+<title>Mega ChatGPT Helper 3.0</title>
 <style>
 :root{--bg:#f5f2ea;--card:#fff;--text:#161616;--muted:#6c6c6c;--line:#ddd6c8;--soft:#f0ece3;--green:#eaf6e8}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--text);padding-bottom:84px}
@@ -11,18 +11,74 @@
 h1{font-size:24px;margin:0}.sub{font-size:13px;color:var(--muted);margin:4px 0 10px}input,select,textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:13px;background:#fff;font-size:16px}
 main{padding:14px}.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:14px}.hero{background:var(--green)}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px}.num{font-size:26px;font-weight:800}
-.nav{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(4,1fr);gap:7px;padding:9px 10px calc(9px + env(safe-area-inset-bottom));background:rgba(245,242,234,.97);border-top:1px solid var(--line)}
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(5,1fr);gap:7px;padding:9px 10px calc(9px + env(safe-area-inset-bottom));background:rgba(245,242,234,.97);border-top:1px solid var(--line)}
 .nav a{text-decoration:none;text-align:center;color:#111;background:#fff;border:1px solid var(--line);border-radius:13px;padding:10px 4px;font-size:12px;font-weight:700}
 section{scroll-margin-top:115px}h2{font-size:20px;margin:0 0 10px}details{border:1px solid var(--line);border-radius:14px;background:#fff;margin-bottom:9px;overflow:hidden}summary{padding:13px;font-weight:750;cursor:pointer;list-style:none}summary span{float:right;color:var(--muted);font-size:12px}.cmds{border-top:1px solid var(--line)}.cmd{display:grid;grid-template-columns:1fr auto;gap:9px;padding:11px;border-bottom:1px solid #eee}.cmd:last-child{border:0}code{display:block;background:#f3f3f3;padding:9px;border-radius:10px;font-family:ui-monospace,Menlo,monospace;font-size:12px;white-space:pre-wrap;word-break:break-word}.desc{font-size:13px;margin-top:5px}.copy{border:0;background:#111;color:#fff;border-radius:10px;padding:9px 10px;height:max-content}
 .preset{border:1px solid var(--line);border-radius:14px;padding:11px;margin-bottom:9px}.preset b{display:block;margin-bottom:7px}.preset .copy{margin-top:8px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.builderout{margin-top:10px}.note{font-size:12px;color:var(--muted);line-height:1.45}.hidden{display:none!important}
 @media(max-width:620px){.stats,.grid2{grid-template-columns:1fr}.cmd{grid-template-columns:1fr}.copy{width:100%}}
 
 .tipgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.tipcard{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff}.tipcard h3{font-size:15px;margin:0 0 6px}.tipcard .why{font-size:12px;color:var(--muted);margin:6px 0}.tipcard code{font-size:11px}.chips{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0}.chip{display:inline-block;padding:7px 9px;border:1px solid var(--line);border-radius:999px;background:var(--soft);font-size:12px;font-weight:700}.igbox{background:linear-gradient(180deg,#fff,#f7f1ff)}.actionrow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}.actionrow button{border:0;border-radius:11px;padding:10px;font-weight:700}.primary{background:#111;color:#fff}.secondary{background:var(--soft);color:#111}@media(max-width:620px){.tipgrid{grid-template-columns:1fr}.actionrow{grid-template-columns:1fr}}
+
+.beginnerGrid{display:grid;grid-template-columns:1.2fr .8fr;gap:10px}.bigask{font-size:17px;min-height:92px;resize:vertical}.modebar{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin:9px 0}.modebtn{border:1px solid var(--line);background:#fff;border-radius:11px;padding:9px 5px;font-size:11px;font-weight:800}.modebtn.active{background:#111;color:#fff}.quickgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}.quick{border:1px solid var(--line);background:#fff;border-radius:13px;padding:11px 7px;font-size:12px;font-weight:750;text-align:center}.resultcard{border:1px solid var(--line);border-radius:14px;padding:10px;margin-top:8px;background:#fff}.resultcard .rcmd{font-family:ui-monospace,Menlo,monospace;font-size:12px;font-weight:800}.resultcard .rwhy{font-size:12px;color:var(--muted);margin:5px 0}.helperActions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.helperActions button{border:0;border-radius:12px;padding:11px;font-weight:800}.favrow{display:flex;gap:7px;overflow:auto;padding-bottom:4px}.favpill{flex:0 0 auto;border:1px solid var(--line);border-radius:999px;background:#fff;padding:8px 10px;font-size:11px}.starbtn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 9px;font-size:16px}.cmdActions{display:flex;gap:6px;align-items:flex-start}.explain{font-size:12px;line-height:1.4;margin-top:6px;color:#333}.howto{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.howstep{background:var(--soft);border-radius:13px;padding:11px;font-size:12px}.howstep b{display:block;font-size:14px;margin-bottom:4px}.empty{font-size:12px;color:var(--muted);padding:8px 0}.badge{display:inline-block;font-size:10px;font-weight:800;padding:4px 7px;border-radius:999px;background:var(--soft);margin-right:5px}.searchhint{font-size:11px;color:var(--muted);margin-top:6px}
+@media(max-width:620px){.beginnerGrid{grid-template-columns:1fr}.modebar{grid-template-columns:repeat(3,1fr)}.quickgrid{grid-template-columns:repeat(2,1fr)}.howto{grid-template-columns:1fr}.helperActions{grid-template-columns:1fr}}
 </style></head><body>
-<header class="wrap"><h1>Cent Commander PRO</h1><div class="sub">Рабочие команды для ChatGPT — фото, видео, маркетплейсы, документы и повседневные задачи</div><input id="search" type="search" placeholder="Поиск: удалить человека, WB, XML, рецепт…"></header>
+<header class="wrap"><h1>🚀 Mega ChatGPT Helper 3.0</h1><div class="sub">Понятный помощник для ChatGPT: опиши задачу обычными словами — программа подскажет, что использовать</div><input id="search" type="search" placeholder="Поиск: удалить человека, WB, XML, рецепт…"></header>
 <main class="wrap">
 <section id="home"><div class="panel hero"><h2>Рабочая версия</h2><div class="note">Основная навигация работает даже без JavaScript. Кнопки копирования, поиск и конструктор работают в Safari. Это наша собственная система команд, а не официальный список slash-команд ChatGPT.</div></div>
-<div class="panel"><div class="stats"><div class="stat"><div class="num">241</div><div class="note">команд</div></div><div class="stat"><div class="num">18</div><div class="note">разделов</div></div><div class="stat"><div class="num">12</div><div class="note">пресетов</div></div></div></div></section>
+<div class="panel"><div class="stats"><div class="stat"><div class="num">249+</div><div class="note">команд и сценариев</div></div><div class="stat"><div class="num">18</div><div class="note">разделов</div></div><div class="stat"><div class="num">12</div><div class="note">пресетов</div></div></div></div></section>
+
+<section id="beginner-helper">
+  <div class="panel hero">
+    <h2>🧠 Что ты хочешь сделать?</h2>
+    <div class="note">Не нужно знать команды. Напиши задачу обычными словами: «убрать человека с фото», «сделать карточку WB», «придумать Reels», «проверить договор», «что приготовить из курицы».</div>
+    <textarea id="smartTask" class="bigask" placeholder="Например: хочу сделать из двух фотографий одно совместное фото и не менять лица"></textarea>
+    <div class="modebar" id="modebar">
+      <button class="modebtn active" data-mode="Точно">🎯 Точно</button>
+      <button class="modebtn" data-mode="Быстро">⚡ Быстро</button>
+      <button class="modebtn" data-mode="Глубоко">🧠 Глубоко</button>
+      <button class="modebtn" data-mode="Креативно">✨ Креативно</button>
+      <button class="modebtn" data-mode="Проверить">✅ Проверить</button>
+    </div>
+    <div class="helperActions">
+      <button id="suggestBtn" class="secondary">🔎 Подобрать инструменты</button>
+      <button id="buildPromptBtn" class="primary">🚀 Собрать идеальный запрос</button>
+    </div>
+    <div id="suggestResults"></div>
+    <div id="promptBox" class="hidden">
+      <div class="resultcard"><b>Готовый запрос для ChatGPT</b><code id="smartPrompt" style="margin-top:8px"></code>
+        <div class="helperActions"><button id="copySmart" class="secondary">Копировать</button><button id="openChatGPT" class="primary">Открыть ChatGPT</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>⚡ Быстрый старт</h2>
+    <div class="quickgrid" id="quickgrid">
+      <button class="quick" data-task="Отредактировать фотографию, сохранить реалистичность и важные детали">📸 Фото</button>
+      <button class="quick" data-task="Создать или продолжить короткое видео без искажений персонажа и движения">🎬 Видео</button>
+      <button class="quick" data-task="Написать или улучшить текст под мою задачу">✍️ Текст</button>
+      <button class="quick" data-task="Проанализировать загруженный файл и дать практический результат">📄 Файл</button>
+      <button class="quick" data-task="Подготовить карточку товара для маркетплейса: SEO, текст, фото и конверсия">🛒 Маркетплейс</button>
+      <button class="quick" data-task="Сделать контент для Instagram: идея, Reels, Stories, подпись и CTA">📲 Instagram</button>
+      <button class="quick" data-task="Найти и сравнить актуальную информацию в интернете по моей задаче">🌐 Интернет</button>
+      <button class="quick" data-task="Разобрать бытовую или техническую проблему пошагово">🛠 Быт / техника</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>👶 Как пользоваться — 3 шага</h2>
+    <div class="howto">
+      <div class="howstep"><b>1. Напиши задачу</b>Обычными словами, как объяснял бы человеку.</div>
+      <div class="howstep"><b>2. Нажми «Подобрать»</b>Программа покажет подходящие команды и объяснит зачем они нужны.</div>
+      <div class="howstep"><b>3. Собери запрос</b>Скопируй готовый промпт или открой ChatGPT.</div>
+    </div>
+  </div>
+
+  <div class="beginnerGrid">
+    <div class="panel"><h2>⭐ Избранное</h2><div id="favoritesBox" class="favrow"><span class="empty">Нажимай ☆ у нужных команд — они появятся здесь.</span></div></div>
+    <div class="panel"><h2>🕘 Недавние</h2><div id="recentBox" class="favrow"><span class="empty">Скопированные команды появятся здесь.</span></div></div>
+  </div>
+</section>
 <section id="daily-tips">
   <div class="panel igbox">
     <h2>🔥 3 лайфхака дня для ChatGPT</h2>
@@ -1136,10 +1192,144 @@ avoid=ghosting,artifacts,background_damage">Копировать</button>
   <button class="copy" data-copy="/shot.notext">Копировать</button>
 </div></div></details></div></section>
 </main>
-<nav class="nav"><a href="#home">Главная</a><a href="#builder">Конструктор</a><a href="#presets">Пресеты</a><a href="#catalog">Каталог</a></nav>
+<nav class="nav"><a href="#beginner-helper">Помощник</a><a href="#builder">Конструктор</a><a href="#presets">Пресеты</a><a href="#daily-tips">Лайфхаки</a><a href="#catalog">Каталог</a></nav>
 <script>
 document.addEventListener('DOMContentLoaded',()=>{
  const copy=async t=>{try{await navigator.clipboard.writeText(t)}catch(e){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove()}};
+
+ const categoryHelp={
+   people:'для работы с людьми на фото: объединение, добавление, удаление, поза и внешний вид',
+   edit:'для точечного редактирования изображения: фон, объект, одежда, свет, ретушь и восстановление',
+   photo:'для выбора профессионального визуального стиля и типа съёмки',
+   lock:'когда важно строго сохранить исходные детали и не допустить их изменения',
+   quality:'для повышения реалистичности, точности и обязательной проверки результата',
+   product:'для товарных фотографий, карточек и предметной съёмки',
+   ad:'для рекламных визуалов, постеров и необычных коммерческих сцен',
+   inbebe:'для фирменных задач INBEBE: карточки, фото, SEO, rich-контент и сохранение упаковки',
+   wb:'для контента и SEO Wildberries', ozon:'для контента и SEO Ozon', ym:'для Яндекс Маркета',
+   market:'для карточек товара: название, описание, ключи, инфографика, отзывы и аудит',
+   seller:'для аналитики продавца: продажи, реклама, маржа, остатки, прогноз и план действий',
+   plamon:'для фирменного визуального и контент-стиля PlaMon',
+   video:'для генерации и продолжения видео с контролем движения, камеры и персонажа',
+   text:'для написания, сокращения, исправления, перевода и улучшения текстов',
+   doc:'для анализа документов, договоров и поиска рисков', xml:'для проверки и исправления XML',
+   finance:'для расчётов, экономики и финансового анализа',
+   tech:'для диагностики техники и пошаговых инструкций', iphone:'для задач iPhone', windows:'для Windows',
+   router:'для сети и роутера', vpn:'для VPN и сетевых подключений',
+   cook:'для рецептов, пропорций, времени приготовления и подбора блюд из имеющихся продуктов',
+   buy:'для выбора и сравнения товаров перед покупкой', trip:'для поездок, маршрутов и бюджета',
+   auto:'для автомобиля: расчёты, диагностика, запчасти и подготовка к сервису',
+   life:'для планирования, решений и организации дел', research:'для исследования темы и проверки фактов',
+   learn:'для понятного обучения и пошаговых объяснений', genealogy:'для генеалогии, архивов и семейного древа',
+   format:'для выбора соотношения сторон изображения или видео', shot:'для кадрирования и композиции',
+   instagram:'для подготовки Reels, Stories, каруселей, подписей, хуков и контент-планов'
+ };
+ const prefixOf=c=>(c||'').replace(/^\//,'').split('.')[0];
+ const commandContext=(cmd,label)=>{
+   const p=prefixOf(cmd), ctx=categoryHelp[p]||'для выполнения этой задачи в ChatGPT';
+   return 'Что умеет: '+label+'. Когда использовать: '+ctx+'.';
+ };
+ document.querySelectorAll('.cmd').forEach(card=>{
+   const btn=card.querySelector('[data-copy]'); if(!btn)return;
+   const cmd=btn.dataset.copy||'';
+   const d=card.querySelector('.desc'); if(!d)return;
+   const original=d.textContent.trim();
+   if(!/Что умеет:/i.test(original)){
+     d.innerHTML='<div class="explain"><b>Что умеет:</b> '+original+'. <b>Когда использовать:</b> '+(categoryHelp[prefixOf(cmd)]||'когда нужна эта операция в ChatGPT')+'.</div>';
+   }
+   const cat=(card.closest('.cat')?.querySelector('summary')?.textContent||'');
+   card.dataset.search=((card.dataset.search||'')+' '+cmd+' '+original+' '+d.textContent+' '+cat).toLowerCase();
+ });
+ const synonymGroups=[
+   ['фото','фотография','картинка','изображение','снимок'],
+   ['удалить','убрать','стереть','удали','убери'],
+   ['добавить','вставить','поместить','добавь'],
+   ['фон','задний план','background'],
+   ['человек','мужчина','женщина','девушка','парень','люди'],
+   ['видео','ролик','reels','рилс','клип'],
+   ['текст','написать','описание','подпись','пост'],
+   ['маркетплейс','wb','wildberries','ozon','озон','яндекс маркет','карточка товара'],
+   ['seo','сео','ключевые слова','поиск'],
+   ['инстаграм','instagram','reels','рилс','stories','сторис'],
+   ['документ','договор','файл','pdf','word','xml'],
+   ['рецепт','готовить','еда','блюдо','кухня'],
+   ['техника','не работает','ошибка','сломалось','починить'],
+   ['купить','покупка','выбрать товар','сравнить товар'],
+   ['интернет','поиск в сети','актуальная информация','найти в интернете']
+ ];
+ const expandTerms=s=>{
+   let out=(s||'').toLowerCase().replace(/ё/g,'е');
+   synonymGroups.forEach(g=>{if(g.some(w=>out.includes(w.replace(/ё/g,'е'))))out+=' '+g.join(' ')});
+   return out;
+ };
+ document.querySelectorAll('.cmd').forEach(c=>c.dataset.search=expandTerms(c.dataset.search||''));
+
+ const getFav=()=>JSON.parse(localStorage.getItem('megaFav')||'[]');
+ const setFav=a=>localStorage.setItem('megaFav',JSON.stringify(a.slice(0,30)));
+ const getRecent=()=>JSON.parse(localStorage.getItem('megaRecent')||'[]');
+ const pushRecent=cmd=>{let a=getRecent().filter(x=>x!==cmd);a.unshift(cmd);localStorage.setItem('megaRecent',JSON.stringify(a.slice(0,12)));renderPersonal()};
+ const renderPersonal=()=>{
+   const fav=getFav(), rec=getRecent();
+   const render=(id,a,empty)=>{const b=document.getElementById(id);if(!b)return;b.innerHTML=a.length?a.map(x=>'<button class="favpill" data-personal="'+x+'">'+x+'</button>').join(''):'<span class="empty">'+empty+'</span>';b.querySelectorAll('[data-personal]').forEach(x=>x.onclick=()=>copy(x.dataset.personal));};
+   render('favoritesBox',fav,'Нажимай ☆ у нужных команд — они появятся здесь.');
+   render('recentBox',rec,'Скопированные команды появятся здесь.');
+   document.querySelectorAll('.starbtn').forEach(b=>b.textContent=fav.includes(b.dataset.star)?'★':'☆');
+ };
+ document.querySelectorAll('.cmd').forEach(card=>{
+   const copyBtn=card.querySelector('[data-copy]'); if(!copyBtn)return;
+   const wrap=document.createElement('div');wrap.className='cmdActions';
+   copyBtn.parentNode.insertBefore(wrap,copyBtn);wrap.appendChild(copyBtn);
+   const star=document.createElement('button');star.className='starbtn';star.dataset.star=copyBtn.dataset.copy;star.textContent='☆';star.title='Добавить в избранное';wrap.appendChild(star);
+   star.addEventListener('click',()=>{let a=getFav(),c=star.dataset.star;a=a.includes(c)?a.filter(x=>x!==c):[c,...a];setFav(a);renderPersonal()});
+   copyBtn.addEventListener('click',()=>pushRecent(copyBtn.dataset.copy));
+ });
+ renderPersonal();
+
+ let selectedMode='Точно';
+ document.querySelectorAll('.modebtn').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.modebtn').forEach(x=>x.classList.remove('active'));b.classList.add('active');selectedMode=b.dataset.mode}));
+ document.querySelectorAll('.quick').forEach(b=>b.addEventListener('click',()=>{document.getElementById('smartTask').value=b.dataset.task;document.getElementById('smartTask').focus()}));
+
+ const rankCommands=q=>{
+   const query=expandTerms(q), toks=query.split(/\s+/).filter(x=>x.length>2);
+   return [...document.querySelectorAll('.cmd')].map(card=>{
+     const hay=expandTerms(card.dataset.search+' '+card.textContent);
+     let score=0;toks.forEach(t=>{if(hay.includes(t))score+=t.length>5?3:1});
+     if(hay.includes(query))score+=10;
+     return {card,score};
+   }).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,6);
+ };
+ const showSuggestions=()=>{
+   const q=document.getElementById('smartTask').value.trim(), box=document.getElementById('suggestResults');
+   if(!q){box.innerHTML='<div class="empty">Сначала напиши, что нужно сделать.</div>';return []}
+   const rs=rankCommands(q);
+   box.innerHTML=rs.length?'<div class="searchhint">Подходящие инструменты:</div>'+rs.map(x=>{
+      const cmd=x.card.querySelector('[data-copy]').dataset.copy;
+      const txt=x.card.querySelector('.desc').textContent;
+      return '<div class="resultcard"><span class="badge">подходит</span><span class="rcmd">'+cmd+'</span><div class="rwhy">'+txt+'</div><button class="copy" style="width:100%" data-scopy="'+cmd+'">Копировать команду</button></div>';
+   }).join(''):'<div class="empty">Точного совпадения нет. Нажми «Собрать идеальный запрос» — он всё равно создаст понятный промпт.</div>';
+   box.querySelectorAll('[data-scopy]').forEach(b=>b.onclick=async()=>{await copy(b.dataset.scopy);pushRecent(b.dataset.scopy);b.textContent='Скопировано'});
+   return rs;
+ };
+ document.getElementById('suggestBtn')?.addEventListener('click',showSuggestions);
+
+ const modeText={
+   'Точно':'Строго соблюдай условия. Не додумывай отсутствующие факты. Если важной информации не хватает — сначала задай уточняющие вопросы.',
+   'Быстро':'Дай короткий практический результат без лишней теории.',
+   'Глубоко':'Разбери задачу глубоко: причины, варианты, риски и лучший практический порядок действий.',
+   'Креативно':'Предложи несколько сильных и небанальных вариантов, но сохрани реалистичность и применимость.',
+   'Проверить':'Сначала найди ошибки, слабые места и противоречия, затем дай исправленный финальный вариант.'
+ };
+ const buildSmartPrompt=()=>{
+   const task=document.getElementById('smartTask').value.trim();if(!task){alert('Сначала напиши задачу.');return}
+   const rs=showSuggestions();
+   const cmds=rs.slice(0,4).map(x=>x.card.querySelector('[data-copy]').dataset.copy).join(' ');
+   const p='ЗАДАЧА:\n'+task+'\n\nРЕЖИМ: '+selectedMode+'\n'+modeText[selectedMode]+'\n\n'+(cmds?'ПОДХОДЯЩИЕ ИНСТРУМЕНТЫ ИЗ МОЕЙ БАЗЫ: '+cmds+'\n\n':'')+'ТРЕБОВАНИЯ К ОТВЕТУ:\n1. Сразу пойми практическую цель.\n2. Если без уточнения можно ошибиться — задай только необходимые вопросы.\n3. Дай готовый результат, который можно использовать сразу.\n4. Не добавляй вымышленные факты.\n5. Перед финалом проверь, что выполнены все условия.';
+   document.getElementById('smartPrompt').textContent=p;document.getElementById('promptBox').classList.remove('hidden');
+ };
+ document.getElementById('buildPromptBtn')?.addEventListener('click',buildSmartPrompt);
+ document.getElementById('copySmart')?.addEventListener('click',()=>copy(document.getElementById('smartPrompt').textContent));
+ document.getElementById('openChatGPT')?.addEventListener('click',async()=>{await copy(document.getElementById('smartPrompt').textContent);window.open('https://chatgpt.com/','_blank')});
+
  document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{await copy(b.dataset.copy);const x=b.textContent;b.textContent='Скопировано';setTimeout(()=>b.textContent=x,900)}));
 
  const tipBank=[
@@ -1164,6 +1354,28 @@ document.addEventListener('DOMContentLoaded',()=>{
   {t:"Проси найти слабые места",d:"Перед публикацией полезно попросить критический разбор.",c:"Найди 5 слабых мест в этом результате и исправь их."},
   {t:"Проси следующий шаг",d:"После ответа попроси конкретное продолжение, а не начинай новую задачу с нуля.",c:"На основе этого результата предложи следующий практический шаг."}
  ];
+ tipBank.push(
+  {t:"Проси сначала план",d:"Перед сложной задачей попроси короткий план действий, а затем выполнение.",c:"Сначала составь план из 5 шагов, затем выполни каждый шаг."},
+  {t:"Скажи, что считать успехом",d:"Если заранее описать критерии хорошего результата, ChatGPT лучше понимает цель.",c:"Хороший результат должен быть точным, практичным, без воды и готовым к использованию."},
+  {t:"Проси не соглашаться автоматически",d:"Для решений полезно попросить проверить твою идею, а не просто поддержать её.",c:"Не соглашайся автоматически. Проверь мою идею, найди слабые места и предложи улучшение."},
+  {t:"Разделяй факты и предположения",d:"Это особенно полезно в исследованиях и при разборе документов.",c:"Отдели подтверждённые факты от предположений и укажи, что требует проверки."},
+  {t:"Проси объяснить ошибку",d:"При технической проблеме важно понять не только что нажать, но и почему это произошло.",c:"Сначала назови вероятную причину ошибки, затем дай пошаговое исправление."},
+  {t:"Добавляй стоп-условия",d:"Скажи, при каких условиях ChatGPT не должен продолжать без уточнения.",c:"Если есть риск изменить важные данные или потерять информацию — остановись и сначала предупреди меня."},
+  {t:"Проси проверить совместимость",d:"Для техники, деталей и покупок обязательно сверяй модель, размер и спецификации.",c:"Перед рекомендацией проверь совместимость по модели, размерам и ключевым характеристикам."},
+  {t:"Указывай исходные данные отдельно",d:"Структура «данные → задача → ограничения» снижает путаницу.",c:"Сначала перечисли исходные данные, затем решение. Не смешивай их."},
+  {t:"Используй контрольный список",d:"После генерации удобно проверить результат по короткому чек-листу.",c:"В конце добавь чек-лист из 5 пунктов и отметь, что выполнено."},
+  {t:"Проси версию для новичка",d:"Сложную инструкцию можно превратить в понятные шаги без жаргона.",c:"Объясни как человеку без опыта: куда нажать, что увидеть и что сделать дальше."},
+  {t:"Проси версию для телефона",d:"Инструкции для компьютера и iPhone отличаются — укажи устройство.",c:"Дай инструкцию именно для iPhone, с названиями кнопок по порядку."},
+  {t:"Проси готовый шаблон",d:"Если задача повторяется, преврати лучший ответ в многоразовый шаблон.",c:"После решения создай универсальный шаблон, где я буду менять только переменные."},
+  {t:"Сначала найди главное",d:"Большой документ или длинную переписку лучше сначала сжать до ключевых пунктов.",c:"Сначала выдели 5 главных выводов, затем подробно разбери только важное."},
+  {t:"Проси оценить риски",d:"Полезно перед покупкой, договором, изменением настроек или запуском рекламы.",c:"Перед рекомендацией перечисли основные риски и как их снизить."},
+  {t:"Проси конкретные числа",d:"Когда возможно, заменяй общие слова измеримыми критериями.",c:"Где возможно, используй конкретные числа, диапазоны и пороговые значения."},
+  {t:"Дай ChatGPT право уточнить",d:"Один уточняющий вопрос иногда экономит несколько неудачных попыток.",c:"Если есть два разумных толкования моей задачи, сначала уточни, какое я имею в виду."},
+  {t:"Проси финал без объяснений",d:"Когда уже всё согласовано, можно получить только чистовой результат.",c:"Мы всё согласовали. Теперь выдай только финальный вариант без пояснений."},
+  {t:"Сохраняй удачный стиль",d:"Можно использовать предыдущий хороший результат как эталон структуры.",c:"Сохрани структуру и уровень качества предыдущего варианта, но сделай новый текст с нуля."},
+  {t:"Проверяй даты",d:"Для свежей информации проси явно проверять дату публикации и актуальность.",c:"Используй актуальные источники и отдельно укажи, на какую дату информация верна."},
+  {t:"Проси следующий лучший шаг",d:"Так разговор превращается в последовательную работу, а не набор отдельных ответов.",c:"После результата назови один следующий шаг, который даст максимальную практическую пользу."}
+ );
  const getDaily=()=>{
    const d=new Date(); const seed=d.getFullYear()*400+d.getMonth()*31+d.getDate();
    return [0,1,2].map(i=>tipBank[(seed*7+i*5)%tipBank.length]);
